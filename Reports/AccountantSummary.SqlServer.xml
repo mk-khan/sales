@@ -20,10 +20,6 @@
         </td>
       </tr>
       <tr>
-        <td>{i18n.TotalSalesTax}</td>
-        <td>{DataSource[0].total_tax}</td>
-      </tr>
-      <tr>
         <td>{i18n.NetSales}</td>
         <td>{DataSource[0].net_sales}</td>
       </tr>
@@ -60,8 +56,7 @@
         SELECT
           SUM(checkout_detail_view.amount) AS total_amount,
           SUM(COALESCE(checkout_detail_view.discount, 0 )) AS total_discount,
-          SUM(CASE WHEN items.is_taxable_item = 1 THEN COALESCE(checkout_detail_view.tax, 0) END) AS total_tax,
-          SUM(checkout_detail_view.amount) - SUM(COALESCE(checkout_detail_view.discount, 0 )) + SUM(CASE WHEN items.is_taxable_item = 1 THEN COALESCE(checkout_detail_view.tax, 0) END) AS net_sales
+          SUM(checkout_detail_view.amount) - SUM(COALESCE(checkout_detail_view.discount, 0 )) AS net_sales
         FROM sales.sales_view
         LEFT JOIN inventory.checkout_detail_view
         ON checkout_detail_view.checkout_id = sales_view.checkout_id
@@ -91,7 +86,6 @@
           items.item_name,
 	        SUM(checkout_detail_view.amount) AS amount,
 	        SUM(checkout_detail_view.discount) AS discount,
-	        SUM(checkout_detail_view.tax) AS tax,
           SUM(checkout_detail_view.total) AS total_sales
       FROM sales.sales_view
       LEFT JOIN account.users
@@ -124,7 +118,6 @@
         items.item_name,
         SUM(checkout_detail_view.amount) AS amount,
         SUM(checkout_detail_view.discount) AS discount,
-        SUM(checkout_detail_view.tax) AS tax,
         SUM(checkout_detail_view.total) AS total_sales
         FROM sales.sales_view
         LEFT JOIN account.users
@@ -150,7 +143,7 @@
         <Parameter Name="@To" FieldLabel="To Date" Type="System.DateTime" />
       </Parameters>
       <RunningTotalTextColumnIndex>0</RunningTotalTextColumnIndex>
-      <RunningTotalFieldIndices>1, 2, 3, 4</RunningTotalFieldIndices>
+      <RunningTotalFieldIndices>1, 2, 3</RunningTotalFieldIndices>
     </DataSource>
   </DataSources>
 </FrapidReport>
