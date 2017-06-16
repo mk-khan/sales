@@ -86,10 +86,10 @@ BEGIN
     SET total_amount = COALESCE(_results.previous_period, 0) + COALESCE(_results.current_period, 0);
     
     DELETE FROM _results
-    WHERE COALESCE(previous_period, 0) = 0
-    AND COALESCE(current_period, 0) = 0
-    AND COALESCE(total_amount, 0) = 0;
-
+    WHERE COALESCE(_results.previous_period, 0) = 0
+    AND COALESCE(_results.current_period, 0) = 0
+    AND COALESCE(_results.total_amount, 0) = 0;
+    
     RETURN QUERY
     SELECT * FROM _results;
 END
