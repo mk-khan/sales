@@ -207,7 +207,7 @@ BEGIN
     
     
 		INSERT INTO sales.customer_receipts(transaction_master_id, customer_id, currency_code, amount, er_debit, er_credit, cash_repository_id, posted_date, collected_on_bank_id, collected_bank_instrument_code, collected_bank_transaction_code)
-		SELECT @transaction_master_id, @customer_id, @currency_code, @amount,  @exchange_rate_debit, @exchange_rate_credit, @cash_repository_id, @posted_date, @bank_account_id, @bank_instrument_code, @bank_tran_code;
+		SELECT @transaction_master_id, @customer_id, @currency_code, @amount,  @exchange_rate_debit, @exchange_rate_credit, @cash_repository_id, @posted_date, @bank_id, @bank_instrument_code, @bank_tran_code;
 
 		EXECUTE finance.auto_verify @transaction_master_id, @office_id;
 		EXECUTE sales.settle_customer_due @customer_id, @office_id;

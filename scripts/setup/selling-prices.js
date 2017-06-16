@@ -34,21 +34,21 @@ scrudFactory.card = {
 scrudFactory.keys = [
     {
         property: "ItemId",
-        url: '/api/views/inventory/items/display-fields',
+        url: '/api/forms/inventory/items/display-fields',
         data: null,
         valueField: "Key",
         textField: "Value"
     },
     {
         property: "UnitId",
-        url: '/api/views/inventory/units/display-fields',
+        url: '/api/forms/inventory/units/display-fields',
         data: null,
         valueField: "Key",
         textField: "Value"
     },
     {
         property: "CustomerTypeId",
-        url: '/api/views/inventory/customer-types/display-fields',
+        url: '/api/forms/inventory/customer-types/display-fields',
         data: null,
         valueField: "Key",
         textField: "Value"
