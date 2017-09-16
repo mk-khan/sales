@@ -1,5 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Globalization;
 using System.Linq;
@@ -107,7 +106,7 @@ namespace MixERP.Sales.DAL.Backend.Tasks.SalesEntry
                     parameters.Add(new NpgsqlParameter("@DiscountRate" + i, details[i].DiscountRate));
                     parameters.Add(new NpgsqlParameter("@Discount" + i, details[i].Discount));
                     parameters.Add(new NpgsqlParameter("@IsTaxed" + i, details[i].IsTaxed));
-                    
+
                     parameters.Add(new NpgsqlParameter("@ShippingCharge" + i, details[i].ShippingCharge));
                 }
             }

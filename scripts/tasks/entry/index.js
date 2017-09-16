@@ -175,7 +175,7 @@ function showInvoice(tranId) {
 
 $("#ReturnButton").click(function () {
     function getSelectedItem() {
-        const selected = $("#JournalView").find("input:checked").first();
+        const selected = $("#SearchView").find("input:checked").first();
 
         if (selected.length) {
             const row = selected.parent().parent().parent();

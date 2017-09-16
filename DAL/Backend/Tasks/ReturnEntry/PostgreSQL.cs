@@ -23,8 +23,9 @@ namespace MixERP.Sales.DAL.Backend.Tasks.ReturnEntry
                                 @ValueDate::date, @BookDate::date, 
                                 @StoreId::integer, @CounterId::integer, @CustomerId, @PriceTypeId::integer,
                                 @ReferenceNumber::national character varying(24), @StatementReference::text, 
-                                ARRAY[{0}], @ShipperId, @Discount
+                                ARRAY[{0}], @ShipperId::integer, @Discount::numeric(30, 6)
                             );";
+
             sql = string.Format(sql, this.GetParametersForDetails(model.Details));
 
             using (var connection = new NpgsqlConnection(connectionString))
@@ -92,8 +93,9 @@ namespace MixERP.Sales.DAL.Backend.Tasks.ReturnEntry
                     parameters.Add(new NpgsqlParameter("@UnitId" + i, details[i].UnitId));
                     parameters.Add(new NpgsqlParameter("@Price" + i, details[i].Price));
                     parameters.Add(new NpgsqlParameter("@DiscountRate" + i, details[i].DiscountRate));
-                    parameters.Add(new NpgsqlParameter("@Tax" + i, DBNull.Value));//The tax will be determined on the database level
+                    parameters.Add(new NpgsqlParameter("@Discount" + i, details[i].Discount));
                     parameters.Add(new NpgsqlParameter("@ShippingCharge" + i, details[i].ShippingCharge));
+                    parameters.Add(new NpgsqlParameter("@IsTaxed" + i, details[i].IsTaxed));
                 }
             }
 
