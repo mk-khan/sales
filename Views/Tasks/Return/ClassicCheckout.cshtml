@@ -98,9 +98,13 @@
             const ajax = request(itemId, customerId, priceTypeId, unitId);
 
             ajax.success(function (response) {
+                var sellingPrice = window.parseFloat2(response);
+                sellingPrice = window.round(sellingPrice, 2);
+
                 $(".checkout.segment").removeClass("loading");
+
                 const priceInput = $("#PriceInputText");
-                priceInput.val(response).trigger("keyup").trigger("change");
+                priceInput.val(sellingPrice).trigger("keyup").trigger("change");
             });
 
             ajax.fail(function (xhr) {
