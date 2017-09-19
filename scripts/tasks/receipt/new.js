@@ -208,20 +208,19 @@ function updateTotal() {
 
     const due = window.parseFloat2($("#DueAmountInputText").val() || 0);
     const amount = window.parseFloat2($("#AmountInputText").val() || 0);
-    const er = window.parseFloat2($("#DebitExchangeRateInputText").val() || 0);
-    const er2 = window.parseFloat2($("#CreditExchangeRateInputText").val()) || 0;
+    const er = window.parseFloat2($("#CreditExchangeRateInputText").val()) || 0;
+    const er2 = window.parseFloat2($("#DebitExchangeRateInputText").val() || 0);
 
-    const toHomeCurrency = amount * er;
+    const toHomeCurrency = window.round(amount * er, 4);
 
     $("#AmountInHomeCurrencyInputText").val(toHomeCurrency);
 
-    const toBase = toHomeCurrency * er2;
-
-    const remainingDue = due - toBase;
+    const toBase = window.round(toHomeCurrency * er2, 4);
+    const remainingDue = window.round(due - toBase, 4);
 
     $("#BaseAmountInputText").val(toBase);
 
-    $("#FinalDueAmountInputText").val(window.round(remainingDue, 2));
+    $("#FinalDueAmountInputText").val(remainingDue);
 
     $("#FinalDueAmountInputText").removeClass("alert-danger");
 
