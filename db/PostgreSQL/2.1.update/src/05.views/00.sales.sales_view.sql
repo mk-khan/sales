@@ -1,4 +1,4 @@
-﻿DROP VIEW IF EXISTS sales.sales_view;
+﻿DROP VIEW IF EXISTS sales.sales_view CASCADE;
 
 CREATE VIEW sales.sales_view
 AS

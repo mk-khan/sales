@@ -1,4 +1,4 @@
-﻿-->-->-- src/Frapid.Web/Areas/MixERP.Sales/db/SQL Server/2.x.update/src/01.types-domains-tables-and-constraints/tables-and-constraints.sql --<--<--
+﻿-->-->-- src/Frapid.Web/Areas/MixERP.Sales/db/SQL Server/2.1.update/src/01.types-domains-tables-and-constraints/tables-and-constraints.sql --<--<--
 ALTER TABLE sales.returns
 ALTER COLUMN sales_id bigint NULL;
 
@@ -7,7 +7,7 @@ ALTER COLUMN transaction_master_id bigint NULL;
 
 
 
--->-->-- src/Frapid.Web/Areas/MixERP.Sales/db/SQL Server/2.x.update/src/02.functions-and-logic/sales.add_gift_card_fund.sql --<--<--
+-->-->-- src/Frapid.Web/Areas/MixERP.Sales/db/SQL Server/2.1.update/src/02.functions-and-logic/sales.add_gift_card_fund.sql --<--<--
 IF OBJECT_ID('sales.add_gift_card_fund') IS NOT NULL
 DROP PROCEDURE sales.add_gift_card_fund;
 
@@ -125,7 +125,7 @@ END;
 GO
 
 
--->-->-- src/Frapid.Web/Areas/MixERP.Sales/db/SQL Server/2.x.update/src/02.functions-and-logic/sales.add_opening_cash.sql --<--<--
+-->-->-- src/Frapid.Web/Areas/MixERP.Sales/db/SQL Server/2.1.update/src/02.functions-and-logic/sales.add_opening_cash.sql --<--<--
 IF OBJECT_ID('sales.add_opening_cash') IS NOT NULL
 DROP PROCEDURE sales.add_opening_cash;
 
@@ -175,7 +175,7 @@ GO
 
 
 
--->-->-- src/Frapid.Web/Areas/MixERP.Sales/db/SQL Server/2.x.update/src/02.functions-and-logic/sales.get_active_coupon_id_by_coupon_code.sql --<--<--
+-->-->-- src/Frapid.Web/Areas/MixERP.Sales/db/SQL Server/2.1.update/src/02.functions-and-logic/sales.get_active_coupon_id_by_coupon_code.sql --<--<--
 IF OBJECT_ID('sales.get_active_coupon_id_by_coupon_code') IS NOT NULL
 DROP FUNCTION sales.get_active_coupon_id_by_coupon_code;
 
@@ -203,7 +203,7 @@ END;
 GO
 
 
--->-->-- src/Frapid.Web/Areas/MixERP.Sales/db/SQL Server/2.x.update/src/02.functions-and-logic/sales.get_avaiable_coupons_to_print.sql --<--<--
+-->-->-- src/Frapid.Web/Areas/MixERP.Sales/db/SQL Server/2.1.update/src/02.functions-and-logic/sales.get_avaiable_coupons_to_print.sql --<--<--
 IF OBJECT_ID('sales.get_avaiable_coupons_to_print') IS NOT NULL
 DROP FUNCTION sales.get_avaiable_coupons_to_print;
 
@@ -310,7 +310,7 @@ END;
 
 GO
 
--->-->-- src/Frapid.Web/Areas/MixERP.Sales/db/SQL Server/2.x.update/src/02.functions-and-logic/sales.get_customer_account_detail.sql --<--<--
+-->-->-- src/Frapid.Web/Areas/MixERP.Sales/db/SQL Server/2.1.update/src/02.functions-and-logic/sales.get_customer_account_detail.sql --<--<--
 IF OBJECT_ID('sales.get_customer_account_detail') IS NOT NULL
 DROP FUNCTION sales.get_customer_account_detail;
 
@@ -389,7 +389,7 @@ GO
 
 --select * from sales.get_customer_account_detail(1, '1-1-2000', '1-1-2060', 1);
 
--->-->-- src/Frapid.Web/Areas/MixERP.Sales/db/SQL Server/2.x.update/src/02.functions-and-logic/sales.get_gift_card_balance.sql --<--<--
+-->-->-- src/Frapid.Web/Areas/MixERP.Sales/db/SQL Server/2.1.update/src/02.functions-and-logic/sales.get_gift_card_balance.sql --<--<--
 IF OBJECT_ID('sales.get_gift_card_balance') IS NOT NULL
 DROP FUNCTION sales.get_gift_card_balance;
 
@@ -427,7 +427,7 @@ END
 GO
 
 
--->-->-- src/Frapid.Web/Areas/MixERP.Sales/db/SQL Server/2.x.update/src/02.functions-and-logic/sales.get_gift_card_detail.sql --<--<--
+-->-->-- src/Frapid.Web/Areas/MixERP.Sales/db/SQL Server/2.1.update/src/02.functions-and-logic/sales.get_gift_card_detail.sql --<--<--
 IF OBJECT_ID('sales.get_gift_card_detail') IS NOT NULL
 DROP FUNCTION sales.get_gift_card_detail;
 GO
@@ -528,7 +528,7 @@ GO
 
 
 
--->-->-- src/Frapid.Web/Areas/MixERP.Sales/db/SQL Server/2.x.update/src/02.functions-and-logic/sales.get_gift_card_id_by_gift_card_number.sql --<--<--
+-->-->-- src/Frapid.Web/Areas/MixERP.Sales/db/SQL Server/2.1.update/src/02.functions-and-logic/sales.get_gift_card_id_by_gift_card_number.sql --<--<--
 IF OBJECT_ID('sales.get_gift_card_id_by_gift_card_number') IS NOT NULL
 DROP FUNCTION sales.get_gift_card_id_by_gift_card_number;
 
@@ -555,7 +555,7 @@ END;
 GO
 
 
--->-->-- src/Frapid.Web/Areas/MixERP.Sales/db/SQL Server/2.x.update/src/02.functions-and-logic/sales.get_item_selling_price.sql --<--<--
+-->-->-- src/Frapid.Web/Areas/MixERP.Sales/db/SQL Server/2.1.update/src/02.functions-and-logic/sales.get_item_selling_price.sql --<--<--
 IF OBJECT_ID('sales.get_item_selling_price') IS NOT NULL
 DROP FUNCTION sales.get_item_selling_price;
 
@@ -643,7 +643,7 @@ GO
 
 
 
--->-->-- src/Frapid.Web/Areas/MixERP.Sales/db/SQL Server/2.x.update/src/02.functions-and-logic/sales.get_late_fee_id_by_late_fee_code.sql --<--<--
+-->-->-- src/Frapid.Web/Areas/MixERP.Sales/db/SQL Server/2.1.update/src/02.functions-and-logic/sales.get_late_fee_id_by_late_fee_code.sql --<--<--
 IF OBJECT_ID('sales.get_late_fee_id_by_late_fee_code') IS NOT NULL
 DROP FUNCTION sales.get_late_fee_id_by_late_fee_code;
 
@@ -669,7 +669,7 @@ END;
 GO
 
 
--->-->-- src/Frapid.Web/Areas/MixERP.Sales/db/SQL Server/2.x.update/src/02.functions-and-logic/sales.get_order_view.sql --<--<--
+-->-->-- src/Frapid.Web/Areas/MixERP.Sales/db/SQL Server/2.1.update/src/02.functions-and-logic/sales.get_order_view.sql --<--<--
 IF OBJECT_ID('sales.get_order_view') IS NOT NULL
 DROP FUNCTION sales.get_order_view;
 
@@ -759,7 +759,7 @@ END;
 GO
 
 
--->-->-- src/Frapid.Web/Areas/MixERP.Sales/db/SQL Server/2.x.update/src/02.functions-and-logic/sales.get_payable_account_for_gift_card.sql --<--<--
+-->-->-- src/Frapid.Web/Areas/MixERP.Sales/db/SQL Server/2.1.update/src/02.functions-and-logic/sales.get_payable_account_for_gift_card.sql --<--<--
 IF OBJECT_ID('sales.get_payable_account_for_gift_card') IS NOT NULL
 DROP FUNCTION sales.get_payable_account_for_gift_card;
 
@@ -786,7 +786,7 @@ END;
 GO
 
 
--->-->-- src/Frapid.Web/Areas/MixERP.Sales/db/SQL Server/2.x.update/src/02.functions-and-logic/sales.get_payable_account_id_by_gift_card_id.sql --<--<--
+-->-->-- src/Frapid.Web/Areas/MixERP.Sales/db/SQL Server/2.1.update/src/02.functions-and-logic/sales.get_payable_account_id_by_gift_card_id.sql --<--<--
 IF OBJECT_ID('sales.get_payable_account_id_by_gift_card_id') IS NOT NULL
 DROP FUNCTION sales.get_payable_account_id_by_gift_card_id;
 
@@ -811,7 +811,7 @@ END
 GO
 
 
--->-->-- src/Frapid.Web/Areas/MixERP.Sales/db/SQL Server/2.x.update/src/02.functions-and-logic/sales.get_quotation_view.sql --<--<--
+-->-->-- src/Frapid.Web/Areas/MixERP.Sales/db/SQL Server/2.1.update/src/02.functions-and-logic/sales.get_quotation_view.sql --<--<--
 IF OBJECT_ID('sales.get_quotation_view') IS NOT NULL
 DROP FUNCTION sales.get_quotation_view;
 
@@ -900,7 +900,7 @@ END;
 GO
 
 
--->-->-- src/Frapid.Web/Areas/MixERP.Sales/db/SQL Server/2.x.update/src/02.functions-and-logic/sales.get_receivable_account_for_check_receipts.sql --<--<--
+-->-->-- src/Frapid.Web/Areas/MixERP.Sales/db/SQL Server/2.1.update/src/02.functions-and-logic/sales.get_receivable_account_for_check_receipts.sql --<--<--
 IF OBJECT_ID('sales.get_receivable_account_for_check_receipts') IS NOT NULL
 DROP FUNCTION sales.get_receivable_account_for_check_receipts;
 
@@ -927,7 +927,7 @@ END;
 GO
 
 
--->-->-- src/Frapid.Web/Areas/MixERP.Sales/db/SQL Server/2.x.update/src/02.functions-and-logic/sales.get_selling_price.sql --<--<--
+-->-->-- src/Frapid.Web/Areas/MixERP.Sales/db/SQL Server/2.1.update/src/02.functions-and-logic/sales.get_selling_price.sql --<--<--
 IF OBJECT_ID('sales.get_selling_price') IS NOT NULL
 DROP FUNCTION sales.get_selling_price;
 
@@ -980,7 +980,7 @@ GO
 --SELECT sales.get_selling_price(1,1,1,1,6);
 
 
--->-->-- src/Frapid.Web/Areas/MixERP.Sales/db/SQL Server/2.x.update/src/02.functions-and-logic/sales.get_top_selling_products_of_all_time.sql --<--<--
+-->-->-- src/Frapid.Web/Areas/MixERP.Sales/db/SQL Server/2.1.update/src/02.functions-and-logic/sales.get_top_selling_products_of_all_time.sql --<--<--
 IF OBJECT_ID('sales.get_top_selling_products_of_all_time') IS NOT NULL
 DROP FUNCTION sales.get_top_selling_products_of_all_time;
 
@@ -1029,7 +1029,7 @@ GO
 
 
 
--->-->-- src/Frapid.Web/Areas/MixERP.Sales/db/SQL Server/2.x.update/src/02.functions-and-logic/sales.post_cash_receipt.sql --<--<--
+-->-->-- src/Frapid.Web/Areas/MixERP.Sales/db/SQL Server/2.1.update/src/02.functions-and-logic/sales.post_cash_receipt.sql --<--<--
 IF OBJECT_ID('sales.post_cash_receipt') IS NOT NULL
 DROP PROCEDURE sales.post_cash_receipt;
 
@@ -1171,7 +1171,7 @@ END;
 GO
 
 
--->-->-- src/Frapid.Web/Areas/MixERP.Sales/db/SQL Server/2.x.update/src/02.functions-and-logic/sales.post_check_receipt.sql --<--<--
+-->-->-- src/Frapid.Web/Areas/MixERP.Sales/db/SQL Server/2.1.update/src/02.functions-and-logic/sales.post_check_receipt.sql --<--<--
 IF OBJECT_ID('sales.post_check_receipt') IS NOT NULL
 DROP PROCEDURE sales.post_check_receipt;
 
@@ -1310,7 +1310,7 @@ GO
 --SELECT * FROM sales.post_check_receipt(1, 1, 1, 1, 1, 1, 'USD', 'USD', 'USD', 1, 1, '', '', 1, '1-1-2020', '1-1-2020', 2000, '', '', '1-1-2020', null);
 
 
--->-->-- src/Frapid.Web/Areas/MixERP.Sales/db/SQL Server/2.x.update/src/02.functions-and-logic/sales.post_customer_receipt.sql --<--<--
+-->-->-- src/Frapid.Web/Areas/MixERP.Sales/db/SQL Server/2.1.update/src/02.functions-and-logic/sales.post_customer_receipt.sql --<--<--
 IF OBJECT_ID('sales.post_customer_receipt') IS NOT NULL
 DROP PROCEDURE sales.post_customer_receipt;
 
@@ -1569,7 +1569,7 @@ GO
 --	 NULL
 --;
 
--->-->-- src/Frapid.Web/Areas/MixERP.Sales/db/SQL Server/2.x.update/src/02.functions-and-logic/sales.post_late_fee.sql --<--<--
+-->-->-- src/Frapid.Web/Areas/MixERP.Sales/db/SQL Server/2.1.update/src/02.functions-and-logic/sales.post_late_fee.sql --<--<--
 IF OBJECT_ID('sales.post_late_fee') IS NOT NULL
 DROP PROCEDURE sales.post_late_fee;
 
@@ -1850,7 +1850,7 @@ GO
 
 
 
--->-->-- src/Frapid.Web/Areas/MixERP.Sales/db/SQL Server/2.x.update/src/02.functions-and-logic/sales.post_receipt.sql --<--<--
+-->-->-- src/Frapid.Web/Areas/MixERP.Sales/db/SQL Server/2.1.update/src/02.functions-and-logic/sales.post_receipt.sql --<--<--
 IF OBJECT_ID('sales.post_receipt') IS NOT NULL
 DROP PROCEDURE sales.post_receipt;
 
@@ -1999,7 +1999,7 @@ GO
 
 
 
--->-->-- src/Frapid.Web/Areas/MixERP.Sales/db/SQL Server/2.x.update/src/02.functions-and-logic/sales.post_receipt_by_gift_card.sql --<--<--
+-->-->-- src/Frapid.Web/Areas/MixERP.Sales/db/SQL Server/2.1.update/src/02.functions-and-logic/sales.post_receipt_by_gift_card.sql --<--<--
 IF OBJECT_ID('sales.post_receipt_by_gift_card') IS NOT NULL
 DROP PROCEDURE sales.post_receipt_by_gift_card;
 
@@ -2136,7 +2136,7 @@ END;
 GO
 
 
--->-->-- src/Frapid.Web/Areas/MixERP.Sales/db/SQL Server/2.x.update/src/02.functions-and-logic/sales.post_return.sql --<--<--
+-->-->-- src/Frapid.Web/Areas/MixERP.Sales/db/SQL Server/2.1.update/src/02.functions-and-logic/sales.post_return.sql --<--<--
 IF OBJECT_ID('sales.post_return') IS NOT NULL
 DROP PROCEDURE sales.post_return;
 
@@ -2524,7 +2524,7 @@ GO
 
 
 
--->-->-- src/Frapid.Web/Areas/MixERP.Sales/db/SQL Server/2.x.update/src/02.functions-and-logic/sales.post_return_without_validation.sql --<--<--
+-->-->-- src/Frapid.Web/Areas/MixERP.Sales/db/SQL Server/2.1.update/src/02.functions-and-logic/sales.post_return_without_validation.sql --<--<--
 IF OBJECT_ID('sales.post_return_without_validation') IS NOT NULL
 DROP PROCEDURE sales.post_return_without_validation;
 
@@ -2906,7 +2906,7 @@ GO
 
 
 
--->-->-- src/Frapid.Web/Areas/MixERP.Sales/db/SQL Server/2.x.update/src/02.functions-and-logic/sales.post_sales.sql --<--<--
+-->-->-- src/Frapid.Web/Areas/MixERP.Sales/db/SQL Server/2.1.update/src/02.functions-and-logic/sales.post_sales.sql --<--<--
 IF OBJECT_ID('sales.post_sales') IS NOT NULL
 DROP PROCEDURE sales.post_sales;
 
@@ -3129,11 +3129,7 @@ BEGIN
             cost_of_goods_sold_account_id   = inventory.get_cost_of_goods_sold_account_id(item_id);
 
 		UPDATE @checkout_details 
-		SET 
-			is_taxable_item = inventory.items.is_taxable_item
-		FROM @checkout_details AS checkout_details
-		INNER JOIN inventory.items
-		ON inventory.items.item_id = checkout_details.item_id;
+		SET is_taxable_item = is_taxed;
 
 		UPDATE @checkout_details
 		SET amount = (COALESCE(price, 0) * COALESCE(quantity, 0)) - COALESCE(discount, 0) + COALESCE(shipping_charge, 0);
@@ -3503,7 +3499,7 @@ GO
 
 
 
--->-->-- src/Frapid.Web/Areas/MixERP.Sales/db/SQL Server/2.x.update/src/02.functions-and-logic/sales.settle_customer_due.sql --<--<--
+-->-->-- src/Frapid.Web/Areas/MixERP.Sales/db/SQL Server/2.1.update/src/02.functions-and-logic/sales.settle_customer_due.sql --<--<--
 IF OBJECT_ID('sales.settle_customer_due') IS NOT NULL
 DROP PROCEDURE sales.settle_customer_due;
 
@@ -3617,7 +3613,7 @@ END;
 GO
 
 
--->-->-- src/Frapid.Web/Areas/MixERP.Sales/db/SQL Server/2.x.update/src/02.functions-and-logic/sales.validate_items_for_return.sql --<--<--
+-->-->-- src/Frapid.Web/Areas/MixERP.Sales/db/SQL Server/2.1.update/src/02.functions-and-logic/sales.validate_items_for_return.sql --<--<--
 IF OBJECT_ID('sales.validate_items_for_return') IS NOT NULL
 DROP FUNCTION sales.validate_items_for_return;
 
@@ -3971,7 +3967,7 @@ GO
 
 
 
--->-->-- src/Frapid.Web/Areas/MixERP.Sales/db/SQL Server/2.x.update/src/05.views/00.sales.sales_view.sql --<--<--
+-->-->-- src/Frapid.Web/Areas/MixERP.Sales/db/SQL Server/2.1.update/src/05.views/00.sales.sales_view.sql --<--<--
 IF OBJECT_ID('sales.sales_view') IS NOT NULL
 DROP VIEW sales.sales_view;
 
@@ -4071,7 +4067,7 @@ WHERE finance.transaction_master.deleted = 0;
 GO
 
 
--->-->-- src/Frapid.Web/Areas/MixERP.Sales/db/SQL Server/2.x.update/src/05.views/01. sales.customer_transaction_view.sql --<--<--
+-->-->-- src/Frapid.Web/Areas/MixERP.Sales/db/SQL Server/2.1.update/src/05.views/01. sales.customer_transaction_view.sql --<--<--
 IF OBJECT_ID('sales.customer_transaction_view') IS NOT NULL
 DROP VIEW sales.customer_transaction_view;
 GO
@@ -4142,7 +4138,7 @@ GO
 --SELECT * FROM sales.customer_transaction_view;
 
 
--->-->-- src/Frapid.Web/Areas/MixERP.Sales/db/SQL Server/2.x.update/src/05.views/sales.coupon_view.sql --<--<--
+-->-->-- src/Frapid.Web/Areas/MixERP.Sales/db/SQL Server/2.1.update/src/05.views/sales.coupon_view.sql --<--<--
 IF OBJECT_ID('sales.coupon_view') IS NOT NULL
 DROP VIEW sales.coupon_view;
 
@@ -4185,7 +4181,7 @@ ON for_ticket_of_price_type.price_type_id = sales.coupons.for_ticket_of_price_ty
 GO
 
 
--->-->-- src/Frapid.Web/Areas/MixERP.Sales/db/SQL Server/2.x.update/src/05.views/sales.customer_receipt_search_view.sql --<--<--
+-->-->-- src/Frapid.Web/Areas/MixERP.Sales/db/SQL Server/2.1.update/src/05.views/sales.customer_receipt_search_view.sql --<--<--
 IF OBJECT_ID('sales.customer_receipt_search_view') IS NOT NULL
 DROP VIEW sales.customer_receipt_search_view;
 
@@ -4218,7 +4214,7 @@ WHERE finance.transaction_master.deleted = 0;
 GO
 
 
--->-->-- src/Frapid.Web/Areas/MixERP.Sales/db/SQL Server/2.x.update/src/05.views/sales.gift_card_search_view.sql --<--<--
+-->-->-- src/Frapid.Web/Areas/MixERP.Sales/db/SQL Server/2.1.update/src/05.views/sales.gift_card_search_view.sql --<--<--
 IF OBJECT_ID('sales.gift_card_search_view') IS NOT NULL
 DROP VIEW sales.gift_card_search_view;
 
@@ -4248,7 +4244,7 @@ WHERE sales.gift_cards.deleted = 0;
 GO
 
 
--->-->-- src/Frapid.Web/Areas/MixERP.Sales/db/SQL Server/2.x.update/src/05.views/sales.gift_card_transaction_view.sql --<--<--
+-->-->-- src/Frapid.Web/Areas/MixERP.Sales/db/SQL Server/2.1.update/src/05.views/sales.gift_card_transaction_view.sql --<--<--
 IF OBJECT_ID('sales.gift_card_transaction_view') IS NOT NULL
 DROP VIEW sales.gift_card_transaction_view;
 
@@ -4298,7 +4294,7 @@ ON finance.transaction_master.verified_by_user_id = verified_by_user.user_id;
 GO
 
 
--->-->-- src/Frapid.Web/Areas/MixERP.Sales/db/SQL Server/2.x.update/src/05.views/sales.item_view.sql --<--<--
+-->-->-- src/Frapid.Web/Areas/MixERP.Sales/db/SQL Server/2.1.update/src/05.views/sales.item_view.sql --<--<--
 IF OBJECT_ID('sales.item_view') IS NOT NULL
 DROP VIEW sales.item_view;
 
@@ -4345,7 +4341,7 @@ AND inventory.items.allow_sales = 1;
 GO
 
 
--->-->-- src/Frapid.Web/Areas/MixERP.Sales/db/SQL Server/2.x.update/src/05.views/sales.order_search_view.sql --<--<--
+-->-->-- src/Frapid.Web/Areas/MixERP.Sales/db/SQL Server/2.1.update/src/05.views/sales.order_search_view.sql --<--<--
 IF OBJECT_ID('sales.order_search_view') IS NOT NULL
 DROP VIEW sales.order_search_view;
 
@@ -4377,7 +4373,7 @@ FROM sales.orders;
 GO
 
 
--->-->-- src/Frapid.Web/Areas/MixERP.Sales/db/SQL Server/2.x.update/src/05.views/sales.quotation_search_view.sql --<--<--
+-->-->-- src/Frapid.Web/Areas/MixERP.Sales/db/SQL Server/2.1.update/src/05.views/sales.quotation_search_view.sql --<--<--
 IF OBJECT_ID('sales.quotation_search_view') IS NOT NULL
 DROP VIEW sales.quotation_search_view;
 
@@ -4409,7 +4405,7 @@ FROM sales.quotations;
 GO
 
 
--->-->-- src/Frapid.Web/Areas/MixERP.Sales/db/SQL Server/2.x.update/src/05.views/sales.return_search_view.sql --<--<--
+-->-->-- src/Frapid.Web/Areas/MixERP.Sales/db/SQL Server/2.1.update/src/05.views/sales.return_search_view.sql --<--<--
 IF OBJECT_ID('sales.return_search_view') IS NOT NULL
 DROP VIEW sales.return_search_view;
 
@@ -4460,7 +4456,7 @@ finance.transaction_master.verification_reason;
 GO
 
 
--->-->-- src/Frapid.Web/Areas/MixERP.Sales/db/SQL Server/2.x.update/src/05.views/sales.sales_search_view.sql --<--<--
+-->-->-- src/Frapid.Web/Areas/MixERP.Sales/db/SQL Server/2.1.update/src/05.views/sales.sales_search_view.sql --<--<--
 IF OBJECT_ID('sales.sales_search_view') IS NOT NULL
 DROP VIEW sales.sales_search_view;
 
@@ -4494,7 +4490,7 @@ GO
 
 
 
--->-->-- src/Frapid.Web/Areas/MixERP.Sales/db/SQL Server/2.x.update/src/99.ownership.sql --<--<--
+-->-->-- src/Frapid.Web/Areas/MixERP.Sales/db/SQL Server/2.1.update/src/99.ownership.sql --<--<--
 EXEC sp_addrolemember  @rolename = 'db_owner', @membername  = 'frapid_db_user'
 GO
 

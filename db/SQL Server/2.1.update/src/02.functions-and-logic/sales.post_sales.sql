@@ -220,11 +220,7 @@ BEGIN
             cost_of_goods_sold_account_id   = inventory.get_cost_of_goods_sold_account_id(item_id);
 
 		UPDATE @checkout_details 
-		SET 
-			is_taxable_item = inventory.items.is_taxable_item
-		FROM @checkout_details AS checkout_details
-		INNER JOIN inventory.items
-		ON inventory.items.item_id = checkout_details.item_id;
+		SET is_taxable_item = is_taxed;
 
 		UPDATE @checkout_details
 		SET amount = (COALESCE(price, 0) * COALESCE(quantity, 0)) - COALESCE(discount, 0) + COALESCE(shipping_charge, 0);

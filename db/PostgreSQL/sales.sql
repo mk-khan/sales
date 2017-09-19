@@ -1,4 +1,4 @@
-﻿-->-->-- src/Frapid.Web/Areas/MixERP.Sales/db/PostgreSQL/2.x.update/src/01.types-domains-tables-and-constraints/tables-and-constraints.sql --<--<--
+﻿-->-->-- src/Frapid.Web/Areas/MixERP.Sales/db/PostgreSQL/2.1.update/src/01.types-domains-tables-and-constraints/tables-and-constraints.sql --<--<--
 ALTER TABLE sales.returns
 ALTER COLUMN sales_id DROP NOT NULL;
 
@@ -6,7 +6,7 @@ ALTER TABLE sales.returns
 ALTER COLUMN transaction_master_id DROP NOT NULL;
 
 
--->-->-- src/Frapid.Web/Areas/MixERP.Sales/db/PostgreSQL/2.x.update/src/02.functions-and-logic/sales.add_gift_card_fund.sql --<--<--
+-->-->-- src/Frapid.Web/Areas/MixERP.Sales/db/PostgreSQL/2.1.update/src/02.functions-and-logic/sales.add_gift_card_fund.sql --<--<--
 DROP FUNCTION IF EXISTS sales.add_gift_card_fund
 (
     _user_id                                    integer, 
@@ -107,7 +107,7 @@ LANGUAGE plpgsql;
 
 
 
--->-->-- src/Frapid.Web/Areas/MixERP.Sales/db/PostgreSQL/2.x.update/src/02.functions-and-logic/sales.add_opening_cash.sql --<--<--
+-->-->-- src/Frapid.Web/Areas/MixERP.Sales/db/PostgreSQL/2.1.update/src/02.functions-and-logic/sales.add_opening_cash.sql --<--<--
 DROP FUNCTION IF EXISTS sales.add_opening_cash
 (
 	_user_id								integer,
@@ -155,7 +155,7 @@ END
 $$
 LANGUAGE plpgsql;
 
--->-->-- src/Frapid.Web/Areas/MixERP.Sales/db/PostgreSQL/2.x.update/src/02.functions-and-logic/sales.get_active_coupon_id_by_coupon_code.sql --<--<--
+-->-->-- src/Frapid.Web/Areas/MixERP.Sales/db/PostgreSQL/2.1.update/src/02.functions-and-logic/sales.get_active_coupon_id_by_coupon_code.sql --<--<--
 DROP FUNCTION IF EXISTS sales.get_active_coupon_id_by_coupon_code(_coupon_code national character varying(100));
 
 CREATE FUNCTION sales.get_active_coupon_id_by_coupon_code(_coupon_code national character varying(100))
@@ -174,7 +174,7 @@ $$
 LANGUAGE plpgsql;
 
 
--->-->-- src/Frapid.Web/Areas/MixERP.Sales/db/PostgreSQL/2.x.update/src/02.functions-and-logic/sales.get_avaiable_coupons_to_print.sql --<--<--
+-->-->-- src/Frapid.Web/Areas/MixERP.Sales/db/PostgreSQL/2.1.update/src/02.functions-and-logic/sales.get_avaiable_coupons_to_print.sql --<--<--
 DROP FUNCTION IF EXISTS sales.get_avaiable_coupons_to_print(_tran_id bigint);
 
 CREATE FUNCTION sales.get_avaiable_coupons_to_print(_tran_id bigint)
@@ -276,7 +276,7 @@ LANGUAGE plpgsql;
 
 --SELECT * FROM sales.get_avaiable_coupons_to_print(2);
 
--->-->-- src/Frapid.Web/Areas/MixERP.Sales/db/PostgreSQL/2.x.update/src/02.functions-and-logic/sales.get_customer_account_detail.sql --<--<--
+-->-->-- src/Frapid.Web/Areas/MixERP.Sales/db/PostgreSQL/2.1.update/src/02.functions-and-logic/sales.get_customer_account_detail.sql --<--<--
 DROP FUNCTION IF EXISTS sales.get_customer_account_detail(integer, date, date, integer);
 CREATE OR REPLACE FUNCTION sales.get_customer_account_detail
 (
@@ -368,7 +368,7 @@ $BODY$
 
 --select * from sales.get_customer_account_detail(1, '1-1-2000', '1-1-2060', 1);
 
--->-->-- src/Frapid.Web/Areas/MixERP.Sales/db/PostgreSQL/2.x.update/src/02.functions-and-logic/sales.get_gift_card_balance.sql --<--<--
+-->-->-- src/Frapid.Web/Areas/MixERP.Sales/db/PostgreSQL/2.1.update/src/02.functions-and-logic/sales.get_gift_card_balance.sql --<--<--
 DROP FUNCTION IF EXISTS sales.get_gift_card_balance(_gift_card_id integer, _value_date date);
 
 CREATE FUNCTION sales.get_gift_card_balance(_gift_card_id integer, _value_date date)
@@ -402,7 +402,7 @@ END
 $$
 LANGUAGE plpgsql;
 
--->-->-- src/Frapid.Web/Areas/MixERP.Sales/db/PostgreSQL/2.x.update/src/02.functions-and-logic/sales.get_gift_card_detail.sql --<--<--
+-->-->-- src/Frapid.Web/Areas/MixERP.Sales/db/PostgreSQL/2.1.update/src/02.functions-and-logic/sales.get_gift_card_detail.sql --<--<--
 DROP FUNCTION IF EXISTS sales.get_gift_card_detail(national character varying(50), date, date, integer);
 CREATE FUNCTION sales.get_gift_card_detail
 (
@@ -514,7 +514,7 @@ $BODY$
 
 
 
--->-->-- src/Frapid.Web/Areas/MixERP.Sales/db/PostgreSQL/2.x.update/src/02.functions-and-logic/sales.get_gift_card_id_by_gift_card_number.sql --<--<--
+-->-->-- src/Frapid.Web/Areas/MixERP.Sales/db/PostgreSQL/2.1.update/src/02.functions-and-logic/sales.get_gift_card_id_by_gift_card_number.sql --<--<--
 DROP FUNCTION IF EXISTS sales.get_gift_card_id_by_gift_card_number(_gift_card_number national character varying(100));
 
 CREATE FUNCTION sales.get_gift_card_id_by_gift_card_number(_gift_card_number national character varying(100))
@@ -532,7 +532,7 @@ LANGUAGE plpgsql;
 
 
 
--->-->-- src/Frapid.Web/Areas/MixERP.Sales/db/PostgreSQL/2.x.update/src/02.functions-and-logic/sales.get_item_selling_price.sql --<--<--
+-->-->-- src/Frapid.Web/Areas/MixERP.Sales/db/PostgreSQL/2.1.update/src/02.functions-and-logic/sales.get_item_selling_price.sql --<--<--
 DROP FUNCTION IF EXISTS sales.get_item_selling_price(_office_id integer, _item_id integer, _customer_type_id integer, _price_type_id integer, _unit_id integer);
 
 CREATE FUNCTION sales.get_item_selling_price(_office_id integer, _item_id integer, _customer_type_id integer, _price_type_id integer, _unit_id integer)
@@ -632,7 +632,7 @@ LANGUAGE plpgsql;
 --SELECT * FROM sales.get_item_selling_price(1, 1, 1, 1, 1);
 
 
--->-->-- src/Frapid.Web/Areas/MixERP.Sales/db/PostgreSQL/2.x.update/src/02.functions-and-logic/sales.get_late_fee_id_by_late_fee_code.sql --<--<--
+-->-->-- src/Frapid.Web/Areas/MixERP.Sales/db/PostgreSQL/2.1.update/src/02.functions-and-logic/sales.get_late_fee_id_by_late_fee_code.sql --<--<--
 DROP FUNCTION IF EXISTS sales.get_late_fee_id_by_late_fee_code(_late_fee_code national character varying(24));
 
 CREATE FUNCTION sales.get_late_fee_id_by_late_fee_code(_late_fee_code national character varying(24))
@@ -649,7 +649,7 @@ $$
 LANGUAGE plpgsql;
 
 
--->-->-- src/Frapid.Web/Areas/MixERP.Sales/db/PostgreSQL/2.x.update/src/02.functions-and-logic/sales.get_order_view.sql --<--<--
+-->-->-- src/Frapid.Web/Areas/MixERP.Sales/db/PostgreSQL/2.1.update/src/02.functions-and-logic/sales.get_order_view.sql --<--<--
 DROP FUNCTION IF EXISTS sales.get_order_view
 (
     _user_id                        integer,
@@ -746,7 +746,7 @@ LANGUAGE plpgsql;
 --SELECT * FROM sales.get_order_view(1,1, '', '11/27/2010','11/27/2016','1-1-2000','1-1-2020', null,'','','','', '');
 
 
--->-->-- src/Frapid.Web/Areas/MixERP.Sales/db/PostgreSQL/2.x.update/src/02.functions-and-logic/sales.get_payable_account_for_gift_card.sql --<--<--
+-->-->-- src/Frapid.Web/Areas/MixERP.Sales/db/PostgreSQL/2.1.update/src/02.functions-and-logic/sales.get_payable_account_for_gift_card.sql --<--<--
 DROP FUNCTION IF EXISTS sales.get_payable_account_for_gift_card(_gift_card_id integer);
 
 CREATE FUNCTION sales.get_payable_account_for_gift_card(_gift_card_id integer)
@@ -764,7 +764,7 @@ LANGUAGE plpgsql;
 
 
 
--->-->-- src/Frapid.Web/Areas/MixERP.Sales/db/PostgreSQL/2.x.update/src/02.functions-and-logic/sales.get_payable_account_id_by_gift_card_id.sql --<--<--
+-->-->-- src/Frapid.Web/Areas/MixERP.Sales/db/PostgreSQL/2.1.update/src/02.functions-and-logic/sales.get_payable_account_id_by_gift_card_id.sql --<--<--
 DROP FUNCTION IF EXISTS sales.get_payable_account_id_by_gift_card_id(_gift_card_id integer);
 
 CREATE FUNCTION sales.get_payable_account_id_by_gift_card_id(_gift_card_id integer)
@@ -780,7 +780,7 @@ END
 $$
 LANGUAGE plpgsql;
 
--->-->-- src/Frapid.Web/Areas/MixERP.Sales/db/PostgreSQL/2.x.update/src/02.functions-and-logic/sales.get_quotation_view.sql --<--<--
+-->-->-- src/Frapid.Web/Areas/MixERP.Sales/db/PostgreSQL/2.1.update/src/02.functions-and-logic/sales.get_quotation_view.sql --<--<--
 DROP FUNCTION IF EXISTS sales.get_quotation_view
 (
     _user_id                        integer,
@@ -876,7 +876,7 @@ LANGUAGE plpgsql;
 --SELECT * FROM sales.get_quotation_view(1,1,'','11/27/2010','11/27/2016','1-1-2000','1-1-2020', null,'','','','', '');
 
 
--->-->-- src/Frapid.Web/Areas/MixERP.Sales/db/PostgreSQL/2.x.update/src/02.functions-and-logic/sales.get_receivable_account_for_check_receipts.sql --<--<--
+-->-->-- src/Frapid.Web/Areas/MixERP.Sales/db/PostgreSQL/2.1.update/src/02.functions-and-logic/sales.get_receivable_account_for_check_receipts.sql --<--<--
 DROP FUNCTION IF EXISTS sales.get_receivable_account_for_check_receipts(_store_id integer);
 
 CREATE FUNCTION sales.get_receivable_account_for_check_receipts(_store_id integer)
@@ -894,7 +894,7 @@ LANGUAGE plpgsql;
 
 
 
--->-->-- src/Frapid.Web/Areas/MixERP.Sales/db/PostgreSQL/2.x.update/src/02.functions-and-logic/sales.get_selling_price.sql --<--<--
+-->-->-- src/Frapid.Web/Areas/MixERP.Sales/db/PostgreSQL/2.1.update/src/02.functions-and-logic/sales.get_selling_price.sql --<--<--
 DROP FUNCTION IF EXISTS sales.get_selling_price(_office_id integer, _item_id integer, _customer_id integer, _price_type_id integer, _unit_id integer);
 
 CREATE FUNCTION sales.get_selling_price(_office_id integer, _item_id integer, _customer_id integer, _price_type_id integer, _unit_id integer)
@@ -946,7 +946,7 @@ LANGUAGE plpgsql;
 --SELECT sales.get_selling_price(1,1,1,1,6);
 
 
--->-->-- src/Frapid.Web/Areas/MixERP.Sales/db/PostgreSQL/2.x.update/src/02.functions-and-logic/sales.get_top_selling_products_of_all_time.sql --<--<--
+-->-->-- src/Frapid.Web/Areas/MixERP.Sales/db/PostgreSQL/2.1.update/src/02.functions-and-logic/sales.get_top_selling_products_of_all_time.sql --<--<--
 DROP FUNCTION IF EXISTS sales.get_top_selling_products_of_all_time(_office_id int);
 
 CREATE FUNCTION sales.get_top_selling_products_of_all_time(_office_id int)
@@ -1000,7 +1000,7 @@ LANGUAGE plpgsql;
 
 --SELECT * FROM sales.get_top_selling_products_of_all_time(1);
 
--->-->-- src/Frapid.Web/Areas/MixERP.Sales/db/PostgreSQL/2.x.update/src/02.functions-and-logic/sales.post_cash_receipt.sql --<--<--
+-->-->-- src/Frapid.Web/Areas/MixERP.Sales/db/PostgreSQL/2.1.update/src/02.functions-and-logic/sales.post_cash_receipt.sql --<--<--
 DROP FUNCTION IF EXISTS sales.post_cash_receipt
 (
     _user_id                                    integer, 
@@ -1129,7 +1129,7 @@ LANGUAGE plpgsql;
 
 --SELECT * FROM sales.post_cash_receipt(1, 1, 1, 1, 1, 'USD', 'USD', 'USD', 1, 1, '', '', 1, 1, 1, '1-1-2020', '1-1-2020', 2000, 0, NULL);
 
--->-->-- src/Frapid.Web/Areas/MixERP.Sales/db/PostgreSQL/2.x.update/src/02.functions-and-logic/sales.post_check_receipt.sql --<--<--
+-->-->-- src/Frapid.Web/Areas/MixERP.Sales/db/PostgreSQL/2.1.update/src/02.functions-and-logic/sales.post_check_receipt.sql --<--<--
 DROP FUNCTION IF EXISTS sales.post_check_receipt
 (
     _user_id                                    integer, 
@@ -1254,7 +1254,7 @@ LANGUAGE plpgsql;
 
 --SELECT * FROM sales.post_check_receipt(1, 1, 1, 1, 1, 1, 'USD', 'USD', 'USD', 1, 1, '', '', 1, '1-1-2020', '1-1-2020', 2000, '', '', '1-1-2020', null);
 
--->-->-- src/Frapid.Web/Areas/MixERP.Sales/db/PostgreSQL/2.x.update/src/02.functions-and-logic/sales.post_customer_receipt.sql --<--<--
+-->-->-- src/Frapid.Web/Areas/MixERP.Sales/db/PostgreSQL/2.1.update/src/02.functions-and-logic/sales.post_customer_receipt.sql --<--<--
 DROP FUNCTION IF EXISTS sales.post_customer_receipt
 (
     _user_id                                    integer, 
@@ -1499,7 +1499,7 @@ LANGUAGE plpgsql;
 --     NULL -- _bank_tran_code                             national character varying(128),
 -- );
 
--->-->-- src/Frapid.Web/Areas/MixERP.Sales/db/PostgreSQL/2.x.update/src/02.functions-and-logic/sales.post_late_fee.sql --<--<--
+-->-->-- src/Frapid.Web/Areas/MixERP.Sales/db/PostgreSQL/2.1.update/src/02.functions-and-logic/sales.post_late_fee.sql --<--<--
 DROP FUNCTION IF EXISTS sales.post_late_fee(_user_id integer, _login_id bigint, _office_id integer, _value_date date);
 
 CREATE FUNCTION sales.post_late_fee(_user_id integer, _login_id bigint, _office_id integer, _value_date date)
@@ -1713,7 +1713,7 @@ SELECT  finance.create_routine('POST-LF', ' sales.post_late_fee', 2500);
 
 --SELECT * FROM  sales.post_late_fee(2, 5, 2,  finance.get_value_date(2));
 
--->-->-- src/Frapid.Web/Areas/MixERP.Sales/db/PostgreSQL/2.x.update/src/02.functions-and-logic/sales.post_receipt.sql --<--<--
+-->-->-- src/Frapid.Web/Areas/MixERP.Sales/db/PostgreSQL/2.1.update/src/02.functions-and-logic/sales.post_receipt.sql --<--<--
 DROP FUNCTION IF EXISTS sales.post_receipt
 (
     _user_id                                    integer, 
@@ -1850,7 +1850,7 @@ LANGUAGE plpgsql;
 --SELECT * FROM sales.post_receipt(1,1,1,inventory.get_customer_id_by_customer_code('DEF'),'USD',1,1,'','', 1, 1, 1, '1-1-2020', '1-1-2020', 2000, 0, 0, 0, '', '', null, '123456', 1, null);
 
 
--->-->-- src/Frapid.Web/Areas/MixERP.Sales/db/PostgreSQL/2.x.update/src/02.functions-and-logic/sales.post_receipt_by_gift_card.sql --<--<--
+-->-->-- src/Frapid.Web/Areas/MixERP.Sales/db/PostgreSQL/2.1.update/src/02.functions-and-logic/sales.post_receipt_by_gift_card.sql --<--<--
 DROP FUNCTION IF EXISTS sales.post_receipt_by_gift_card
 (
     _user_id                                    integer, 
@@ -1974,7 +1974,7 @@ LANGUAGE plpgsql;
 
 --select * from sales.post_receipt_by_gift_card(1,1, 1,1,1,'USD','USD','USD',1,1,'','',1,'1-1-2020', '1-1-2020', 1, '123456', 1000, NULL);
 
--->-->-- src/Frapid.Web/Areas/MixERP.Sales/db/PostgreSQL/2.x.update/src/02.functions-and-logic/sales.post_return.sql --<--<--
+-->-->-- src/Frapid.Web/Areas/MixERP.Sales/db/PostgreSQL/2.1.update/src/02.functions-and-logic/sales.post_return.sql --<--<--
 DROP FUNCTION IF EXISTS sales.post_return
 (
     _transaction_master_id          bigint,
@@ -2357,61 +2357,74 @@ LANGUAGE plpgsql;
 
 
 
--->-->-- src/Frapid.Web/Areas/MixERP.Sales/db/PostgreSQL/2.x.update/src/02.functions-and-logic/sales.post_return_without_validation.sql --<--<--
-IF OBJECT_ID('sales.post_return_without_validation') IS NOT NULL
-DROP PROCEDURE sales.post_return_without_validation;
-
-GO
-
-CREATE PROCEDURE sales.post_return_without_validation
+-->-->-- src/Frapid.Web/Areas/MixERP.Sales/db/PostgreSQL/2.1.update/src/02.functions-and-logic/sales.post_return_without_validation.sql --<--<--
+DROP FUNCTION IF EXISTS sales.post_return_without_validation
 (
-    @office_id                      integer,
-    @user_id                        integer,
-    @login_id                       bigint,
-    @value_date                     date,
-    @book_date                      date,
-    @store_id                       integer,
-    @counter_id                     integer,
-    @customer_id                    integer,
-    @price_type_id                  integer,
-    @reference_number               national character varying(24),
-    @statement_reference            national character varying(2000),
-    @details                        sales.sales_detail_type READONLY,
-	@shipper_id						integer,
-	@discount						numeric(30, 6),
-    @tran_master_id                 bigint OUTPUT
+    _office_id                              integer,
+    _user_id                                integer,
+    _login_id                               bigint,
+    _value_date                             date,
+    _book_date                              date,
+    _store_id                               integer,
+    _counter_id                             integer,
+    _customer_id                            integer,
+    _price_type_id                          integer,
+    _reference_number                       national character varying(24),
+    _statement_reference                    national character varying(2000),
+    _details                                sales.sales_detail_type[],
+	_shipper_id						        integer,
+	_discount						        numeric(30, 6)
+);
+
+CREATE FUNCTION sales.post_return_without_validation
+(
+    _office_id                              integer,
+    _user_id                                integer,
+    _login_id                               bigint,
+    _value_date                             date,
+    _book_date                              date,
+    _store_id                               integer,
+    _counter_id                             integer,
+    _customer_id                            integer,
+    _price_type_id                          integer,
+    _reference_number                       national character varying(24),
+    _statement_reference                    national character varying(2000),
+    _details                                sales.sales_detail_type[],
+	_shipper_id						        integer,
+	_discount						        numeric(30, 6)
 )
+RETURNS bigint
 AS
+$$
+    DECLARE _book_name						national character varying(50) = 'Sales Return';
+    DECLARE _cost_center_id					bigint;
+    DECLARE _tran_counter					integer;
+    DECLARE _tran_code						national character varying(50);
+    DECLARE _checkout_id					bigint;
+    DECLARE _grand_total					numeric(30, 6);
+    DECLARE _discount_total					numeric(30, 6);
+    DECLARE _default_currency_code			national character varying(12);
+    DECLARE _tax_total						numeric(30, 6);
+    DECLARE _tax_account_id					integer;
+	DECLARE _sales_tax_rate					numeric(30, 6);
+	DECLARE _taxable_total					numeric(30, 6);
+	DECLARE _nontaxable_total				numeric(30, 6);
+    DECLARE _invoice_discount				numeric(30, 6);
+    DECLARE _shipping_charge                numeric(30, 6);
+    DECLARE _payable						numeric(30, 6);
+    DECLARE _transaction_code               national character varying(50);
+    DECLARE _is_periodic                    boolean = inventory.is_periodic_inventory(_office_id);
+	DECLARE _transaction_master_id			bigint;
+    DECLARE _cost_of_goods                  numeric(30, 6);
 BEGIN
-    SET NOCOUNT ON;
-    SET XACT_ABORT ON;
+    IF NOT finance.can_post_transaction(_login_id, _user_id, _office_id, _book_name, _value_date) THEN
+        RETURN 0;
+    END IF;
 
-    DECLARE @book_name						national character varying(50) = 'Sales Return';
-    DECLARE @cost_center_id					bigint;
-    DECLARE @tran_counter					integer;
-    DECLARE @tran_code						national character varying(50);
-    DECLARE @checkout_id					bigint;
-    DECLARE @grand_total					numeric(30, 6);
-    DECLARE @discount_total					numeric(30, 6);
-    DECLARE @default_currency_code			national character varying(12);
-    DECLARE @tax_total						numeric(30, 6);
-    DECLARE @tax_account_id					integer;
-    DECLARE @can_post_transaction			bit;
-    DECLARE @error_message					national character varying(MAX);
-	DECLARE @sales_tax_rate					numeric(30, 6);
-	DECLARE @taxable_total					numeric(30, 6);
-	DECLARE @nontaxable_total				numeric(30, 6);
-    DECLARE @invoice_discount				numeric(30, 6);
-    DECLARE @shipping_charge                numeric(30, 6);
-    DECLARE @payable						numeric(30, 6);
-    DECLARE @transaction_code               national character varying(50);
-    DECLARE @is_periodic                    bit = inventory.is_periodic_inventory(@office_id);
-	DECLARE @transaction_master_id			bigint;
-    DECLARE @cost_of_goods                  numeric(30, 6);
-
-    DECLARE @checkout_details TABLE
+    DROP TABLE IF EXISTS _checkout_details;
+    CREATE TEMPORARY TABLE _checkout_details
     (
-        id                                  integer IDENTITY PRIMARY KEY,
+        id                                  SERIAL PRIMARY KEY,
         checkout_id                         bigint, 
         store_id                            integer,
         transaction_type                    national character varying(2),
@@ -2424,17 +2437,18 @@ BEGIN
         cost_of_goods_sold                  numeric(30, 6) NOT NULL DEFAULT(0),
         discount_rate                       numeric(30, 6),
         discount                            numeric(30, 6) NOT NULL DEFAULT(0),
-		is_taxable_item						bit,
-		is_taxed							bit,
+		is_taxable_item						boolean,
+		is_taxed							boolean,
         amount								numeric(30, 6),
         shipping_charge                     numeric(30, 6) NOT NULL DEFAULT(0),
         sales_account_id					integer, 
         sales_discount_account_id			integer, 
         inventory_account_id                integer,
         cost_of_goods_sold_account_id       integer
-    );
+    ) ON COMMIT DROP;
 
-    DECLARE @temp_transaction_details TABLE
+    DROP TABLE IF EXISTS _temp_transaction_details;
+    CREATE TEMPORARY TABLE _temp_transaction_details
     (
         transaction_master_id               bigint, 
         tran_type                           national character varying(4), 
@@ -2445,301 +2459,221 @@ BEGIN
         local_currency_code                 national character varying(12), 
         er                                  numeric(30, 6), 
         amount_in_local_currency            numeric(30, 6)
-    );
+    ) ON COMMIT DROP;
 
-    BEGIN TRY
-        DECLARE @tran_count int = @@TRANCOUNT;
         
-        IF(@tran_count= 0)
-        BEGIN
-            BEGIN TRANSACTION
-        END;
-    	    
-        SELECT
-            @can_post_transaction   = can_post_transaction,
-            @error_message          = error_message
-        FROM finance.can_post_transaction(@login_id, @user_id, @office_id, @book_name, @value_date);
-
-        IF(@can_post_transaction = 0)
-        BEGIN
-            RAISERROR(@error_message, 13, 1);
-            RETURN;
-        END;
-
-        SET @tax_account_id                 = finance.get_sales_tax_account_id_by_office_id(@office_id);
-
-        IF(COALESCE(@customer_id, 0) = 0)
-        BEGIN
-            RAISERROR('Invalid customer', 13, 1);
-        END;
-        
-
-
-		SELECT @sales_tax_rate = finance.tax_setups.sales_tax_rate
-		FROM finance.tax_setups
-		WHERE finance.tax_setups.deleted = 0
-		AND finance.tax_setups.office_id = @office_id;
-
-        INSERT INTO @checkout_details(store_id, transaction_type, item_id, quantity, unit_id, price, discount_rate, discount, shipping_charge, is_taxed)
-        SELECT store_id, 'Cr', item_id, quantity, unit_id, price, discount_rate, discount, shipping_charge, COALESCE(is_taxed, 1)
-        FROM @details;
-
-        UPDATE @checkout_details 
-        SET
-            base_quantity                   = inventory.get_base_quantity_by_unit_id(unit_id, quantity),
-            base_unit_id                    = inventory.get_root_unit_id(unit_id),
-            sales_account_id				= inventory.get_sales_account_id(item_id),
-            sales_discount_account_id		= inventory.get_sales_discount_account_id(item_id),
-            inventory_account_id            = inventory.get_inventory_account_id(item_id),
-            cost_of_goods_sold_account_id   = inventory.get_cost_of_goods_sold_account_id(item_id);
-        
-		UPDATE @checkout_details
-		SET
-            discount                        = COALESCE(ROUND(((price * quantity) + shipping_charge) * (discount_rate / 100), 2), 0)
-		WHERE COALESCE(discount, 0) = 0;
-
-		UPDATE @checkout_details
-		SET
-            discount_rate                   = COALESCE(ROUND(100 * discount / ((price * quantity) + shipping_charge), 2), 0)
-		WHERE COALESCE(discount_rate, 0) = 0;
-
-
-		UPDATE @checkout_details 
-		SET 
-			is_taxable_item = inventory.items.is_taxable_item
-		FROM @checkout_details AS checkout_details
-		INNER JOIN inventory.items
-		ON inventory.items.item_id = checkout_details.item_id;
-
-		UPDATE @checkout_details
-		SET is_taxed = 0
-		WHERE is_taxable_item = 0;
-
-		UPDATE @checkout_details
-		SET amount = (COALESCE(price, 0) * COALESCE(quantity, 0)) - COALESCE(discount, 0) + COALESCE(shipping_charge, 0);
-
-		IF EXISTS
-		(
-			SELECT 1
-			FROM @checkout_details
-			WHERE amount < 0
-		)
-		BEGIN
-			RAISERROR('A line amount cannot be less than zero.', 16, 1);
-		END;
-
-        IF EXISTS
-        (
-            SELECT TOP 1 0 FROM @checkout_details AS details
-            WHERE inventory.is_valid_unit_id(details.unit_id, details.item_id) = 0
-        )
-        BEGIN
-            RAISERROR('Item/unit mismatch.', 13, 1);
-        END;
-
-		SELECT 
-			@taxable_total		= COALESCE(SUM(CASE WHEN is_taxed = 1 THEN 1 ELSE 0 END * COALESCE(amount, 0)), 0),
-			@nontaxable_total	= COALESCE(SUM(CASE WHEN is_taxed = 0 THEN 1 ELSE 0 END * COALESCE(amount, 0)), 0)
-		FROM @checkout_details;
-
-		IF(@invoice_discount > @taxable_total)
-		BEGIN
-			RAISERROR('The invoice discount cannot be greater than total taxable amount.', 16, 1);
-		END;
-
-        SELECT @discount_total				= SUM(COALESCE(discount, 0)) FROM @checkout_details;
-
-        SELECT @shipping_charge				= SUM(COALESCE(shipping_charge, 0)) FROM @checkout_details;
-        SELECT @tax_total					= ROUND((COALESCE(@taxable_total, 0) - COALESCE(@invoice_discount, 0)) * (@sales_tax_rate / 100), 2);
-        SELECT @grand_total					= COALESCE(@taxable_total, 0) + COALESCE(@nontaxable_total, 0) + COALESCE(@tax_total, 0) - COALESCE(@discount_total, 0)  - COALESCE(@invoice_discount, 0);
-        SET @payable						= @grand_total;
-
-        SET @default_currency_code          = core.get_currency_code_by_office_id(@office_id);
-        SET @tran_counter                   = finance.get_new_transaction_counter(@value_date);
-        SET @transaction_code               = finance.get_transaction_code(@value_date, @office_id, @user_id, @login_id);
-
-
-
-
-
-
-
-
-
-        INSERT INTO @temp_transaction_details(tran_type, account_id, statement_reference, currency_code, amount_in_currency, er, local_currency_code, amount_in_local_currency)
-        SELECT 'Dr', sales_account_id, @statement_reference, @default_currency_code, SUM(COALESCE(price, 0) * COALESCE(quantity, 0)), 1, @default_currency_code, SUM(COALESCE(price, 0) * COALESCE(quantity, 0))
-        FROM @checkout_details
-        GROUP BY sales_account_id;
-
-        IF(@is_periodic = 0)
-        BEGIN
-            --Perpetutal Inventory Accounting System
-            UPDATE @checkout_details SET cost_of_goods_sold = inventory.get_cost_of_goods_sold(item_id, unit_id, store_id, quantity);
-
-            SELECT @cost_of_goods = SUM(cost_of_goods_sold)
-            FROM @checkout_details;
-
-
-            IF(@cost_of_goods > 0)
-            BEGIN
-                INSERT INTO @temp_transaction_details(tran_type, account_id, statement_reference, currency_code, amount_in_currency, er, local_currency_code, amount_in_local_currency)
-                SELECT 'Cr', cost_of_goods_sold_account_id, @statement_reference, @default_currency_code, SUM(COALESCE(cost_of_goods_sold, 0)), 1, @default_currency_code, SUM(COALESCE(cost_of_goods_sold, 0))
-                FROM @checkout_details
-                GROUP BY cost_of_goods_sold_account_id;
-
-                INSERT INTO @temp_transaction_details(tran_type, account_id, statement_reference, currency_code, amount_in_currency, er, local_currency_code, amount_in_local_currency)
-                SELECT 'Dr', inventory_account_id, @statement_reference, @default_currency_code, SUM(COALESCE(cost_of_goods_sold, 0)), 1, @default_currency_code, SUM(COALESCE(cost_of_goods_sold, 0))
-                FROM @checkout_details
-                GROUP BY inventory_account_id;
-            END;
-        END;
-
-        IF(COALESCE(@tax_total, 0) > 0)
-        BEGIN
-            INSERT INTO @temp_transaction_details(tran_type, account_id, statement_reference, currency_code, amount_in_currency, er, local_currency_code, amount_in_local_currency)
-            SELECT 'Dr', @tax_account_id, @statement_reference, @default_currency_code, @tax_total, 1, @default_currency_code, @tax_total;
-        END;
-
-        IF(COALESCE(@shipping_charge, 0) > 0)
-        BEGIN
-            INSERT INTO @temp_transaction_details(tran_type, account_id, statement_reference, currency_code, amount_in_currency, er, local_currency_code, amount_in_local_currency)
-            SELECT 'Dr', inventory.get_account_id_by_shipper_id(@shipper_id), @statement_reference, @default_currency_code, @shipping_charge, 1, @default_currency_code, @shipping_charge;                
-        END;
-
-
-        IF(COALESCE(@discount_total, 0) > 0)
-        BEGIN
-            INSERT INTO @temp_transaction_details(tran_type, account_id, statement_reference, currency_code, amount_in_currency, er, local_currency_code, amount_in_local_currency)
-            SELECT 'Cr', sales_discount_account_id, @statement_reference, @default_currency_code, SUM(COALESCE(discount, 0)), 1, @default_currency_code, SUM(COALESCE(discount, 0))
-            FROM @checkout_details
-            GROUP BY sales_discount_account_id
-            HAVING SUM(COALESCE(discount, 0)) > 0;
-        END;
-
-
-        INSERT INTO @temp_transaction_details(tran_type, account_id, statement_reference, currency_code, amount_in_currency, er, local_currency_code, amount_in_local_currency)
-        SELECT 'Cr', inventory.get_account_id_by_customer_id(@customer_id), @statement_reference, @default_currency_code, @payable, 1, @default_currency_code, @payable;
-        
-		IF
-		(
-			SELECT SUM(CASE WHEN tran_type = 'Cr' THEN 1 ELSE -1 END * amount_in_local_currency)
-			FROM @temp_transaction_details
-		) != 0
-		BEGIN
-			SELECT finance.get_account_name_by_account_id(account_id), * FROM @temp_transaction_details ORDER BY tran_type;
-			RAISERROR('Could not balance the Journal Entry. Nothing was saved.', 16, 1);		
-		END;
-		
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-        INSERT INTO finance.transaction_master(transaction_counter, transaction_code, book, value_date, book_date, user_id, login_id, office_id, cost_center_id, reference_number, statement_reference) 
-        SELECT @tran_counter, @transaction_code, @book_name, @value_date, @book_date, @user_id, @login_id, @office_id, @cost_center_id, @reference_number, @statement_reference;
-        SET @transaction_master_id = SCOPE_IDENTITY();
-        
-        INSERT INTO finance.transaction_details(value_date, book_date, office_id, transaction_master_id, tran_type, account_id, statement_reference, currency_code, amount_in_currency, local_currency_code, er, amount_in_local_currency)
-        SELECT @value_date, @book_date, @office_id, @transaction_master_id, tran_type, account_id, statement_reference, currency_code, amount_in_currency, local_currency_code, er, amount_in_local_currency
-        FROM @temp_transaction_details
-        ORDER BY tran_type DESC;
-
-
-        INSERT INTO inventory.checkouts(value_date, book_date, transaction_master_id, transaction_book, posted_by, shipper_id, office_id, discount, taxable_total, tax_rate, tax, nontaxable_total)
-        SELECT @value_date, @book_date, @transaction_master_id, @book_name, @user_id, @shipper_id, @office_id, @invoice_discount, @taxable_total, @sales_tax_rate, @tax_total, @nontaxable_total;
-        SET @checkout_id                = SCOPE_IDENTITY();
-
-
-        INSERT INTO inventory.checkout_details(checkout_id, value_date, book_date, store_id, transaction_type, item_id, price, discount_rate, discount, cost_of_goods_sold, shipping_charge, unit_id, quantity, base_unit_id, base_quantity)
-        SELECT @checkout_id, @value_date, @book_date, store_id, transaction_type, item_id, price, discount_rate, discount, cost_of_goods_sold, shipping_charge, unit_id, quantity, base_unit_id, base_quantity
-        FROM @checkout_details;
-        
-
-        EXECUTE finance.auto_verify @transaction_master_id, @office_id;
-
-
-		INSERT INTO sales.returns(sales_id, checkout_id, transaction_master_id, return_transaction_master_id, counter_id, customer_id, price_type_id)
-		SELECT NULL, @checkout_id, NULL, @transaction_master_id, @counter_id, @customer_id, @price_type_id;
-
-		SET @tran_master_id = @transaction_master_id;
-
-        IF(@tran_count = 0)
-        BEGIN
-            COMMIT TRANSACTION;
-        END;
-    END TRY
-    BEGIN CATCH
-        IF(XACT_STATE() <> 0 AND @tran_count = 0) 
-        BEGIN
-            ROLLBACK TRANSACTION;
-        END;
-
-        DECLARE @ErrorMessage national character varying(4000)  = ERROR_MESSAGE();
-        DECLARE @ErrorSeverity int                              = ERROR_SEVERITY();
-        DECLARE @ErrorState int                                 = ERROR_STATE();
-        RAISERROR (@ErrorMessage, @ErrorSeverity, @ErrorState);
-    END CATCH;
+    _tax_account_id                         := finance.get_sales_tax_account_id_by_office_id(_office_id);
+
+    IF(COALESCE(_customer_id, 0) = 0) THEN
+        RAISE EXCEPTION 'Invalid customer';
+    END IF;
+    
+
+
+    SELECT finance.tax_setups.sales_tax_rate
+    INTO _sales_tax_rate
+    FROM finance.tax_setups
+    WHERE NOT finance.tax_setups.deleted
+    AND finance.tax_setups.office_id = _office_id;
+
+    INSERT INTO _checkout_details(store_id, transaction_type, item_id, quantity, unit_id, price, discount_rate, discount, shipping_charge, is_taxed)
+    SELECT store_id, 'Cr', item_id, quantity, unit_id, price, discount_rate, discount, shipping_charge, COALESCE(is_taxed, true)
+    FROM explode_array(_details);
+
+    UPDATE _checkout_details 
+    SET
+        base_quantity                   = inventory.get_base_quantity_by_unit_id(unit_id, quantity),
+        base_unit_id                    = inventory.get_root_unit_id(unit_id),
+        sales_account_id				= inventory.get_sales_account_id(item_id),
+        sales_discount_account_id		= inventory.get_sales_discount_account_id(item_id),
+        inventory_account_id            = inventory.get_inventory_account_id(item_id),
+        cost_of_goods_sold_account_id   = inventory.get_cost_of_goods_sold_account_id(item_id);
+    
+    UPDATE _checkout_details
+    SET
+        discount                        = COALESCE(ROUND(((price * quantity) + shipping_charge) * (discount_rate / 100), 2), 0)
+    WHERE COALESCE(discount, 0) = 0;
+
+    UPDATE _checkout_details
+    SET
+        discount_rate                   = COALESCE(ROUND(100 * discount / ((price * quantity) + shipping_charge), 2), 0)
+    WHERE COALESCE(discount_rate, 0) = 0;
+
+
+    UPDATE _checkout_details 
+    SET 
+        is_taxable_item = inventory.items.is_taxable_item
+    FROM _checkout_details AS checkout_details
+    INNER JOIN inventory.items
+    ON inventory.items.item_id = checkout_details.item_id;
+
+    UPDATE _checkout_details
+    SET is_taxed = false
+    WHERE NOT is_taxable_item;
+
+    UPDATE _checkout_details
+    SET amount = (COALESCE(price, 0) * COALESCE(quantity, 0)) - COALESCE(discount, 0) + COALESCE(shipping_charge, 0);
+
+    IF EXISTS
+    (
+        SELECT 1
+        FROM _checkout_details
+        WHERE amount < 0
+    ) THEN
+        RAISE EXCEPTION 'A line amount cannot be less than zero.';
+    END IF;
+
+    IF EXISTS
+    (
+        SELECT 0 FROM _checkout_details AS details
+        WHERE NOT inventory.is_valid_unit_id(details.unit_id, details.item_id)
+        LIMIT 1
+    ) THEN
+        RAISE EXCEPTION 'Item/unit mismatch.';
+    END IF;
+
+    SELECT 
+        COALESCE(SUM(CASE WHEN is_taxed THEN 1 ELSE 0 END * COALESCE(amount, 0)), 0),
+        COALESCE(SUM(CASE WHEN NOT is_taxed THEN 1 ELSE 0 END * COALESCE(amount, 0)), 0)
+    INTO
+        _taxable_total
+        _nontaxable_total
+    FROM _checkout_details;
+
+    IF(_invoice_discount > _taxable_total) THEN
+        RAISE EXCEPTION 'The invoice discount cannot be greater than total taxable amount.';
+    END IF;
+
+    SELECT SUM(COALESCE(discount, 0))           INTO _discount_total FROM _checkout_details;
+    SELECT SUM(COALESCE(shipping_charge, 0))    INTO _shipping_charge FROM _checkout_details;
+
+    _tax_total                          := ROUND((COALESCE(_taxable_total, 0) - COALESCE(_invoice_discount, 0)) * (_sales_tax_rate / 100), 2);
+    _grand_total					    := COALESCE(_taxable_total, 0) + COALESCE(_nontaxable_total, 0) + COALESCE(_tax_total, 0) - COALESCE(_discount_total, 0)  - COALESCE(_invoice_discount, 0);
+    _payable						    := _grand_total;
+
+    _default_currency_code              := core.get_currency_code_by_office_id(_office_id);
+    _tran_counter                       := finance.get_new_transaction_counter(_value_date);
+    _transaction_code                   := finance.get_transaction_code(_value_date, _office_id, _user_id, _login_id);
+
+
+    INSERT INTO _temp_transaction_details(tran_type, account_id, statement_reference, currency_code, amount_in_currency, er, local_currency_code, amount_in_local_currency)
+    SELECT 'Dr', sales_account_id, _statement_reference, _default_currency_code, SUM(COALESCE(price, 0) * COALESCE(quantity, 0)), 1, _default_currency_code, SUM(COALESCE(price, 0) * COALESCE(quantity, 0))
+    FROM _checkout_details
+    GROUP BY sales_account_id;
+
+    IF(NOT _is_periodic) THEN
+        --Perpetutal Inventory Accounting System
+        UPDATE _checkout_details 
+        SET cost_of_goods_sold = inventory.get_cost_of_goods_sold(item_id, unit_id, store_id, quantity);
+
+        SELECT SUM(cost_of_goods_sold)
+        INTO _cost_of_goods
+        FROM _checkout_details;
+
+
+        IF(_cost_of_goods > 0) THEN
+            INSERT INTO _temp_transaction_details(tran_type, account_id, statement_reference, currency_code, amount_in_currency, er, local_currency_code, amount_in_local_currency)
+            SELECT 'Cr', cost_of_goods_sold_account_id, _statement_reference, _default_currency_code, SUM(COALESCE(cost_of_goods_sold, 0)), 1, _default_currency_code, SUM(COALESCE(cost_of_goods_sold, 0))
+            FROM _checkout_details
+            GROUP BY cost_of_goods_sold_account_id;
+
+            INSERT INTO _temp_transaction_details(tran_type, account_id, statement_reference, currency_code, amount_in_currency, er, local_currency_code, amount_in_local_currency)
+            SELECT 'Dr', inventory_account_id, _statement_reference, _default_currency_code, SUM(COALESCE(cost_of_goods_sold, 0)), 1, _default_currency_code, SUM(COALESCE(cost_of_goods_sold, 0))
+            FROM _checkout_details
+            GROUP BY inventory_account_id;
+        END IF;
+    END IF;
+
+    IF(COALESCE(_tax_total, 0) > 0) THEN
+        INSERT INTO _temp_transaction_details(tran_type, account_id, statement_reference, currency_code, amount_in_currency, er, local_currency_code, amount_in_local_currency)
+        SELECT 'Dr', _tax_account_id, _statement_reference, _default_currency_code, _tax_total, 1, _default_currency_code, _tax_total;
+    END IF;
+
+    IF(COALESCE(_shipping_charge, 0) > 0) THEN
+        INSERT INTO _temp_transaction_details(tran_type, account_id, statement_reference, currency_code, amount_in_currency, er, local_currency_code, amount_in_local_currency)
+        SELECT 'Dr', inventory.get_account_id_by_shipper_id(_shipper_id), _statement_reference, _default_currency_code, _shipping_charge, 1, _default_currency_code, _shipping_charge;                
+    END IF;
+
+
+    IF(COALESCE(_discount_total, 0) > 0) THEN
+        INSERT INTO _temp_transaction_details(tran_type, account_id, statement_reference, currency_code, amount_in_currency, er, local_currency_code, amount_in_local_currency)
+        SELECT 'Cr', sales_discount_account_id, _statement_reference, _default_currency_code, SUM(COALESCE(discount, 0)), 1, _default_currency_code, SUM(COALESCE(discount, 0))
+        FROM _checkout_details
+        GROUP BY sales_discount_account_id
+        HAVING SUM(COALESCE(discount, 0)) > 0;
+    END IF;
+
+
+    INSERT INTO _temp_transaction_details(tran_type, account_id, statement_reference, currency_code, amount_in_currency, er, local_currency_code, amount_in_local_currency)
+    SELECT 'Cr', inventory.get_account_id_by_customer_id(_customer_id), _statement_reference, _default_currency_code, _payable, 1, _default_currency_code, _payable;
+    
+    IF
+    (
+        SELECT SUM(CASE WHEN tran_type = 'Cr' THEN 1 ELSE -1 END * amount_in_local_currency)
+        FROM _temp_transaction_details
+    ) != 0 THEN
+        RAISE EXCEPTION 'Could not balance the Journal Entry. Nothing was saved.';		
+    END IF;
+    
+
+    INSERT INTO finance.transaction_master(transaction_counter, transaction_code, book, value_date, book_date, user_id, login_id, office_id, cost_center_id, reference_number, statement_reference) 
+    SELECT _tran_counter, _transaction_code, _book_name, _value_date, _book_date, _user_id, _login_id, _office_id, _cost_center_id, _reference_number, _statement_reference
+    RETURNING finance.transaction_master.transaction_master_id INTO _transaction_master_id;
+    
+    INSERT INTO finance.transaction_details(value_date, book_date, office_id, transaction_master_id, tran_type, account_id, statement_reference, currency_code, amount_in_currency, local_currency_code, er, amount_in_local_currency)
+    SELECT _value_date, _book_date, _office_id, _transaction_master_id, tran_type, account_id, statement_reference, currency_code, amount_in_currency, local_currency_code, er, amount_in_local_currency
+    FROM _temp_transaction_details
+    ORDER BY tran_type DESC;
+
+
+    INSERT INTO inventory.checkouts(value_date, book_date, transaction_master_id, transaction_book, posted_by, shipper_id, office_id, discount, taxable_total, tax_rate, tax, nontaxable_total)
+    SELECT _value_date, _book_date, _transaction_master_id, _book_name, _user_id, _shipper_id, _office_id, _invoice_discount, _taxable_total, _sales_tax_rate, _tax_total, _nontaxable_total
+    RETURNING inventory.checkouts.checkout_id INTO _checkout_id;
+
+
+    INSERT INTO inventory.checkout_details(checkout_id, value_date, book_date, store_id, transaction_type, item_id, price, discount_rate, discount, cost_of_goods_sold, shipping_charge, unit_id, quantity, base_unit_id, base_quantity)
+    SELECT _checkout_id, _value_date, _book_date, store_id, transaction_type, item_id, price, discount_rate, discount, cost_of_goods_sold, shipping_charge, unit_id, quantity, base_unit_id, base_quantity
+    FROM _checkout_details;
+    
+
+    EXECUTE finance.auto_verify _transaction_master_id, _office_id;
+
+
+    INSERT INTO sales.returns(sales_id, checkout_id, transaction_master_id, return_transaction_master_id, counter_id, customer_id, price_type_id)
+    SELECT NULL, _checkout_id, NULL, _transaction_master_id, _counter_id, _customer_id, _price_type_id;
+
+    RETURN _transaction_master_id;
 END;
-
-GO
-
-
-
-
---DECLARE @transaction_master_id          bigint = 369;
---DECLARE @office_id                      integer = (SELECT TOP 1 office_id FROM core.offices);
---DECLARE @user_id                        integer = (SELECT TOP 1 user_id FROM account.users);
---DECLARE @login_id                       bigint = (SELECT TOP 1 login_id FROM account.logins WHERE user_id = @user_id);
---DECLARE @value_date                     date = finance.get_value_date(@office_id);
---DECLARE @book_date                      date = finance.get_value_date(@office_id);
---DECLARE @store_id                       integer = (SELECT TOP 1 store_id FROM inventory.stores);
---DECLARE @counter_id                     integer = (SELECT TOP 1 counter_id FROM inventory.counters);
---DECLARE @customer_id                    integer = (SELECT TOP 1 customer_id FROM inventory.customers);
---DECLARE @price_type_id                  integer = (SELECT TOP 1 price_type_id FROM sales.price_types);
---DECLARE @reference_number               national character varying(24) = 'N/A';
---DECLARE @statement_reference            national character varying(2000) = 'Test';
---DECLARE @details                        sales.sales_detail_type;
---DECLARE @tran_master_id                 bigint;
-
---INSERT INTO @details(store_id, transaction_type, item_id, quantity, unit_id, price, discount, shipping_charge, is_taxed)
---SELECT @store_id, 'Cr', 1, 1, 1, 2320, 62.84, 0, 1;
-
-
---EXECUTE sales.post_return_without_validation
---    @office_id                      ,
---    @user_id                        ,
---    @login_id                       ,
---    @value_date                     ,
---    @book_date                      ,
---    @store_id                       ,
---    @counter_id                     ,
---    @customer_id                    ,
---    @price_type_id                  ,
---    @reference_number               ,
---    @statement_reference            ,
---    @details                        ,
---	1,
---	0,
---    @tran_master_id                 OUTPUT;
+$$
+LANGUAGE plpgsql;
 
 
 
--->-->-- src/Frapid.Web/Areas/MixERP.Sales/db/PostgreSQL/2.x.update/src/02.functions-and-logic/sales.post_sales.sql --<--<--
+-- SELECT * FROM sales.post_return_without_validation
+-- (
+--     1, --_office_id                              integer,
+--     1, --_user_id                                integer,
+--     1, --_login_id                               bigint,
+--     finance.get_value_date(1), --_value_date                             date,
+--     finance.get_value_date(1), --_book_date                              date,
+--     1, --_store_id                               integer,
+--     1, --_counter_id                             integer,
+--     1, --_customer_id                            integer,
+--     1, --_price_type_id                          integer,
+--     '',--_reference_number                       national character varying(24),
+--     '',--_statement_reference                    national character varying(2000),
+--     ARRAY
+--     [
+--         ROW(1, 'Dr', 1, 1, 1,1, 0, 10, 200, false)::sales.sales_detail_type,
+--         ROW(1, 'Dr', 2, 1, 7,1, 300, 10, 30, false)::sales.sales_detail_type,
+--         ROW(1, 'Dr', 3, 1, 1,1, 5000, 10, 50, false)::sales.sales_detail_type
+--     ],
+-- 	1, --_shipper_id						        integer,
+-- 	0 --_discount						        numeric(30, 6)
+-- );
+
+
+-->-->-- src/Frapid.Web/Areas/MixERP.Sales/db/PostgreSQL/2.1.update/src/02.functions-and-logic/sales.post_sales.sql --<--<--
 DROP FUNCTION IF EXISTS sales.post_sales
 (
     _office_id                              integer,
@@ -3280,7 +3214,7 @@ LANGUAGE plpgsql;
 -- 
 
 
--->-->-- src/Frapid.Web/Areas/MixERP.Sales/db/PostgreSQL/2.x.update/src/02.functions-and-logic/sales.refresh_materialized_views.sql --<--<--
+-->-->-- src/Frapid.Web/Areas/MixERP.Sales/db/PostgreSQL/2.1.update/src/02.functions-and-logic/sales.refresh_materialized_views.sql --<--<--
 DROP FUNCTION IF EXISTS sales.refresh_materialized_views(_user_id integer, _login_id bigint, _office_id integer, _value_date date);
 
 CREATE FUNCTION sales.refresh_materialized_views(_user_id integer, _login_id bigint, _office_id integer, _value_date date)
@@ -3301,7 +3235,7 @@ SELECT finance.create_routine('REF-MV', 'sales.refresh_materialized_views', 9999
 
 --SELECT * FROM sales.refresh_materialized_views(1, 1, 1, '1-1-2000')
 
--->-->-- src/Frapid.Web/Areas/MixERP.Sales/db/PostgreSQL/2.x.update/src/02.functions-and-logic/sales.settle_customer_due.sql --<--<--
+-->-->-- src/Frapid.Web/Areas/MixERP.Sales/db/PostgreSQL/2.1.update/src/02.functions-and-logic/sales.settle_customer_due.sql --<--<--
 DROP FUNCTION IF EXISTS sales.settle_customer_due(_customer_id integer, _office_id integer);
 
 CREATE FUNCTION sales.settle_customer_due(_customer_id integer, _office_id integer)
@@ -3404,7 +3338,7 @@ LANGUAGE plpgsql;
 
 
 
--->-->-- src/Frapid.Web/Areas/MixERP.Sales/db/PostgreSQL/2.x.update/src/02.functions-and-logic/sales.validate_items_for_return.sql --<--<--
+-->-->-- src/Frapid.Web/Areas/MixERP.Sales/db/PostgreSQL/2.1.update/src/02.functions-and-logic/sales.validate_items_for_return.sql --<--<--
 DROP FUNCTION IF EXISTS sales.validate_items_for_return
 (
     _transaction_master_id                  bigint, 
@@ -3770,7 +3704,7 @@ LANGUAGE plpgsql;
 -- 
 
 
--->-->-- src/Frapid.Web/Areas/MixERP.Sales/db/PostgreSQL/2.x.update/src/05.views/00.sales.sales_view.sql --<--<--
+-->-->-- src/Frapid.Web/Areas/MixERP.Sales/db/PostgreSQL/2.1.update/src/05.views/00.sales.sales_view.sql --<--<--
 DROP VIEW IF EXISTS sales.sales_view;
 
 CREATE VIEW sales.sales_view
@@ -3864,7 +3798,7 @@ WHERE NOT finance.transaction_master.deleted;
 
 --SELECT * FROM sales.sales_view
 
--->-->-- src/Frapid.Web/Areas/MixERP.Sales/db/PostgreSQL/2.x.update/src/05.views/01.sales.customer_transaction_view.sql --<--<--
+-->-->-- src/Frapid.Web/Areas/MixERP.Sales/db/PostgreSQL/2.1.update/src/05.views/01.sales.customer_transaction_view.sql --<--<--
 DROP VIEW IF EXISTS sales.customer_transaction_view;
 CREATE VIEW sales.customer_transaction_view 
 AS
@@ -3929,7 +3863,7 @@ WHERE transaction_master.verification_status_id > 0;
 
 --SELECT * FROM sales.customer_transaction_view;
 
--->-->-- src/Frapid.Web/Areas/MixERP.Sales/db/PostgreSQL/2.x.update/src/05.views/sales.coupon_view.sql --<--<--
+-->-->-- src/Frapid.Web/Areas/MixERP.Sales/db/PostgreSQL/2.1.update/src/05.views/sales.coupon_view.sql --<--<--
 DROP VIEW IF EXISTS sales.coupon_view;
 
 CREATE VIEW sales.coupon_view
@@ -3964,7 +3898,7 @@ ON for_ticket_of_price_type.price_type_id = sales.coupons.for_ticket_of_price_ty
 
 
 
--->-->-- src/Frapid.Web/Areas/MixERP.Sales/db/PostgreSQL/2.x.update/src/05.views/sales.customer_receipt_search_view.sql --<--<--
+-->-->-- src/Frapid.Web/Areas/MixERP.Sales/db/PostgreSQL/2.1.update/src/05.views/sales.customer_receipt_search_view.sql --<--<--
 DROP VIEW IF EXISTS sales.customer_receipt_search_view;
 
 CREATE VIEW sales.customer_receipt_search_view
@@ -3993,7 +3927,7 @@ WHERE NOT finance.transaction_master.deleted;
 
 
 
--->-->-- src/Frapid.Web/Areas/MixERP.Sales/db/PostgreSQL/2.x.update/src/05.views/sales.gift_card_search_view.sql --<--<--
+-->-->-- src/Frapid.Web/Areas/MixERP.Sales/db/PostgreSQL/2.1.update/src/05.views/sales.gift_card_search_view.sql --<--<--
 DROP VIEW IF EXISTS sales.gift_card_search_view;
 
 CREATE VIEW sales.gift_card_search_view
@@ -4015,7 +3949,7 @@ WHERE NOT sales.gift_cards.deleted;
 
 
 
--->-->-- src/Frapid.Web/Areas/MixERP.Sales/db/PostgreSQL/2.x.update/src/05.views/sales.gift_card_transaction_view.sql --<--<--
+-->-->-- src/Frapid.Web/Areas/MixERP.Sales/db/PostgreSQL/2.1.update/src/05.views/sales.gift_card_transaction_view.sql --<--<--
 DROP VIEW IF EXISTS sales.gift_card_transaction_view;
 
 CREATE VIEW sales.gift_card_transaction_view
@@ -4057,7 +3991,7 @@ ON finance.transaction_master.verified_by_user_id = verified_by_user.user_id;
 
 --SELECT * FROM sales.gift_card_transaction_view;
 
--->-->-- src/Frapid.Web/Areas/MixERP.Sales/db/PostgreSQL/2.x.update/src/05.views/sales.item_view.sql --<--<--
+-->-->-- src/Frapid.Web/Areas/MixERP.Sales/db/PostgreSQL/2.1.update/src/05.views/sales.item_view.sql --<--<--
 DROP VIEW IF EXISTS sales.item_view;
 
 CREATE VIEW sales.item_view
@@ -4096,7 +4030,7 @@ WHERE NOT inventory.items.deleted
 AND inventory.items.allow_sales;
 
 
--->-->-- src/Frapid.Web/Areas/MixERP.Sales/db/PostgreSQL/2.x.update/src/05.views/sales.order_search_view.sql --<--<--
+-->-->-- src/Frapid.Web/Areas/MixERP.Sales/db/PostgreSQL/2.1.update/src/05.views/sales.order_search_view.sql --<--<--
 DROP VIEW IF EXISTS sales.order_search_view;
 
 CREATE VIEW sales.order_search_view
@@ -4123,7 +4057,7 @@ SELECT
 FROM sales.orders;
 
 
--->-->-- src/Frapid.Web/Areas/MixERP.Sales/db/PostgreSQL/2.x.update/src/05.views/sales.quotation_search_view.sql --<--<--
+-->-->-- src/Frapid.Web/Areas/MixERP.Sales/db/PostgreSQL/2.1.update/src/05.views/sales.quotation_search_view.sql --<--<--
 DROP VIEW IF EXISTS sales.quotation_search_view;
 
 CREATE VIEW sales.quotation_search_view
@@ -4151,7 +4085,7 @@ FROM sales.quotations;
 
 
 
--->-->-- src/Frapid.Web/Areas/MixERP.Sales/db/PostgreSQL/2.x.update/src/05.views/sales.return_search_view.sql --<--<--
+-->-->-- src/Frapid.Web/Areas/MixERP.Sales/db/PostgreSQL/2.1.update/src/05.views/sales.return_search_view.sql --<--<--
 DROP VIEW IF EXISTS sales.return_search_view;
 
 CREATE VIEW sales.return_search_view
@@ -4197,7 +4131,7 @@ finance.transaction_master.last_verified_on,
 finance.transaction_master.verification_reason;
 
 
--->-->-- src/Frapid.Web/Areas/MixERP.Sales/db/PostgreSQL/2.x.update/src/05.views/sales.sales_search_view.sql --<--<--
+-->-->-- src/Frapid.Web/Areas/MixERP.Sales/db/PostgreSQL/2.1.update/src/05.views/sales.sales_search_view.sql --<--<--
 DROP VIEW IF EXISTS sales.sales_search_view;
 
 CREATE VIEW sales.sales_search_view
@@ -4226,7 +4160,7 @@ WHERE NOT finance.transaction_master.deleted
 ORDER BY sales_id;
 
 
--->-->-- src/Frapid.Web/Areas/MixERP.Sales/db/PostgreSQL/2.x.update/src/99.ownership.sql --<--<--
+-->-->-- src/Frapid.Web/Areas/MixERP.Sales/db/PostgreSQL/2.1.update/src/99.ownership.sql --<--<--
 DO
 $$
     DECLARE this record;

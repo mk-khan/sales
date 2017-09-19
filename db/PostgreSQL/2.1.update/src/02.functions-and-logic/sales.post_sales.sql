@@ -230,11 +230,7 @@ BEGIN
         cost_of_goods_sold_account_id   = inventory.get_cost_of_goods_sold_account_id(item_id);
 
     UPDATE _checkout_details
-    SET
-        is_taxable_item = inventory.items.is_taxable_item
-    FROM _checkout_details AS checkout_details
-    INNER JOIN inventory.items
-    ON inventory.items.item_id = checkout_details.item_id;
+    SET is_taxable_item = is_taxed;
 
     UPDATE _checkout_details
     SET amount = (COALESCE(price, 0) * COALESCE(quantity, 0)) - COALESCE(discount, 0) + COALESCE(shipping_charge, 0);
@@ -282,12 +278,13 @@ BEGIN
     END IF;
 
     SELECT 
-        COALESCE(SUM(CASE WHEN is_taxable_item THEN 1 ELSE 0 END * COALESCE(amount, 0)), 0),
-        COALESCE(SUM(CASE WHEN NOT is_taxable_item THEN 1 ELSE 0 END * COALESCE(amount, 0)), 0)
+        COALESCE(SUM(CASE WHEN is_taxed THEN 1 ELSE 0 END * COALESCE(amount, 0)), 0),
+        COALESCE(SUM(CASE WHEN NOT is_taxed THEN 1 ELSE 0 END * COALESCE(amount, 0)), 0)
     INTO
-        _taxable_total
+        _taxable_total,
         _nontaxable_total
     FROM _checkout_details;
+
 
     SELECT 
         ROUND(SUM(COALESCE(discount, 0)), 2)
@@ -317,14 +314,13 @@ BEGIN
 
     _receivable         = _grand_total;
 
-
     IF(_is_flat_discount AND _discount > _receivable) THEN
         RAISE EXCEPTION 'The discount amount % cannot be greater than total amount %.', _discount, _receivable;
     ELSIF(NOT _is_flat_discount AND _discount > 100) THEN
         RAISE EXCEPTION 'The discount rate cannot be greater than 100.';
     END IF;
 
-    IF(_tender > 0) THEN
+   IF(_tender > 0) THEN
         IF(_tender < _receivable) THEN
             RAISE EXCEPTION 'The tender amount must be greater than or equal to %.', _receivable;
         END IF;
@@ -348,7 +344,9 @@ BEGIN
         UPDATE _checkout_details 
         SET cost_of_goods_sold = inventory.get_cost_of_goods_sold(item_id, unit_id, store_id, quantity);
 
-        SELECT SUM(cost_of_goods_sold) INTO _cost_of_goods FROM _checkout_details;
+        SELECT SUM(cost_of_goods_sold) 
+        INTO _cost_of_goods 
+        FROM _checkout_details;
 
         IF(_cost_of_goods > 0) THEN
             INSERT INTO _temp_transaction_details(tran_type, account_id, statement_reference, currency_code, amount_in_currency, er, local_currency_code, amount_in_local_currency)
@@ -400,8 +398,7 @@ BEGIN
         SELECT SUM(CASE WHEN tran_type = 'Cr' THEN 1 ELSE -1 END * amount_in_local_currency)
         FROM _temp_transaction_details
     ) != 0  THEN
-        SELECT finance.get_account_name_by_account_id(account_id), * FROM _temp_transaction_details ORDER BY tran_type;
-        RAISE EXCEPTION 'Could not balance the Journal Entry. Nothing was saved.';
+    RAISE EXCEPTION E'Could not balance the Journal Entry. Nothing was saved.\n %', array_to_string(array_agg(_temp_transaction_details), E'\n') FROM _temp_transaction_details;		
     END IF;
     
 
@@ -409,6 +406,7 @@ BEGIN
     _transaction_code       = finance.get_transaction_code(_value_date, _office_id, _user_id, _login_id);
 
     
+    RAISE INFO E'Journal entry.\n %', array_to_string(array_agg(_temp_transaction_details), E'\n') FROM _temp_transaction_details;		
     INSERT INTO finance.transaction_master(transaction_counter, transaction_code, book, value_date, book_date, user_id, login_id, office_id, cost_center_id, reference_number, statement_reference) 
     SELECT _tran_counter, _transaction_code, _book_name, _value_date, _book_date, _user_id, _login_id, _office_id, _cost_center_id, _reference_number, _statement_reference
     RETURNING transaction_master_id INTO _transaction_master_id;
@@ -524,13 +522,13 @@ LANGUAGE plpgsql;
 --     1, --_store_id
 --     null, --_coupon_code
 --     true, --_is_flat_discount
---     1000, --_discount
+--     0, --_discount
 --     ARRAY
 --     [
---         ROW(1, 'Cr', 1, 1, 1,180000, 0, 10, 0, false)::sales.sales_detail_type,
---         ROW(1, 'Cr', 2, 1, 7,130000, 0, 10, 0, false)::sales.sales_detail_type,
---         ROW(1, 'Cr', 3, 1, 1,110000, 0, 10, 0, true)::sales.sales_detail_type
---     ], --_details
+--         ROW(1, 'Dr', 1, 1, 1,1, 0, 10, 200, false)::sales.sales_detail_type,
+--         ROW(1, 'Dr', 2, 1, 7,1, 300, 10, 30, false)::sales.sales_detail_type,
+--         ROW(1, 'Dr', 3, 1, 1,1, 5000, 10, 50, false)::sales.sales_detail_type
+--     ],
 --     NULL, --_sales_quotation_id
 --     NULL, --_sales_order_id
 --     '' --_serial_number_ids
