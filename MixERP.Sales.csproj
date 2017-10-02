@@ -269,6 +269,7 @@
     <Content Include="Reports\CustomerAccountStatement.xml" />
     <Content Include="Reports\CustomerReceipts.SqlServer.xml" />
     <Content Include="Reports\CustomerReceipts.xml" />
+    <Content Include="Reports\Customers.xml" />
     <Content Include="Reports\DetailedPaymentReport.SqlServer.xml" />
     <Content Include="Reports\DetailedPaymentReport.xml" />
     <Content Include="Reports\GiftCardSummary.SqlServer.xml" />
@@ -289,6 +290,7 @@
     <Content Include="Reports\Return.xml" />
     <Content Include="Reports\SalesByOffice.SqlServer.xml" />
     <Content Include="Reports\SalesByOffice.xml" />
+    <Content Include="Reports\SalesDetails.xml" />
     <Content Include="Reports\SalesDiscountStatus.xml" />
     <Content Include="Reports\SalesDiscountStatus.SqlServer.xml" />
     <Content Include="Reports\TopSellingItems.xml" />
