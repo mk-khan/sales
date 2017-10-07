@@ -3967,6 +3967,11 @@ GO
 
 
 
+-->-->-- src/Frapid.Web/Areas/MixERP.Sales/db/SQL Server/2.1.update/src/03.menus/menus.sql --<--<--
+EXECUTE core.create_menu 'MixERP.Sales', 'Customers', 'Customers', '/dashboard/reports/view/Areas/MixERP.Sales/Reports/Customers.xml', 'users', 'Reports';
+EXECUTE core.create_menu 'MixERP.Sales', 'SalesDetails', 'Sales Details', '/dashboard/reports/view/Areas/MixERP.Sales/Reports/SalesDetails.xml', 'money', 'Reports';
+
+
 -->-->-- src/Frapid.Web/Areas/MixERP.Sales/db/SQL Server/2.1.update/src/05.views/00.sales.sales_view.sql --<--<--
 IF OBJECT_ID('sales.sales_view') IS NOT NULL
 DROP VIEW sales.sales_view;
