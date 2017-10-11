@@ -32,7 +32,7 @@ BEGIN
 		RETURN sales.get_item_selling_price(_office_id, _item_id, inventory.get_customer_type_id_by_customer_id(_customer_id), _price_type_id, _unit_id);
 	END IF;
 
-    IF(_includes_tax = 1) THEN
+    IF(_includes_tax) THEN
         _tax_rate   := finance.get_sales_tax_rate(_office_id);
         _price      := _price / ((100 + _tax_rate)/ 100);
     END IF;
