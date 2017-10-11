@@ -11,7 +11,8 @@
     decimal taxTotal = Model.View.Tax;
 }
 @{
-    decimal discountRate = Math.Round(Model.View.Discount * 100 / Model.View.TaxableTotal, 1);
+    var taxableTotalValue = Model.View.TaxableTotal == 0 ? 1 : Model.View.TaxableTotal;
+    decimal discountRate = Math.Round(Model.View.Discount * 100 / taxableTotalValue, 1);
 }
 
 <link rel="stylesheet" type="text/css" href="/Areas/MixERP.Sales/styles/ticket/index.css" />
