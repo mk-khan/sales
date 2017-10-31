@@ -56,17 +56,17 @@ $("#SaveButton").off("click").on("click", function () {
         return;
     };
 
-    $("#SaveButton").addClass("loading");
+    $("#SaveButton").addClass("loading").prop("disabled", true);
     const ajax = request(model);
 
     ajax.success(function () {
-        $("#SaveButton").removeClass("loading");
+        $("#SaveButton").removeClass("loading").prop("disabled", false);
         window.displaySuccess();
         document.location = document.location;
     });
 
     ajax.fail(function (xhr) {
-        $("#SaveButton").removeClass("loading");
+        $("#SaveButton").removeClass("loading").prop("disabled", false);
         window.logAjaxErrorMessage(xhr);
     });
 });

@@ -5,6 +5,8 @@ GO
 
 CREATE PROCEDURE sales.post_customer_receipt
 (
+	@value_date									date,
+	@book_date									date,
     @user_id                                    integer, 
     @office_id                                  integer, 
     @login_id                                   bigint,
@@ -31,8 +33,6 @@ BEGIN
     SET XACT_ABORT ON;
 
 	DECLARE @bank_account_id					integer = finance.get_account_id_by_bank_account_id(@bank_id);
-    DECLARE @value_date                         date = finance.get_value_date(@office_id);
-    DECLARE @book_date                          date = @value_date;
     DECLARE @book                               national character varying(50);
     DECLARE @base_currency_code                 national character varying(12);
     DECLARE @local_currency_code                national character varying(12);

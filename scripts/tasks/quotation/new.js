@@ -162,7 +162,7 @@ $("#CheckoutButton").off("click").on("click", function () {
     };
 
 
-    $("#CheckoutButton").addClass("loading");
+    $("#CheckoutButton").addClass("loading").prop("disabled", true);
 
     const ajax = request(model);
 
@@ -172,7 +172,7 @@ $("#CheckoutButton").off("click").on("click", function () {
     });
 
     ajax.fail(function (xhr) {
-        $("#CheckoutButton").removeClass("loading");
+        $("#CheckoutButton").removeClass("loading").prop("disabled", false);
         window.logAjaxErrorMessage(xhr);
     });
 });

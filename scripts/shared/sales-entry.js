@@ -374,7 +374,7 @@ $("#CheckoutButton").off("click").on("click", function () {
     };
 
 
-    $("#CheckoutButton").addClass("loading");
+    $("#CheckoutButton").addClass("loading").prop("disabled", true);
 
     const ajax = request(model);
 
@@ -383,11 +383,11 @@ $("#CheckoutButton").off("click").on("click", function () {
         window.clearScreen();
 
         window.showTicket(id);
-        $("#CheckoutButton").removeClass("loading");
+        $("#CheckoutButton").removeClass("loading").prop("disabled", false);
     });
 
     ajax.fail(function (xhr) {
-        $("#CheckoutButton").removeClass("loading");
+        $("#CheckoutButton").removeClass("loading").prop("disabled", false);
         window.displayMessage(JSON.stringify(xhr));
     });
 });

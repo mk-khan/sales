@@ -5,6 +5,9 @@ ALTER COLUMN sales_id DROP NOT NULL;
 ALTER TABLE sales.returns
 ALTER COLUMN transaction_master_id DROP NOT NULL;
 
+ALTER TABLE sales.customerwise_selling_prices
+ADD COLUMN IF NOT EXISTS is_taxable boolean NOT NULL DEFAULT(false);
+
 
 -->-->-- src/Frapid.Web/Areas/MixERP.Sales/db/PostgreSQL/2.1.update/src/02.functions-and-logic/sales.add_gift_card_fund.sql --<--<--
 DROP FUNCTION IF EXISTS sales.add_gift_card_fund
@@ -1277,8 +1280,34 @@ DROP FUNCTION IF EXISTS sales.post_customer_receipt
     _bank_tran_code                             national character varying(128)
 );
 
+DROP FUNCTION IF EXISTS sales.post_customer_receipt
+(
+	_value_date									date,
+	_book_date									date,
+    _user_id                                    integer, 
+    _office_id                                  integer, 
+    _login_id                                   bigint,
+    _customer_id                                integer, 
+    _currency_code                              national character varying(12), 
+    _cash_account_id                            integer,
+    _amount                                     public.money_strict, 
+    _exchange_rate_debit                        public.decimal_strict, 
+    _exchange_rate_credit                       public.decimal_strict,
+    _reference_number                           national character varying(24), 
+    _statement_reference                        national character varying(128), 
+    _cost_center_id                             integer,
+    _cash_repository_id                         integer,
+    _posted_date                                date,
+    _bank_id                                    integer,
+    _payment_card_id                            integer,
+    _bank_instrument_code                       national character varying(128),
+    _bank_tran_code                             national character varying(128)
+);
+
 CREATE FUNCTION sales.post_customer_receipt
 (
+	_value_date									date,
+	_book_date									date,
     _user_id                                    integer, 
     _office_id                                  integer, 
     _login_id                                   bigint,
@@ -1301,8 +1330,6 @@ CREATE FUNCTION sales.post_customer_receipt
 RETURNS bigint
 AS
 $$
-    DECLARE _value_date                         date;
-    DECLARE _book_date                          date;
     DECLARE _book                               text;
     DECLARE _transaction_master_id              bigint;
     DECLARE _base_currency_code                 national character varying(12);
@@ -1322,8 +1349,6 @@ $$
     DECLARE _merchant_fee_lc                    public.money_strict2;
 	DECLARE _bank_account_id					integer;
 BEGIN
-    _value_date                             := finance.get_value_date(_office_id);
-    _book_date                              := _value_date;
 	_bank_account_id					    := finance.get_account_id_by_bank_account_id(_bank_id);    
 
     IF(finance.can_post_transaction(_login_id, _user_id, _office_id, _book, _value_date) = false) THEN

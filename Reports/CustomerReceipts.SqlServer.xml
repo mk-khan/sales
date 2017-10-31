@@ -24,7 +24,7 @@
 			sales.customer_receipts.customer_id,
 			inventory.get_customer_name_by_customer_id(sales.customer_receipts.customer_id) AS customer_name,
 			CASE WHEN COALESCE(sales.customer_receipts.check_number, '') = '' THEN 
-				(tender - change)
+				(amount)
 			ELSE 
 				check_amount
 			END AS amount,

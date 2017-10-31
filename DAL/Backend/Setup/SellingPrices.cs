@@ -34,7 +34,8 @@ namespace MixERP.Sales.DAL.Backend.Setup
 	                                    inventory.items.item_name,
 	                                    inventory.items.unit_id,
 	                                    inventory.get_unit_name_by_unit_id(inventory.items.unit_id) AS unit,
-	                                    COALESCE(price_list.price, sales.get_item_selling_price(@1, inventory.items.item_id, NULL, NULL, inventory.items.unit_id)) AS price
+	                                    COALESCE(price_list.price, sales.get_item_selling_price(@1, inventory.items.item_id, NULL, NULL, inventory.items.unit_id)) AS price,
+										price_list.is_taxable
                                     FROM inventory.items
                                     LEFT JOIN price_list
                                     ON price_list.item_id = inventory.items.item_id

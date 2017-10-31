@@ -13,6 +13,7 @@ namespace MixERP.Sales.DTO
         public int ItemId { get; set; }
         public int UnitId { get; set; }
         public decimal? Price { get; set; }
+        public bool IsTaxable { get; set; }
         public int? AuditUserId { get; set; }
         public DateTimeOffset? AuditTs { get; set; }
         public bool? Deleted { get; set; }

@@ -38,7 +38,7 @@ $(document).on("posready", function() {
         };
 
 
-        $("#CheckoutButton").addClass("loading");
+        $("#CheckoutButton").addClass("loading").prop("disabled", true);
 
         const ajax = request(model);
 
@@ -48,7 +48,7 @@ $(document).on("posready", function() {
         });
 
         ajax.fail(function(xhr) {
-            $("#CheckoutButton").removeClass("loading");
+            $("#CheckoutButton").removeClass("loading").prop("disabled", false);
             window.displayMessage(JSON.stringify(xhr));
         });
     });

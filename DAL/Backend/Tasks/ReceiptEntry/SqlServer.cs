@@ -13,7 +13,8 @@ namespace MixERP.Sales.DAL.Backend.Tasks.ReceiptEntry
         public async Task<long> PostAsync(string tenant, SalesReceipt model)
         {
             string connectionString = FrapidDbServer.GetConnectionString(tenant);
-            const string sql = @"EXECUTE sales.post_customer_receipt                            
+            const string sql = @"EXECUTE sales.post_customer_receipt
+                                    @ValueDate, @BookDate,
                                     @UserId, @OfficeId, @LoginId, @CustomerId, 
                                     @CurrencyCode, @CashAccountId, @Amount, 
                                     @ExchangeRateDebit, @ExchangeRateCredit, 
@@ -28,6 +29,8 @@ namespace MixERP.Sales.DAL.Backend.Tasks.ReceiptEntry
             {
                 using (var command = new SqlCommand(sql, connection))
                 {
+                    command.Parameters.AddWithNullableValue("@ValueDate", model.ValueDate);
+                    command.Parameters.AddWithNullableValue("@BookDate", model.BookDate);
                     command.Parameters.AddWithNullableValue("@UserId", model.UserId);
                     command.Parameters.AddWithNullableValue("@OfficeId", model.OfficeId);
                     command.Parameters.AddWithNullableValue("@LoginId", model.LoginId);

@@ -27,32 +27,32 @@
 
 <div class="ui attached segment" style="padding:2em">
     <div class="ui flat form">
-        <div class="ui big header">Payment Type</div>
+        <div class="ui big header">@I18N.PaymentType</div>
         <div class="field">
             <div class="ui form">
                 <div class="inline fields">
                     <div class="field">
                         <div class="ui radio checkbox">
                             <input name="payment-type" data-payment-type="cash" checked="checked" type="radio">
-                            <label>By Cash</label>
+                            <label>@I18N.ByCash</label>
                         </div>
                     </div>
                     <div class="field">
                         <div class="ui radio checkbox">
                             <input name="payment-type" data-payment-type="check" type="radio">
-                            <label>Via Check</label>
+                            <label>@I18N.ViaCheck</label>
                         </div>
                     </div>
                     <div class="field">
                         <div class="ui radio checkbox">
                             <input name="payment-type" data-payment-type="credit" type="radio">
-                            <label>On Credit</label>
+                            <label>@I18N.OnCredit</label>
                         </div>
                     </div>
                     <div class="field">
                         <div class="ui radio checkbox">
                             <input name="payment-type" data-payment-type="gift card" type="radio">
-                            <label>Using Gift Card</label>
+                            <label>@I18N.UsingGiftCard</label>
                         </div>
                     </div>
                 </div>
@@ -108,8 +108,9 @@
             </div>
         </div>
         <button class="ui big green button" onclick="postSalesCheckout(this)">@I18N.Checkout</button>
+        <button class="ui big basic button" onclick="$('.reprint.ticket.modal').modal('show');">@I18N.ReprintTicket</button>
         <div class="ticket panel">
-            <div class="ui big header">Sales Ticket</div>
+            <div class="ui big header">@I18N.SalesTicket</div>
             <iframe id="TicketIframe"></iframe>
             <button class="ui blue circular button" onclick="$('#TicketIframe').get(0).contentWindow.print();" id="PrintButton">@I18N.Print</button>
             <button class="ui red  circular button" onclick="$('.ticket.panel').hide();">Hide</button>
@@ -117,6 +118,7 @@
     </div>
 </div>
 
+@Html.PartialView("Shared/ReprintTicketModal.cshtml", TenantConvention.GetTenant())
 @Html.PartialView("Shared/GiftCardSerachModal.cshtml", TenantConvention.GetTenant());
 
 <script>
@@ -314,7 +316,7 @@
             return;
         };
 
-        const button = $(this);
+        const button = $(el);
         button.addClass("loading").prop("disabled", true);
 
         const ajax = request(model);
