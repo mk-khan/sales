@@ -919,10 +919,12 @@ BEGIN
 	
 	SELECT
 		sales.customerwise_selling_prices.price,
-		sales.customerwise_selling_prices.unit_id
+		sales.customerwise_selling_prices.unit_id,
+		sales.customerwise_selling_prices.is_taxable
     INTO
         _price,
-        _costing_unit_id
+        _costing_unit_id,
+		_includes_tax
 	FROM sales.customerwise_selling_prices
 	WHERE NOT sales.customerwise_selling_prices.deleted
 	AND sales.customerwise_selling_prices.customer_id = _customer_id
@@ -3735,6 +3737,7 @@ LANGUAGE plpgsql;
 -->-->-- src/Frapid.Web/Areas/MixERP.Sales/db/PostgreSQL/2.1.update/src/03.menus/menus.sql --<--<--
 SELECT * FROM core.create_menu('MixERP.Sales', 'Customers', 'Customers', '/dashboard/reports/view/Areas/MixERP.Sales/Reports/Customers.xml', 'users', 'Reports');
 SELECT * FROM core.create_menu('MixERP.Sales', 'SalesDetails', 'Sales Details', '/dashboard/reports/view/Areas/MixERP.Sales/Reports/SalesDetails.xml', 'money', 'Reports');
+SELECT * FROM core.create_menu('MixERP.Sales', 'SalesSummary', 'Sales Summary', '/dashboard/reports/view/Areas/MixERP.Sales/Reports/SalesSummary.xml', 'money', 'Reports');
 
 
 -->-->-- src/Frapid.Web/Areas/MixERP.Sales/db/PostgreSQL/2.1.update/src/05.views/00.sales.sales_view.sql --<--<--

@@ -19,10 +19,12 @@ BEGIN
 	
 	SELECT
 		sales.customerwise_selling_prices.price,
-		sales.customerwise_selling_prices.unit_id
+		sales.customerwise_selling_prices.unit_id,
+		sales.customerwise_selling_prices.is_taxable
     INTO
         _price,
-        _costing_unit_id
+        _costing_unit_id,
+		_includes_tax
 	FROM sales.customerwise_selling_prices
 	WHERE NOT sales.customerwise_selling_prices.deleted
 	AND sales.customerwise_selling_prices.customer_id = _customer_id

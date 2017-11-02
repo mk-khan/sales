@@ -22,7 +22,8 @@ BEGIN
 	
 	SELECT
 		@price				= sales.customerwise_selling_prices.price,
-		@costing_unit_id	=  sales.customerwise_selling_prices.unit_id
+		@costing_unit_id	= sales.customerwise_selling_prices.unit_id,
+		@includes_tax		= sales.customerwise_selling_prices.is_taxable
 	FROM sales.customerwise_selling_prices
 	WHERE sales.customerwise_selling_prices.deleted = 0
 	AND sales.customerwise_selling_prices.customer_id = @customer_id
@@ -33,13 +34,14 @@ BEGIN
 		RETURN sales.get_item_selling_price(@office_id, @item_id, inventory.get_customer_type_id_by_customer_id(@customer_id), @price_type_id, @unit_id);
 	END;
 
+
     IF(@includes_tax = 1)
     BEGIN
         SET @tax_rate = finance.get_sales_tax_rate(@office_id);
         SET @price = @price / ((100 + @tax_rate)/ 100);
     END;
 
-    --Get the unitary conversion factor if the requested unit does not match with the price defition.
+	--Get the unitary conversion factor if the requested unit does not match with the price defition.
     SET @factor = inventory.convert_unit(@unit_id, @costing_unit_id);
 
     RETURN @price * @factor;
