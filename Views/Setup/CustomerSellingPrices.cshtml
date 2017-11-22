@@ -130,8 +130,8 @@
             $.each(candidates, function () {
                 const row = $(this);
 
-                const itemId = window.parseInt2(row.attr("data-item-id"));
-                const unitId = window.parseInt2(row.attr("data-unit-id"));
+                const itemId = window.parseInt(row.attr("data-item-id"));
+                const unitId = window.parseInt(row.attr("data-unit-id"));
                 const price = window.parseFloat2(row.find("input.price").val());
                 const isTaxable = row.find(".check.each.item").prop("checked");
 
@@ -149,7 +149,7 @@
             return model;
         };
 
-        const customerId = window.parseInt2($("#CustomerIdSelect").val());
+        const customerId = window.parseInt($("#CustomerIdSelect").val());
         if (!customerId) {
             return;
         };
@@ -180,7 +180,7 @@
         const target = $(".price.list .table tbody");
         target.html("");
 
-        const customerId = window.parseInt2($("#CustomerIdSelect").val());
+        const customerId = window.parseInt($("#CustomerIdSelect").val());
         if (!customerId) {
             return;
         };

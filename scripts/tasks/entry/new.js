@@ -8,7 +8,7 @@
 function mergeDetails(model) {
     $(document).off("itemAdded").on("itemAdded", function (e, tabId, itemId, el) {
         const item = window.Enumerable.From(model).Where(function (x) {
-            return x.ItemId === window.parseInt2(itemId);
+            return x.ItemId === window.parseInt(itemId);
         }).FirstOrDefault();
 
         const quantityInput = el.find("input.quantity");

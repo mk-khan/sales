@@ -95,7 +95,7 @@ $("#DiscountTypeSelect").change(function () {
 
 $("#DiscountInputText").keyup(function () {
     const rate = window.parseFloat2($("#DiscountInputText").val()) || 0;
-    const type = window.parseInt2($("#DiscountTypeSelect").val()) || 0;
+    const type = window.parseInt($("#DiscountTypeSelect").val()) || 0;
 
     if (type === 1 && rate > 100) {
         $("#DiscountInputText").val("0");
@@ -109,9 +109,9 @@ function updateTotal() {
     const candidates = $("#SalesItems div.item");
     const amountEl = $("div.amount .money");
     const countEl = $("div.count .money");
-    const couponDiscountType = window.parseInt2($("#DiscountTypeSelect").val());
+    const couponDiscountType = window.parseInt($("#DiscountTypeSelect").val());
     const couponDiscountRate = window.parseFloat2($("#DiscountInputText").val()) || 0;
-    const taxRate = window.parseFloat2($("#SalesTaxRateHidden").val()) || 0;
+    const taxRate = window.parseFloat($("#SalesTaxRateHidden").val()) || 0;
 
     var discount;
 
@@ -281,7 +281,7 @@ $(".tabs .new.item").off("click").on("click", function () {
 
     $.each(candidates, function () {
         const el = $(this);
-        const id = window.parseInt2(el.text());
+        const id = window.parseInt(el.text());
         items.push(id);
     });
 
@@ -303,7 +303,7 @@ $(".tabs .new.item").off("click").on("click", function () {
 
 $(".tabs .actions .delete.icon").off("click").on("click", function () {
     const activeEl = $(".tabs .selected.item");
-    const id = window.parseInt2(activeEl.text());
+    const id = window.parseInt(activeEl.text());
 
     if (activeEl.length && id > 1) {
         const confirmed = window.confirm(window.translate("AreYouSureYouWantDeleteTab"));
@@ -400,7 +400,7 @@ function getTaxRate() {
     const ajax = request();
 
     ajax.success(function (response) {
-        const salesTaxRate = window.parseFloat2(response[0].SalesTaxRate) || 0;
+        const salesTaxRate = window.parseFloat(response[0].SalesTaxRate) || 0;
         $("#SalesTaxRateHidden").val(salesTaxRate);
     });
 };

@@ -10,7 +10,7 @@
 function mergeDetails(model) {
     $(document).off("itemAdded").on("itemAdded", function (e, itemId, el) {
         const item = window.Enumerable.From(model).Where(function (x) {
-            return x.ItemId === window.parseInt2(itemId);
+            return x.ItemId === window.parseInt(itemId);
         }).FirstOrDefault();
 
         const quantityInput = el.find("input.quantity");
@@ -107,9 +107,9 @@ $("#CheckoutButton").off("click").on("click", function () {
 
             $.each(items, function () {
                 const el = $(this);
-                const itemId = window.parseInt2(el.attr("data-item-id"));
+                const itemId = window.parseInt(el.attr("data-item-id"));
                 const quantity = window.parseFloat2(el.find("input.quantity").val());
-                const unitId = window.parseInt2(el.find("select.unit").val());
+                const unitId = window.parseInt(el.find("select.unit").val());
                 const price = window.parseFloat2(el.find("input.price").val()) || 0;
                 const discountRate = window.parseFloat2(el.find("input.discount").val()) || 0;
                 const isTaxableItem = el.attr("data-is-taxable-item") === "true";
@@ -141,7 +141,7 @@ $("#CheckoutButton").off("click").on("click", function () {
         const shipperId = $("#ShipperSelect").val();
         const details = getDetails();
         const discount = window.parseFloat2($("#DiscountInputText").val());
-        var taxRate = window.parseFloat2($("#SalesTaxRateHidden").val()) || 0;
+        var taxRate = window.parseFloat($("#SalesTaxRateHidden").val()) || 0;
 
         var totalPrice = 0;
         var taxableTotal = 0;
@@ -154,9 +154,9 @@ $("#CheckoutButton").off("click").on("click", function () {
 
             $.each(items, function () {
                 const el = $(this);
-                const itemId = window.parseInt2(el.attr("data-item-id"));
+                const itemId = window.parseInt(el.attr("data-item-id"));
                 const quantity = window.parseFloat2(el.find("input.quantity").val());
-                const unitId = window.parseInt2(el.find("select.unit").val());
+                const unitId = window.parseInt(el.find("select.unit").val());
                 const price = window.parseFloat2(el.find("input.price").val()) || 0;
                 const discountRate = window.parseFloat2(el.find("input.discount").val()) || 0;
                 const isTaxableItem = el.attr("data-is-taxable-item") === "true";

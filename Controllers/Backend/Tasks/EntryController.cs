@@ -32,6 +32,9 @@ namespace MixERP.Sales.Controllers.Backend.Tasks
         {
             var meta = await AppUsers.GetCurrentAsync().ConfigureAwait(true);
 
+            search.From = search.From == DateTime.MinValue ? DateTime.Today : search.From;
+            search.To = search.To == DateTime.MinValue ? DateTime.Today : search.To;
+
             try
             {
                 var result = await SalesEntries.GetSearchViewAsync(this.Tenant, meta.OfficeId, search).ConfigureAwait(true);

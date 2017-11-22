@@ -287,7 +287,9 @@
     <Content Include="Reports\Quotation.xml" />
     <Content Include="Reports\QuotationStatus.SqlServer.xml" />
     <Content Include="Reports\QuotationStatus.xml" />
-    <Content Include="Reports\Receipt.xml" />
+    <Content Include="Reports\Receipt.xml">
+      <SubType>Designer</SubType>
+    </Content>
     <Content Include="Reports\Return.xml" />
     <Content Include="Reports\SalesByOffice.SqlServer.xml" />
     <Content Include="Reports\SalesByOffice.xml" />

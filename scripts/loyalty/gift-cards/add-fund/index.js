@@ -163,7 +163,7 @@ $("#ReturnButton").click(function () {
         if (selected.length) {
             const row = selected.parent().parent().parent();
             const id = row.find("td:nth-child(3)").html();
-            return window.parseInt2(id);
+            return window.parseInt(id);
         };
 
         return 0;

@@ -41,19 +41,19 @@ function defaulPOSItemClick(el, callback) {
     $(".footer.items").show();
     targetEl.show();
 
-    var sellingPrice = window.parseFloat2(el.attr("data-selling-price")) || 0;
+    var sellingPrice = window.parseFloat(el.attr("data-selling-price")) || 0;
     var photo = el.attr("data-photo") || "";
 
     var barCode = el.attr("data-barcode");
     var brand = el.attr("data-brand");
-    var unitId = window.parseInt2(el.attr("data-unit-id"));
+    var unitId = window.parseInt(el.attr("data-unit-id"));
     var validUnits = el.attr("data-valid-units");
     var itemGroup = el.attr("data-item-group");
     var itemName = el.attr("data-item-name");
     var itemCode = el.attr("data-item-code");
-    var itemId = window.parseInt2(el.attr("data-item-id"));
+    var itemId = window.parseInt(el.attr("data-item-id"));
     var isTaxableItem = el.attr("data-is-taxable-item") === "true";
-    var taxRate = window.parseFloat2($("#SalesTaxRateHidden").val()) || 0;
+    var taxRate = window.parseFloat($("#SalesTaxRateHidden").val()) || 0;
 
     var price = sellingPrice;
 
@@ -214,8 +214,8 @@ function defaulPOSItemClick(el, callback) {
         };
 
         const itemId = el.attr("data-item-id");
-        const customerId = window.parseInt2($("#CustomerInputText").attr("data-customer-id")) || 0;
-        const priceTypeId = window.parseInt2($("#PriceTypeSelect").val()) || 0;
+        const customerId = window.parseInt($("#CustomerInputText").attr("data-customer-id")) || 0;
+        const priceTypeId = window.parseInt($("#PriceTypeSelect").val()) || 0;
         const unitId = el.val();
 
         $(".action.panel.segment").addClass("loading");
@@ -417,7 +417,7 @@ function displayProducts(category, searchQuery) {
         var sellingPrice = product.SellingPrice;
 
         if (product.SellingPriceIncludesTax) {
-            sellingPrice = (100 * sellingPrice) / (100 + window.parseFloat2(product.SalesTaxRate));
+            sellingPrice = (100 * sellingPrice) / (100 + window.parseFloat(product.SalesTaxRate));
             sellingPrice = window.round(sellingPrice, 2);
         };
 

@@ -194,7 +194,7 @@
 
             const tender = window.parseFloat2($("#TenderInputText").val()) || 0;
             const change = window.parseFloat2($("#ChangeInputText").val()) || 0;
-            const paymentTermId = window.parseInt2($("#PaymentTermSelect").val()) || null;
+            const paymentTermId = window.parseInt($("#PaymentTermSelect").val()) || null;
 
             const checkAmount = window.parseFloat2($("#CheckAmountInputText").val()) || null;
             const bankName = $("#BankNameInputText").val();
@@ -356,8 +356,8 @@
             };
 
             const itemId = $("#ItemSelect").val();
-            const customerId = window.parseInt2($("#CustomerSelect").val()) || 0;
-            const priceTypeId = window.parseInt2($("#PriceTypeSelect").val()) || 0;
+            const customerId = window.parseInt($("#CustomerSelect").val()) || 0;
+            const priceTypeId = window.parseInt($("#PriceTypeSelect").val()) || 0;
             const unitId = $("#UnitSelect").val();
 
 
@@ -366,7 +366,7 @@
             const ajax = request(itemId, customerId, priceTypeId, unitId);
 
             ajax.success(function (response) {
-                var sellingPrice = window.parseFloat2(response);
+                var sellingPrice = window.parseFloat(response);
                 sellingPrice = window.round(sellingPrice, 2);
 
                 $(".checkout.segment").removeClass("loading");

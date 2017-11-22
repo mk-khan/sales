@@ -5,7 +5,7 @@
 
     $.each(candidates, function () {
         const el = $(this);
-        const value = window.parseInt2(el.attr("data-value")) || 0;
+        const value = window.parseInt(el.attr("data-value")) || 0;
         const number = window.parseFloat2(el.val()) || 0;
 
         const result = value * number;
@@ -51,7 +51,7 @@ $("#SaveButton").off("click").on("click", function () {
     const model = window.serializeForm($(".eod.cash"));
     const total = parseFloat2($("#TotalInputText").val()) || 0;//because the field is readonyl
 
-    if (window.parseFloat2(model.SubmittedCash) !== total) {
+    if (window.parseFloat(model.SubmittedCash) !== total) {
         window.displayMessage(window.translate("SubmittedAmountMustEqualTotalAmount"));
         return;
     };
@@ -74,7 +74,7 @@ $("#SaveButton").off("click").on("click", function () {
 
 $(".denomination .ui.input.field:not(.total) input").keyup(function () {
     const el = $(this);
-    const value = window.parseInt2(el.attr("data-value")) || 0;
+    const value = window.parseInt(el.attr("data-value")) || 0;
     const number = window.parseFloat2(el.val()) || 0;
     const result = value * number;
 

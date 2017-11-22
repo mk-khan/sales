@@ -128,20 +128,20 @@ $(document).on("itemFetched", function () {
 function initializeClickAndAction() {
     $("#POSItemList .item").off("click").on("click", function () {
         var el = $(this);
-        var sellingPrice = window.parseFloat2(el.attr("data-selling-price")) || 0;
+        var sellingPrice = window.parseFloat(el.attr("data-selling-price")) || 0;
         var photo = el.attr("data-photo") || "";
 
         var barCode = el.attr("data-barcode");
         var brand = el.attr("data-brand");
-        var unitId = window.parseInt2(el.attr("data-unit-id"));
+        var unitId = window.parseInt(el.attr("data-unit-id"));
         var validUnits = el.attr("data-valid-units");
         var itemGroup = el.attr("data-item-group");
         var itemName = el.attr("data-item-name");
         var itemCode = el.attr("data-item-code");
-        var itemId = window.parseInt2(el.attr("data-item-id"));
+        var itemId = window.parseInt(el.attr("data-item-id"));
         var price = sellingPrice;
         var isTaxableItem = el.attr("data-is-taxable-item") === "true";
-        var taxRate = window.parseFloat2($("#SalesTaxRateHidden").val()) || 0;
+        var taxRate = window.parseFloat($("#SalesTaxRateHidden").val()) || 0;
 
         if (!price) {
             alert("Cannot add item because the price is zero.");
@@ -300,8 +300,8 @@ function initializeClickAndAction() {
             };
 
             const itemId = el.attr("data-item-id");
-            const customerId = window.parseInt2($("#CustomerSelect").val()) || 0;
-            const priceTypeId = window.parseInt2($("#PriceTypeSelect").val()) || 0;
+            const customerId = window.parseInt($("#CustomerSelect").val()) || 0;
+            const priceTypeId = window.parseInt($("#PriceTypeSelect").val()) || 0;
             const unitId = el.val();
 
             $(".pos.sales.segment").addClass("loading");
@@ -349,7 +349,7 @@ $("#SummaryItems div.discount .money input, " +
 function updateTotal() {
     const candidates = $("#SalesItems div.item");
     const amountEl = $("#SummaryItems div.amount .money");
-    const taxRate = window.parseFloat2($("#SalesTaxRateHidden").val()) || 0;
+    const taxRate = window.parseFloat($("#SalesTaxRateHidden").val()) || 0;
 
     window.setRegionalFormat();
 
@@ -473,7 +473,7 @@ function displayProducts(category, searchQuery) {
         var sellingPrice = product.SellingPrice;
 
         if (product.SellingPriceIncludesTax) {
-            sellingPrice = (100 * sellingPrice) / (100 + window.parseFloat2(product.SalesTaxRate));
+            sellingPrice = (100 * sellingPrice) / (100 + window.parseFloat(product.SalesTaxRate));
             sellingPrice = window.round(sellingPrice, 2);
         };
 
@@ -604,7 +604,7 @@ function getTaxRate() {
     const ajax = request();
 
     ajax.success(function (response) {
-        const salesTaxRate = window.parseFloat2(response[0].SalesTaxRate) || 0;
+        const salesTaxRate = window.parseFloat(response[0].SalesTaxRate) || 0;
         $("#SalesTaxRateHidden").val(salesTaxRate);
     });
 };

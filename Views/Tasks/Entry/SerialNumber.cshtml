@@ -217,7 +217,7 @@
             const el = $(item);
 
             if (el.is(":checked")) {
-                const id = window.parseInt2(el.attr("data-id") || 0);
+                const id = window.parseInt(el.attr("data-id") || 0);
                 ids.push(id);
             }
         });

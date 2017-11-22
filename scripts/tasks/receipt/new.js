@@ -167,8 +167,8 @@ $("#BankAccountIdSelect").change(function () {
 });
 
 $("#PaymentCardIdSelect").change(function () {
-    const merchantAccountId = window.parseInt2($("#BankAccountIdSelect").val() || 0);
-    const paymentCardId = window.parseInt2($("#PaymentCardIdSelect").val() || 0);
+    const merchantAccountId = window.parseInt($("#BankAccountIdSelect").val() || 0);
+    const paymentCardId = window.parseInt($("#PaymentCardIdSelect").val() || 0);
 
     $("#CustomerPaysFeeRadio").removeProp("checked");
     $("#MerchantFeeInputText").val("");
