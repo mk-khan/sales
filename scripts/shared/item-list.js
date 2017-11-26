@@ -439,33 +439,43 @@ function displayProducts(category, searchQuery) {
     var groupItems;
 
     if (!category && !searchQuery) {
-        groupItems = products;
+        groupItems = window.Enumerable
+            .From(products).Take(numberOfItemsToDisplay).ToArray();
     } else {
         if (category && searchQuery) {
             groupItems = window.Enumerable
                 .From(products)
                 .Where(function (x) {
                     return x.ItemGroupName.toLowerCase() === category.toString().toLowerCase()
-                        && x.ItemName.toLowerCase().indexOf(searchQuery.toLowerCase()) > -1;
-                }).ToArray();
+                        &&
+                        (
+                            x.ItemName.toLowerCase().indexOf(searchQuery.toLowerCase()) > -1
+                            ||
+                            x.Barcode.toLowerCase().indexOf(searchQuery.toLowerCase()) > -1
+                        );
+                }).Take(numberOfItemsToDisplay).ToArray();
         } else if (!category && searchQuery) {
             groupItems = window.Enumerable
                 .From(products)
                 .Where(function (x) {
-                    return x.ItemName.toLowerCase().indexOf(searchQuery.toLowerCase()) > -1;
-                }).ToArray();
+                    return x.ItemName.toLowerCase().indexOf(searchQuery.toLowerCase()) > -1
+                        ||
+                        x.Barcode.toLowerCase().indexOf(searchQuery.toLowerCase()) > -1;
+                }).Take(numberOfItemsToDisplay).ToArray();
         } else {
             groupItems = window.Enumerable
                 .From(products)
                 .Where(function (x) {
                     return x.ItemGroupName.toLowerCase() === category.toString().toLowerCase();
-                }).ToArray();
+                }).Take(numberOfItemsToDisplay).ToArray();
         };
     };
 
-    groupItems = window.Enumerable.From(groupItems).OrderBy(function (x) { return x.ItemId }).ToArray();
 
     target.html("").hide();
+
+    groupItems = window.Enumerable.From(groupItems).OrderBy(function (x) { return x.ItemId; }).ToArray();
+
 
     $.each(groupItems, function () {
         const product = this;
@@ -487,9 +497,9 @@ function displayProducts(category, searchQuery) {
         item.attr("data-valid-units", product.ValidUnits);
         item.attr("data-barcode", product.Barcode);
         item.attr("data-photo", product.Photo);
+        item.attr("data-is-taxable-item", product.IsTaxableItem);
         item.attr("data-selling-price", sellingPrice);
         item.attr("data-selling-price-includes-tax", product.SellingPriceIncludesTax);
-        item.attr("data-is-taxable-item", product.IsTaxableItem);
 
         if (product.HotItem) {
             item.addClass("hot");
@@ -504,13 +514,14 @@ function displayProducts(category, searchQuery) {
 
 
         const photo = $("<div class='photo' />");
-        const img = $("<img />");
 
         if (product.Photo) {
+            const img = $("<img />");
             img.attr("src", product.Photo + "?Height=200&Width=200");
+
+            img.appendTo(photo);
         };
 
-        img.appendTo(photo);
         photo.appendTo(info);
 
         const name = $("<div class='name' />");
