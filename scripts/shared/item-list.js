@@ -631,7 +631,12 @@ function getTaxRate() {
     const ajax = request();
 
     ajax.success(function (response) {
-        const salesTaxRate = window.parseFloat(response[0].SalesTaxRate) || 0;
+        var taxRate = 0;
+        if (response != null && response.length > 0) {
+            taxRate = window.parseFloat(response[0].SalesTaxRate);
+            
+        }
+        const salesTaxRate = taxRate || 0;
         $("#SalesTaxRateHidden").val(salesTaxRate);
     });
 };
