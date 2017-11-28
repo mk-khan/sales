@@ -1,4 +1,6 @@
-﻿var itemTemplate =
+﻿const numberOfItemsToDisplay = 20;
+
+var itemTemplate =
     `<div class="item" id="pos-{ItemId}" data-selling-price="{InvariantCultureSellingPrice}" data-photo="{Photo}" data-unit-id="{UnitId}" data-valid-units="{ValidUnits}" data-brand="{BrandName}" data-item-group="{ItemGroupName}" data-item-name="{ItemName}" data-item-code="{ItemCode}" data-item-id="{ItemId}" data-price="{Price}" data-is-taxable-item="{IsTaxableItem}">
 	<div class="photo block">
 		<img src="{Photo}">
@@ -382,27 +384,35 @@ function displayProducts(category, searchQuery) {
     var groupItems;
 
     if (!category && !searchQuery) {
-        groupItems = products;
+        groupItems = window.Enumerable
+            .From(products).Take(numberOfItemsToDisplay).ToArray();
     } else {
         if (category && searchQuery) {
             groupItems = window.Enumerable
                 .From(products)
                 .Where(function (x) {
                     return x.ItemGroupName.toLowerCase() === category.toString().toLowerCase()
-                        && x.ItemName.toLowerCase().indexOf(searchQuery.toLowerCase()) > -1;
-                }).ToArray();
+                        &&
+                        (
+                            x.ItemName.toLowerCase().indexOf(searchQuery.toLowerCase()) > -1
+                                ||
+                                x.Barcode.toLowerCase().indexOf(searchQuery.toLowerCase()) > -1
+                        );
+                }).Take(numberOfItemsToDisplay).ToArray();
         } else if (!category && searchQuery) {
             groupItems = window.Enumerable
                 .From(products)
                 .Where(function (x) {
-                    return x.ItemName.toLowerCase().indexOf(searchQuery.toLowerCase()) > -1;
-                }).ToArray();
+                    return x.ItemName.toLowerCase().indexOf(searchQuery.toLowerCase()) > -1
+                        ||
+                        x.Barcode.toLowerCase().indexOf(searchQuery.toLowerCase()) > -1;
+                }).Take(numberOfItemsToDisplay).ToArray();
         } else {
             groupItems = window.Enumerable
                 .From(products)
                 .Where(function (x) {
                     return x.ItemGroupName.toLowerCase() === category.toString().toLowerCase();
-                }).ToArray();
+                }).Take(numberOfItemsToDisplay).ToArray();
         };
     };
 

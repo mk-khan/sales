@@ -360,7 +360,31 @@ $(document).ajaxStop(function () {
 
 setTimeout(function () {
     window.setRegionalFormat();
-}, 100);
+
+    $(document).scannerDetection({
+        timeBeforeScanTest: 200, // wait for the next character for upto 200ms
+        endChar: [13], // be sure the scan is complete if key 13 (enter) is detected
+        avgTimeByChar: 100, // it's not a barcode if a character takes longer than 40ms
+        ignoreIfFocusOn: 'input', // turn off scanner detection if an input has focus
+        onComplete: function (barcode) {
+            const candidate = $("div.item[data-barcode='" + barcode + "']");
+
+            if (candidate.length) {
+                candidate.trigger("click");
+            };            
+        }, // main callback function
+        scanButtonKeyCode: 116, // the hardware scan button acts as key 116 (F5)
+        scanButtonLongPressThreshold: 5, // assume a long press if 5 or more events come in sequence
+        onScanButtonLongPressed: false, // callback for long pressing the scan button
+        onError: function (string) {
+            const candidate = $("div.item[data-barcode='" + string + "']");
+
+            if (candidate.length) {
+                candidate.trigger("click");
+            };
+        }
+    });
+}, 1000);
 
 
 window.overridePath = "/dashboard/sales/tasks/entry";
@@ -418,3 +442,4 @@ if (window.metaView) {
         getTaxRate();
     });
 };
+
