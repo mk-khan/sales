@@ -37,7 +37,7 @@ $(document).off("itemAdded").on("itemAdded", function (e, tabId, itemId) {
     if (discountInput.length) {
         discountInput.val(item.DiscountRate);
     };
-
+	
     discountInput.trigger("keyup");
 });
 

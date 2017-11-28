@@ -3,6 +3,8 @@
     $("#PriceTypeSelect").val(model.PriceTypeId);
     $("#ShipperSelect").val(model.ShipperId);
     $("#ReferenceNumberInputText").val(model.ReferenceNumber);
+	$("#BookDateInputText").datepicker("setDate", new Date(model.ExpectedDeliveryDate));
+	$("#ValueDateInputText").datepicker("setDate", new Date(model.ValueDate));
 };
 
 function mergeDetails(model) {
@@ -16,7 +18,7 @@ function mergeDetails(model) {
         const discountInput = el.find("input.discount");
         const unitSelect = el.find("select.unit");
 
-        unitSelect.val(item.UnitId).trigger("change");
+        unitSelect.val(item.UnitId);//.trigger("change");
         priceInput.val(item.Price).trigger("keyup");
 
         setTimeout(function () {
@@ -65,9 +67,10 @@ function mergeQuotation(quotationId) {
         window.mergeDetails(response.Details);
     });
 };
-
-$(document).on("itemFetched", function () {
-    const orderId = window.getQueryStringByName("OrderId");
+function readyFnLoad() {
+	
+    // Code to run when the document is ready.
+	const orderId = window.getQueryStringByName("OrderId");
 
     if (orderId) {
         mergeOrder(orderId);
@@ -79,4 +82,10 @@ $(document).on("itemFetched", function () {
     if (quotationId) {
         mergeQuotation(quotationId);
     };
+}
+
+
+$(document).on("itemFetched", function () {
+	if($(".pos.tabs").html() != "")
+		readyFnLoad();
 });

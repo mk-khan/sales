@@ -32,6 +32,12 @@ var itemTemplate =
 			<select class="unit inverted" data-item-id="{ItemId}">
 			</select>
 		</div>
+		 <div class="terms">
+             <div class ="description">Comments</div>
+        <div class="control">
+                <input class="ItemCommentInputText" style="text-align:left" type="text"></input>
+                 </div>
+             </div>
 	</div>
 	<div class="number block">
 		<input type="text" class="price" title="${window.translate("EditPrice")}" value="{SellingPrice}">
@@ -97,12 +103,16 @@ $(".search.panel input").keydown(function (e) {
     };
 });
 
+$("#RefreshItemButton").off("click").on("click", function () {
+		window.fetchUnits();
+        window.fetchProducts();
+});
 window.fetchUnits();
 window.fetchProducts();
 
-setTimeout(function () {
-    window.fetchProducts();
-}, 120000);
+//setTimeout(function () {
+ //   window.fetchProducts();
+//}, 120000);
 
 function removeItem(el) {
     const confirmed = confirm(window.translate("AreYouSure"));
@@ -124,9 +134,9 @@ $(document).on("itemFetched", function () {
     initializeClickAndAction();
 });
 
-
 function initializeClickAndAction() {
     $("#POSItemList .item").off("click").on("click", function () {
+		
         var el = $(this);
         var sellingPrice = window.parseFloat(el.attr("data-selling-price")) || 0;
         var photo = el.attr("data-photo") || "";
@@ -186,6 +196,7 @@ function initializeClickAndAction() {
 
         var item = $(template);
         var quantityInput = item.find("input.quantity");
+		var commentsInput = item.find("input.ItemCommentInputText");
         var priceInput = item.find("input.price");
         var discountInput = item.find("input.discount");
         var unitSelect = item.find("select.unit");
@@ -215,7 +226,15 @@ function initializeClickAndAction() {
         };
 
         loadUnits(unitSelect, unitId, validUnits.split(','));
-
+		function updateItemComment(comment){
+	    var currentVal = $("#TermsTextArea").val();
+		var newVal ;
+		if(currentVal != "")
+		 newVal = currentVal + ", " + comment;
+		else
+			newVal = comment;
+		$("#TermsTextArea").val(newVal);
+		}
         function updateItemTotal(el) {
             const quantityEl = el.find("input.quantity");
             const discountEl = el.find("input.discount");
@@ -250,6 +269,12 @@ function initializeClickAndAction() {
             const el = $(this);
             const parentInfo = el.parent().parent();
             updateItemTotal(parentInfo);
+        });
+		
+		commentsInput.on("focusout", function () {
+            const el = $(this);
+			const p = el.parent().parent().parent();
+            updateItemComment(p.find(".header").text() + ": "+ el.val());
         });
 
         discountInput.on("keyup", function () {
@@ -333,7 +358,7 @@ function initializeClickAndAction() {
             buttonEl.toggle();
         });
 
-        item.appendTo(targetEl);
+        item.prependTo(targetEl);
         quantityInput.trigger("keyup");
         window.updateTotal();
 
@@ -392,6 +417,8 @@ function updateTotal() {
     totalPrice = window.round(totalPrice, 2);
 
     amountEl.html(window.getFormattedNumber(totalPrice));
+	var totalitemCount = candidates.length;
+	$(".item.totalcount .money").text(totalitemCount);
 };
 
 function displayCategories() {

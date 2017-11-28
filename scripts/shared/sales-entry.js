@@ -29,7 +29,7 @@ function getModel() {
 
         return model;
     };
-
+    
     //Cash
     const tender = window.parseFloat2($("#TenderInputText").val()) || 0;
     const change = window.parseFloat2($("#ChangeInputText").val()) || 0;
@@ -42,7 +42,7 @@ function getModel() {
     const checkAmount = window.parseFloat2($("#CheckAmountInputText").val()) || null;
     const bankName = $("#BankNameInputText").val();
     const checkNumber = $("#CheckNumberInputText").val();
-    const checkDate = $("#CheckDateInputText").datepicker("getDate");
+    const checkDate = getNewUTCDateOnly("#CheckDateInputText");
 
     //Gift Card
     const giftCardNumber = $("#GiftCardNumberInputText").val();
@@ -55,8 +55,8 @@ function getModel() {
     const discountType = window.parseInt($("#DiscountTypeSelect").val());
     const discount = window.parseFloat2($("#DiscountInputText").val()) || 0;
 
-    const valueDate = $("#ValueDateInputText").datepicker("getDate");
-    const bookDate = $("#BookDateInputText").datepicker("getDate");
+    const valueDate = getNewUTCDateOnly("#ValueDateInputText");
+    const bookDate = getNewUTCDateOnly("#BookDateInputText");
     const costCenterId = window.parseInt($("#CostCenterSelect").val()) || null;
     const referenceNumber = $("#ReferenceNumberInputText").val();
     const statementReference = $("#StatementReferenceInputText").val();
@@ -266,7 +266,7 @@ $("#CheckoutButton").off("click").on("click", function () {
         var paymentTerm = window.parseInt($("#PaymentTermSelect").val()) || null;
         var checkAmount = window.parseFloat2($("#CheckAmountInputText").val()) || 0;
         var bankName = $("#BankNameInputText").val();
-        var checkDate = $("#CheckDateInputText").datepicker("getDate");
+        var checkDate = getNewUTCDateOnly("#CheckDateInputText")
         var checkNumber = $("#CheckNumberInputText").val();
         var giftCardNumber = $("#GiftCardNumberInputText").val();
         var giftCardBalance = $("#GiftCardNumberBalanceInputText").val();
@@ -384,6 +384,8 @@ $("#CheckoutButton").off("click").on("click", function () {
 
         window.showTicket(id);
         $("#CheckoutButton").removeClass("loading").prop("disabled", false);
+        const url = "/dashboard/sales/tasks/entry/checklist/" + id;
+        $("#ShowInvoice").attr("onclick", "window.open('" + url + "', '_blank');");
     });
 
     ajax.fail(function (xhr) {

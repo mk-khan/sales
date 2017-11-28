@@ -38,6 +38,19 @@
                 return "/dashboard/sales/tasks/entry/new?OrderId=" + orderId;
             }
         },
+		{
+            Title: 'Copy this order',
+            Icon: "chevron circle right",
+            HrefExpression: function (data) {
+                const orderId = data.OrderId;
+                if (!orderId) {
+                    return null;
+                };
+
+
+                return "/dashboard/sales/tasks/order/new?OrderId=" + orderId;
+            }
+        },
         {
             Title: window.translate("ViewAdvice"),
             Icon: "zoom",

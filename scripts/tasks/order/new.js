@@ -5,6 +5,8 @@
     $("#ReferenceNumberInputText").val(model.ReferenceNumber);
     $("#TermsInputText").val(model.Terms);
     $("#InternalMemoInputText").val(model.InternalMemo);
+	$("#ExpectedDeliveryDateInputText").datepicker("setDate", new Date(model.ExpectedDeliveryDate));
+	$("#ValueDateInputDate").datepicker("setDate", new Date(model.ValueDate));
 };
 
 function mergeDetails(model) {
@@ -18,7 +20,7 @@ function mergeDetails(model) {
         const discountInput = el.find("input.discount");
         const unitSelect = el.find("select.unit");
 
-        unitSelect.val(item.UnitId).trigger("change");
+        unitSelect.val(item.UnitId);
         priceInput.val(item.Price).trigger("keyup");
         discountInput.val(item.DiscountRate).trigger("keyup").trigger("blur");
 
@@ -44,6 +46,22 @@ function mergeQuotation(quotationId) {
 
     ajax.success(function (response) {
         window.mergeInfo(response.Quotation);
+        window.mergeDetails(response.Details);
+    });
+};
+
+function mergeOrder(orderId) {
+    function request() {
+        var url = "/dashboard/sales/tasks/order/merge-model/{orderId}";
+        url = url.replace("{orderId}", orderId);
+
+        return window.getAjaxRequest(url);
+    };
+	
+    const ajax = request();
+
+    ajax.success(function (response) {
+        window.mergeInfo(response.Order);
         window.mergeDetails(response.Details);
     });
 };
@@ -85,7 +103,14 @@ function initializeUI() {
         const quotationId = window.getQueryStringByName("QuotationId");
         if (quotationId) {
             mergeQuotation(quotationId);
+			return;
         };
+		const orderId = window.getQueryStringByName("OrderId");
+
+		if (orderId) {
+			mergeOrder(orderId);
+			return;
+		};
     });
 
     window.loadDatepicker();
@@ -117,7 +142,7 @@ $("#CheckoutButton").off("click").on("click", function () {
                 const discount = window.round(amount * discountRate / 100, 2);
 
                 model.push({
-                    ValueDate: $("#ValueDateInputDate").datepicker("getDate"),
+                    ValueDate: getNewUTCDateOnly("#ValueDateInputDate"),
                     ItemId: itemId,
                     Quantity: quantity,
                     UnitId: unitId,
@@ -131,8 +156,8 @@ $("#CheckoutButton").off("click").on("click", function () {
             return model;
         };
 
-        const valueDate = $("#ValueDateInputDate").datepicker("getDate");
-        const expectedDeliveryDate = $("#ExpectedDeliveryDateInputText").datepicker("getDate");
+        const valueDate = getNewUTCDateOnly("#ValueDateInputDate");
+        const expectedDeliveryDate = getNewUTCDateOnly("#ExpectedDeliveryDateInputText");
         const referenceNumber = $("#ReferenceNumberInputText").val();
         const terms = $("#TermsTextArea").val();
         const internalMemo = $("#InternalMemoTextArea").val();

@@ -19,7 +19,7 @@
     $(".page.title").html("Sales Quotation");
 
     const expectedDeliveryDate =
-        $("<input type='text' class='date' value='7d' id='ExpectedDeliveryDateInputText' />");
+        $("<input type='text' class='date' value='0d' id='ExpectedDeliveryDateInputText' />");
     $("#BookDateInputDate").after(expectedDeliveryDate).remove();
     expectedDeliveryDate.parent().parent().find(".description").html(window.translate("ExpectedDeliveryDate"));
 
@@ -30,6 +30,14 @@
     $("#CostCenterSelect").closest(".two.summary.items").attr("class", "one summary items");
     $(".cost.center.item").remove();
     $(".store.item").remove();
+	
+	$(document).on("itemFetched", function () {
+        const quotationId = window.getQueryStringByName("QuotationId");
+        if (quotationId) {
+            mergeQuotation(quotationId);
+			return;
+        };
+    });
 
     window.loadDatepicker();
 };
@@ -53,7 +61,7 @@ function getModel() {
             const discount = window.round(amount * discountRate / 100, 2);
 
             model.push({
-                ValueDate: $("#ValueDateInputDate").datepicker("getDate"),
+                ValueDate: getNewUTCDateOnly("#ValueDateInputDate"),
                 ItemId: itemId,
                 Quantity: quantity,
                 UnitId: unitId,
@@ -67,8 +75,8 @@ function getModel() {
         return model;
     };
 
-    const valueDate = $("#ValueDateInputDate").datepicker("getDate");
-    const expectedDeliveryDate = $("#ExpectedDeliveryDateInputText").datepicker("getDate");
+    const valueDate = getNewUTCDateOnly("#ValueDateInputDate");
+    const expectedDeliveryDate = getNewUTCDateOnly("#ExpectedDeliveryDateInputText");
     const referenceNumber = $("#ReferenceNumberInputText").val();
     const terms = $("#TermsTextArea").val();
     const internalMemo = $("#InternalMemoTextArea").val();
@@ -138,6 +146,60 @@ function getModel() {
         TaxRate: taxRate,
         Tax: tax
     };
+};
+function mergeInfo(model) {
+    $("#CustomerSelect").val(model.CustomerId);
+    $("#PriceTypeSelect").val(model.PriceTypeId);
+    $("#ShipperSelect").val(model.ShipperId);
+    $("#ReferenceNumberInputText").val(model.ReferenceNumber);
+    $("#TermsTextArea").val(model.Terms);
+    $("#InternalMemoTextArea").val(model.InternalMemo);
+	$("#DiscountInputText").val(model.Discount);
+	$("#ExpectedDeliveryDateInputText").datepicker("setDate", new Date(model.ExpectedDeliveryDate));
+	$("#ValueDateInputDate").datepicker("setDate", new Date(model.ValueDate));
+	
+};
+
+function mergeDetails(model) {
+    $(document).off("itemAdded").on("itemAdded", function (e, itemId, el) {
+        const item = window.Enumerable.From(model).Where(function (x) {
+            return x.ItemId === window.parseInt2(itemId);
+        }).FirstOrDefault();
+
+        const quantityInput = el.find("input.quantity");
+        const priceInput = el.find("input.price");
+        const discountInput = el.find("input.discount");
+        const unitSelect = el.find("select.unit");
+        unitSelect.val(item.UnitId);
+        priceInput.val(item.Price).trigger("keyup");
+        discountInput.val(item.DiscountRate).trigger("keyup").trigger("blur");
+
+        setTimeout(function () {
+            quantityInput.val(item.Quantity).trigger("keyup");
+        }, 1000);
+    });
+
+    $.each(model, function () {
+        $("#POSItemList [data-item-id='" + this.ItemId + "']").trigger("click");
+    });
+	var totalitemCount = window.Enumerable.From(model).Count();
+		$(".item.totalcount .money").text(totalitemCount);
+};
+
+function mergeQuotation(quotationId) {
+    function request() {
+        var url = "/dashboard/sales/tasks/quotation/merge-model/{quotationId}";
+        url = url.replace("{quotationId}", quotationId);
+
+        return window.getAjaxRequest(url);
+    };
+
+    const ajax = request();
+
+    ajax.success(function (response) {
+        window.mergeInfo(response.Quotation);
+        window.mergeDetails(response.Details);
+    });
 };
 
 $("#CheckoutButton").off("click").on("click", function () {

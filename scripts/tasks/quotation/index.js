@@ -38,6 +38,30 @@
                 return "/dashboard/sales/tasks/entry/new?QuotationId=" + quotationId;
             }
         },
+		{
+            Title: window.translate("ConvertToOrder"),
+            Icon: "chevron circle right",
+            HrefExpression: function (data) {
+                const quotationId = data.QuotationId;
+                if (!quotationId) {
+                    return null;
+                };
+
+
+                return "/dashboard/sales/tasks/order/new?QuotationId=" + quotationId;
+            }
+        },
+		{
+            Title: 'Copy this picking slip',
+            Icon: "chevron circle right",
+            HrefExpression: function (data) {
+                const QuotationId = data.QuotationId;
+                if (!QuotationId) {
+                    return null;
+                };
+                return "/dashboard/sales/tasks/quotation/new?QuotationId=" + QuotationId;
+            }
+        },
         {
             Title: window.translate("ViewAdvice"),
             Icon: "zoom",

@@ -34,6 +34,7 @@
 var products = [];
 var metaUnits = [];
 
+
 function defaulPOSItemClick(el, callback) {
     var targetEl = $("#SalesItems");
 
@@ -464,9 +465,9 @@ function displayProducts(category, searchQuery) {
         name.appendTo(info);
 
         info.appendTo(item);
-        item.appendTo(target);
+        item.prependTo(target);
     });
-
+	
     if (searchQuery) {
         target.show();
         return;
