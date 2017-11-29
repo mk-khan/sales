@@ -476,20 +476,21 @@ function displayProducts(category, searchQuery) {
                     return x.ItemGroupName.toLowerCase() === category.toString().toLowerCase()
                         &&
                         (
-                            x.ItemName.toLowerCase().indexOf(searchQuery.toLowerCase()) > -1
+                            (x.ItemName && x.ItemName.length > 0 && x.ItemName.toLowerCase().indexOf(searchQuery.toLowerCase()) > -1)
                             ||
-                            x.Barcode.toLowerCase().indexOf(searchQuery.toLowerCase()) > -1
+                            (x.Barcode && x.Barcode.length > 0 && x.Barcode.toLowerCase().indexOf(searchQuery.toLowerCase()) > -1)
                         );
                 }).Take(numberOfItemsToDisplay).ToArray();
         } else if (!category && searchQuery) {
             groupItems = window.Enumerable
                 .From(products)
                 .Where(function (x) {
-                    return x.ItemName.toLowerCase().indexOf(searchQuery.toLowerCase()) > -1
+                    return (x.ItemName && x.ItemName.length > 0 && x.ItemName.toLowerCase().indexOf(searchQuery.toString().toLowerCase()) > -1)
                         ||
-                        x.Barcode.toLowerCase().indexOf(searchQuery.toLowerCase()) > -1;
+                        (x.Barcode && x.Barcode.length > 0 && x.Barcode.toLowerCase().indexOf(searchQuery.toString().toLowerCase()) > -1);
                 }).Take(numberOfItemsToDisplay).ToArray();
         } else {
+
             groupItems = window.Enumerable
                 .From(products)
                 .Where(function (x) {
