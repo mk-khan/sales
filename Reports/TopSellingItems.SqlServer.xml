@@ -28,17 +28,17 @@
 			FROM
 			(
 				SELECT
+				TOP 10      
 						inventory.verified_checkout_view.item_id, 
 						SUM(quantity) AS quantity,
 						SUM((price * quantity) - COALESCE(discount, 0) + COALESCE(shipping_charge, 0)) AS sales_amount
 				FROM inventory.verified_checkout_view
-				WHERE inventory.verified_checkout_view.office_id = @OfficeId::integer
-				AND inventory.verified_checkout_view.value_date BETWEEN @From::date AND @To::date
-				AND (COALESCE(@CostCenterId::integer, 0) = 0 OR inventory.verified_checkout_view.cost_center_id = @CostCenterId::integer)
+				WHERE inventory.verified_checkout_view.office_id = @OfficeId
+				AND inventory.verified_checkout_view.value_date BETWEEN @From AND @To
+				AND (COALESCE(@CostCenterId, 0) = 0 OR inventory.verified_checkout_view.cost_center_id = @CostCenterId)
 				AND inventory.verified_checkout_view.book LIKE 'Sales%'
 				GROUP BY inventory.verified_checkout_view.item_id
 				ORDER BY 2 DESC
-				LIMIT 10
 			) re
 		)
 		SELECT row_number, item_code, item_name, quantity, sales_amount
