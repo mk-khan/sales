@@ -54,6 +54,7 @@ namespace MixERP.Sales.Controllers.Backend.Tasks
             return this.FrapidView(this.GetRazorView<AreaRegistration>("Tasks/Entry/Index.cshtml", this.Tenant));
         }
 
+
         [Route("dashboard/sales/tasks/entry/verification")]
         [MenuPolicy]
         [AccessPolicy("sales", "sales", AccessTypeEnum.Verify)]
@@ -102,7 +103,7 @@ namespace MixERP.Sales.Controllers.Backend.Tasks
         [MenuPolicy(OverridePath = "/dashboard/sales/tasks/entry")]
         public async Task<ActionResult> Purchase(long transactionMasterId)
         {
-            var model = await SerialNumbers.GetSerialNumberDetails(this.Tenant, transactionMasterId);
+            var model = await SerialNumbers.GetSerialNumberDetails(this.Tenant, transactionMasterId).ConfigureAwait(true);
 
             return this.FrapidView(this.GetRazorView<AreaRegistration>("Tasks/Entry/SerialNumber.cshtml", this.Tenant), model);
         }
