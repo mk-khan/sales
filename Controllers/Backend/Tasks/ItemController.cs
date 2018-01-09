@@ -10,13 +10,15 @@ namespace MixERP.Sales.Controllers.Backend.Tasks
     public class ItemController : SalesDashboardController
     {
         [Route("dashboard/sales/tasks/items")]
+        [Route("dashboard/sales/tasks/items/{customerId}")]
         [AccessPolicy("sales", "item_view", AccessTypeEnum.Read)]
-        public async Task<ActionResult> IndexAsync()
+        public async Task<ActionResult> IndexAsync(int? customerId)
         {
             var meta = await AppUsers.GetCurrentAsync().ConfigureAwait(true);
-            var model = await Items.GetItemsAsync(this.Tenant, meta.OfficeId).ConfigureAwait(true);
+            var model = await Items.GetItemsAsync(this.Tenant, meta.OfficeId, customerId).ConfigureAwait(true);
             return this.Ok(model);
         }
+
 
         [Route("dashboard/sales/tasks/selling-price/{itemId}/{customerId}/{priceTypeId}/{unitId}")]
         [AccessPolicy("sales", "item_selling_prices", AccessTypeEnum.Read)]
@@ -41,7 +43,7 @@ namespace MixERP.Sales.Controllers.Backend.Tasks
                 return this.InvalidModelState(this.ModelState);
             }
 
-            var model = await Items.GetSerialNumbersAsync(this.Tenant, itemId, unitId, storeId);
+            var model = await Items.GetSerialNumbersAsync(this.Tenant, itemId, unitId, storeId).ConfigureAwait(true);
             return this.Ok(model);
         }
 

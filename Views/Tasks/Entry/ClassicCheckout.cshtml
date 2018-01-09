@@ -122,6 +122,86 @@
 @Html.PartialView("Shared/GiftCardSerachModal.cshtml", TenantConvention.GetTenant());
 
 <script>
+    $(document).ready(function () {
+        const orderId = $("#OrderIdInputHidden").val();
+        if (orderId) {
+            function request() {
+                const url = `/dashboard/sales/tasks/order/merge-model/${orderId}`;
+                return window.getAjaxRequest(url);
+            };
+
+            const ajax = request();
+
+            ajax.success(function (response) {
+                const order = response.Order;
+
+                setTimeout(function () {
+                    if (response.Order) {
+                        $("#ValueDateInputDate").datepicker("setDate", new Date(order.ValueDate));
+                        $("#BookDateInputDate").datepicker("setDate", new Date(order.ExpectedDeliveryDate));
+                        $("#StoreSelect").val(order.StoreId);
+                        $("#PriceTypeSelect").val(order.PriceTypeId);
+                        $("#CustomerSelect").val(order.CustomerId);
+                        $("#ShipperSelect").val(order.ShipperId);
+                        $("#ReferenceNumberInputText").val(order.ReferenceNumber);
+                        $("#DiscountInputText").val(order.Discount);
+                        $("#TaxableTotalInputText").val(order.TaxableTotal);
+                        $("#TaxInputText").val(order.Tax);
+                        $("#NonTaxableTotalInputText").val(order.NontaxableTotal);
+                    }
+
+                    $.each(response.Details, function () {
+                        const el = $("#CheckoutGrid tbody");
+                        const item = $(this)[0];
+
+                        //const candidate = "<tr />";
+                        //el.append(candidate);
+
+                        const add = $("#CheckoutGrid tfoot tr:eq(1)");
+                        add.find("#ItemSelect").val(item.ItemId);
+                        add.find("#QuantityInputText").val(item.Quantity);
+                        add.find("#UnitSelect").val(item.UnitId);
+                        add.find("#PriceInputText").val(item.Price);
+                        add.find("#ShippingChargeInputText").val(item.ShippingCharge);
+                        add.find("#LineDiscountInputText").val(item.Discount);
+
+                        add.find("#AddButton").trigger("click");
+
+                        el.find("tr:last").attr("data-unit-id", item.UnitId);
+                        el.find("tr:last").attr("data-is-taxable-item", item.IsTaxed);
+                        getUnits(el.find("tr:last td:eq(2)"), item.UnitId);
+                    })
+                }, 3000);
+            });
+
+            ajax.fail(function (xhr) {
+                ajax.logAjaxErrorMessage(xhr);
+            });
+        };
+    });
+
+    function getUnits(el, unitId) {
+        function request() {
+            const url = "/api/forms/inventory/units/get-where/-1";
+            const filters = [];
+
+            filters.push(window.getAjaxColumnFilter("WHERE", "UnitId", "int", window.FilterConditions.IsEqualTo, unitId));
+
+            const data = JSON.stringify(filters);
+            return window.getAjaxRequest(url, "POST", data);
+        };
+
+        const ajax = request();
+        ajax.success(function (response) {
+            const model = response[0];
+            el.html(model.UnitName);
+        });
+
+        ajax.fail(function (xhr) {
+            window.logAjaxErrorMessage(xhr);
+        });
+    };
+
     $("#GiftCardNumberInputText").on("change", function () {
         function request(giftCardNumber) {
             var url = "/dashboard/loyalty/tasks/gift-cards/get-balance/{giftCardNumber}";
