@@ -1,0 +1,54 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<FrapidReport>
+<Header />
+  <Title>Product Requirement By Customer</Title>
+  <Body>
+    <Content>
+      <h5>Duration: {DataSource[0].from_date} to {DataSource[0].to_date}</h5>
+    </Content>
+    <GridViews>
+      <GridView>
+        <GridViewDataSource Index="1">
+        </GridViewDataSource>
+      </GridView>
+    </GridViews>
+  </Body>
+  <DataSources>
+    <DataSource>
+      <Query>
+        SELECT @From::date AS from_date, @To::date AS to_date;
+      </Query>
+      <Parameters>
+        <Parameter Name="@From" FieldLabel="From Date" Type="System.DateTime" />
+        <Parameter Name="@To" FieldLabel="To Date" Type="System.DateTime" />
+      </Parameters>
+    </DataSource>
+    <DataSource>
+      <Query>
+        SELECT DENSE_RANK() OVER (ORDER BY quotations.quotation_id) AS "Order No",
+		      quotations.quotation_id as "Pick Id",
+	          customers.customer_name,
+	          quotations.expected_delivery_date as "delivery date",
+			  quotation_details.quantity,
+			  ' ' as "EnterPrice",
+			  units.unit_name,
+	          items.item_name,
+			  quotations.terms
+	        FROM sales.quotations
+	        JOIN inventory.customers ON quotations.customer_id = customers.customer_id
+	        JOIN sales.quotation_details ON quotations.quotation_id = quotation_details.quotation_id
+	        JOIN inventory.items ON quotation_details.item_id = items.item_id
+	        JOIN inventory.units ON quotation_details.unit_id = units.unit_id
+	        WHERE quotations.office_id = @OfficeId and quotations.cancelled = false
+	        AND quotations.expected_delivery_date BETWEEN @From::date AND @To::date
+      </Query>
+      <Parameters>
+        <Parameter Name="@From" FieldLabel="From Date" Type="System.DateTime" />
+        <Parameter Name="@To" FieldLabel="To Date" Type="System.DateTime" />
+        <Parameter Name="@OfficeId" FieldLabel="Office Id" Type="int"  DefaultValue="{Meta.OfficeId}" />
+      </Parameters>
+      <RunningTotalTextColumnIndex>8</RunningTotalTextColumnIndex>
+      <RunningTotalFieldIndices>6</RunningTotalFieldIndices>
+    </DataSource>
+  </DataSources>
+</FrapidReport>

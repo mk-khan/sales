@@ -262,10 +262,16 @@
   <ItemGroup>
     <Content Include="DevTrends.MvcDonutCaching.README.txt" />
     <Content Include="packages.config" />
+    <Content Include="Reports\AccountantSummary.SqlServer.xml" />
+    <Content Include="Reports\AccountantSummary.xml" />
+    <Content Include="Reports\AccountReceivableByCustomer.SqlServer.xml" />
+    <Content Include="Reports\AccountReceivableByCustomer.xml" />
     <Content Include="Reports\AccountReceivables.SqlServer.xml" />
     <Content Include="Reports\AccountReceivables.xml" />
     <Content Include="Reports\AllGiftCards.SqlServer.xml" />
     <Content Include="Reports\AllGiftCards.xml" />
+    <Content Include="Reports\ClosedOut.SqlServer.xml" />
+    <Content Include="Reports\ClosedOut.xml" />
     <Content Include="Reports\CustomerAccountStatement.SqlServer.xml" />
     <Content Include="Reports\CustomerAccountStatement.xml" />
     <Content Include="Reports\CustomerReceipts.SqlServer.xml" />
@@ -282,20 +288,32 @@
     <Content Include="Reports\Invoice.SqlServer.xml" />
     <Content Include="Reports\Invoice.xml" />
     <Content Include="Reports\Order.xml" />
+    <Content Include="Reports\OrderDeliverySheet.xml" />
+    <Content Include="Reports\OrderInvoiceSheet.xml" />
+    <Content Include="Reports\OrderInvoiceSummary.xml" />
+    <Content Include="Reports\OrderInvoiceSummaryByCustomer.xml" />
+    <Content Include="Reports\OrderInvoiceSummarySheet.xml" />
+    <Content Include="Reports\OrderInvoiceSummarySheetByCustomer.xml" />
     <Content Include="Reports\OrderStatus.SqlServer.xml" />
     <Content Include="Reports\OrderStatus.xml" />
+    <Content Include="Reports\ProductRequirement.xml" />
+    <Content Include="Reports\ProductRequirementByCustomer.xml" />
     <Content Include="Reports\Quotation.xml" />
     <Content Include="Reports\QuotationStatus.SqlServer.xml" />
     <Content Include="Reports\QuotationStatus.xml" />
     <Content Include="Reports\Receipt.xml">
       <SubType>Designer</SubType>
     </Content>
+    <Content Include="Reports\ReceiptJournalSummary.SqlServer.xml" />
+    <Content Include="Reports\ReceiptJournalSummary.xml" />
     <Content Include="Reports\Return.xml" />
     <Content Include="Reports\SalesByOffice.SqlServer.xml" />
     <Content Include="Reports\SalesByOffice.xml" />
     <Content Include="Reports\SalesDetails.xml" />
     <Content Include="Reports\SalesDiscountStatus.xml" />
     <Content Include="Reports\SalesDiscountStatus.SqlServer.xml" />
+    <Content Include="Reports\SalesSummary.SqlServer.xml" />
+    <Content Include="Reports\SalesSummary.xml" />
     <Content Include="Reports\TopSellingItems.xml" />
     <Content Include="widgets\receipts.html" />
     <Content Include="widgets\top-customers.html" />

@@ -1,0 +1,67 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<FrapidReport>
+<Header />
+  <Title>Product Requirement</Title>
+  <Body>
+    <Content>
+      <h5>Duration: {DataSource[0].from_date} to {DataSource[0].to_date}</h5>
+    </Content>
+    <GridViews>
+      <GridView>
+        <GridViewDataSource Index="1">
+        </GridViewDataSource>
+      </GridView>
+    </GridViews>
+  </Body>
+  <DataSources>
+    <DataSource>
+      <Query>
+        SELECT @From::date AS from_date, @To::date AS to_date;
+      </Query>
+      <Parameters>
+        <Parameter Name="@From" FieldLabel="From Date" Type="System.DateTime" />
+        <Parameter Name="@To" FieldLabel="To Date" Type="System.DateTime" />
+      </Parameters>
+    </DataSource>
+    <DataSource>
+      <Query>
+	   WITH summary
+		AS
+		(   SELECT 
+		    items.item_id,
+		    items.item_name,
+		    item_groups.item_group_name,
+		    string_agg(customers.customer_code || ': ' || (quotation_details.quantity:: float), ',') as customer_name,
+		    units.unit_id as base_unit_id,
+	        SUM(quotation_details.quantity) as base_total_quantity,
+	        units.unit_code
+	        FROM sales.quotations
+	        JOIN inventory.customers ON quotations.customer_id = customers.customer_id
+	        JOIN sales.quotation_details ON quotations.quotation_id = quotation_details.quotation_id
+	        JOIN inventory.items ON quotation_details.item_id = items.item_id
+	        JOIN inventory.units ON quotation_details.unit_id = units.unit_id
+			JOIN inventory.item_groups ON item_groups.item_group_id = items.item_group_id
+	        WHERE quotations.office_id = @OfficeId and quotations.cancelled = false
+	        AND quotations.expected_delivery_date BETWEEN @From::date AND @To::date
+	        group by item_groups.item_group_name,items.item_name,  units.unit_code,items.item_id, units.unit_id)
+	        SELECT 
+			row_number() over(order by item_group_name, item_name) as "Serial No",
+			customer_name,
+			item_group_name as "Category",
+			inventory.get_item_name_by_item_id(item_id) AS item_name,
+			sum(base_total_quantity) AS quantity,
+			inventory.get_unit_name_by_unit_id(base_unit_id) AS unit
+			FROM summary
+		group by item_group_name,customer_name, item_name,item_id, unit
+		ORDER BY  item_group_name, item_name;
+      </Query>
+      <Parameters>
+        <Parameter Name="@From" FieldLabel="From Date" Type="System.DateTime" />
+        <Parameter Name="@To" FieldLabel="To Date" Type="System.DateTime" />
+        <Parameter Name="@OfficeId" FieldLabel="Office Id" Type="int"  DefaultValue="{Meta.OfficeId}" />
+      </Parameters>
+      <RunningTotalTextColumnIndex>3</RunningTotalTextColumnIndex>
+      <RunningTotalFieldIndices>4</RunningTotalFieldIndices>
+    </DataSource>
+  </DataSources>
+</FrapidReport>

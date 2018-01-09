@@ -1,0 +1,79 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<FrapidReport>
+<Header />
+  <Title>Invoice Summary</Title>
+  <TopSection style="padding-bottom: 0px !important;">
+    <table class="table horizontal">
+      <tr>
+        <td style="padding: 0.8em !important;"><b>Statement Date</b></td>
+        <td style="padding: 0.8em !important;">
+          {DataSource[0].Statement_Date}
+        </td>
+        <td style="padding: 0.8em !important;"><b>{i18n.CustomerName}</b></td>
+        <td style="padding: 0.8em !important;">{DataSource[0].customer_name}</td>
+      </tr>
+      <tr>
+        <td style="padding: 0.8em !important;"><b>Statement Period</b></td>
+        <td style="padding: 0.8em !important;">{DataSource[0].from_date} to {DataSource[0].to_date}</td>
+		<td style="padding: 0.8em !important;"><b>Due Date</b></td>
+        <td style="padding: 0.8em !important;">{DataSource[0].due_date}</td>
+      </tr>
+    </table>
+  </TopSection>
+  <Body>
+    <Content>
+      <h3>Statement Details</h3>
+    </Content>
+    <GridViews>
+      <GridView>
+        <GridViewDataSource Index="1">
+        </GridViewDataSource>
+      </GridView>
+    </GridViews>
+  </Body>
+  <DataSources>
+	<DataSource>
+      <Query>
+        SELECT
+        cus.customer_code,
+        cus.customer_name, to_char((LOCALTIMESTAMP AT TIME ZONE 'AST')::date, 'DD Mon YYYY') as Statement_Date,
+        to_char(@From::date, 'DD Mon YYYY') AS from_date, to_char(@To::date, 'DD Mon YYYY') AS to_date,
+		to_char(@duedate::date, 'DD Mon YYYY') AS due_date
+        FROM inventory.customers cus
+        WHERE cus.customer_id = @CustomerId
+      </Query>
+      <Parameters>
+	   <Parameter Name="@CustomerId" FieldLabel="Customer" Type="integer" PopulateFrom="/api/views/inventory/customers/display-fields" KeyField="Key" ValueField="Value"/>
+	  <Parameter Name="@From" FieldLabel="From Date" Type="System.DateTime" />
+        <Parameter Name="@To" FieldLabel="To Date" Type="System.DateTime" />
+		<Parameter Name="@duedate" FieldLabel="Due Date" Type="System.DateTime" />
+      </Parameters>
+    </DataSource>
+    <DataSource>
+      <Query>
+	  SELECT DENSE_RANK() OVER (ORDER BY  orders.order_id) AS "S No",
+		      orders.order_id as "Invoice Id",
+	          customers.customer_name,
+	          orders.expected_delivery_date as "delivery date",
+              sum(order_details.price * order_details.quantity) as "Amount",
+              orders.terms
+	        FROM sales.orders
+	        JOIN inventory.customers ON orders.customer_id = customers.customer_id
+	        JOIN sales.order_details ON orders.order_id = order_details.order_id
+	        WHERE orders.office_id = @OfficeId and orders.cancelled = false
+	        AND orders.expected_delivery_date BETWEEN @From::date AND @To::date
+			AND orders.customer_id = @CustomerId::int
+	        group by orders.order_id, customers.customer_name, orders.expected_delivery_date,orders.terms
+			order by orders.order_id;
+      </Query>
+      <Parameters>
+        <Parameter Name="@OfficeId" FieldLabel="Office Id" Type="int"  DefaultValue="{Meta.OfficeId}" />
+        <Parameter Name="@CustomerId" FieldLabel="Customer" Type="int" PopulateFrom="/api/views/inventory/customers/display-fields" KeyField="Key" ValueField="Value" Optional="true"/>
+        <Parameter Name="@From" FieldLabel="From Date" Type="System.DateTime" />
+        <Parameter Name="@To" FieldLabel="To Date" Type="System.DateTime" />
+      </Parameters>
+      <RunningTotalTextColumnIndex>3</RunningTotalTextColumnIndex>
+      <RunningTotalFieldIndices>4</RunningTotalFieldIndices>
+    </DataSource>
+  </DataSources>
+</FrapidReport>

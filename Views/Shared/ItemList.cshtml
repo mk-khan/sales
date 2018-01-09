@@ -50,7 +50,10 @@
             </div>
             <div class="search panel">
                 <input type="search" placeholder="@I18N.Search"/>
-
+			
+			<button style="padding-left:20px" id="RefreshItemButton" class="ui green icon small button">
+                    Refresh Item List
+                </button>
             </div>
             <div class="item list" id="POSItemList">
             </div>
@@ -60,13 +63,18 @@
             </div>
             <div class="tender info">
                 <div class="page title">@I18N.Sales</div>
-                <div id="SummaryItems" class="two summary items">
+                <div id="SummaryItems" class="three summary items">
                     <div class="amount item">
                         <div class="description">@I18N.Amount</div>
                         <div class="money">
                             <span></span>
                         </div>
                     </div>
+					<div class="item totalcount">
+				<div class="description">Item Count</div>
+				<div class="money">
+				</div>
+				</div>
                     <div class="store item">
                         <div class="description">@I18N.Store</div>
                         <div class="control">
