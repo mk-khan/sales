@@ -19,7 +19,7 @@
     $(".page.title").html("Sales Quotation");
 
     const expectedDeliveryDate =
-        $("<input type='text' class='date' value='0d' id='ExpectedDeliveryDateInputText' />");
+        $("<input type='text' class='date' value='1d' id='ExpectedDeliveryDateInputText' />");
     $("#BookDateInputDate").after(expectedDeliveryDate).remove();
     expectedDeliveryDate.parent().parent().find(".description").html(window.translate("ExpectedDeliveryDate"));
 
@@ -38,8 +38,13 @@
 			return;
         };
     });
-
+	
     window.loadDatepicker();
+	var today = new Date();
+	var tomorrow = new Date();
+	tomorrow.setDate(tomorrow.getDate() + 1);
+	$("#ExpectedDeliveryDateInputText").datepicker("setDate", tomorrow);
+	$("#ValueDateInputDate").datepicker("setDate", today);
 };
 
 initializeUI();

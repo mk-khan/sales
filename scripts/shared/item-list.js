@@ -1,4 +1,5 @@
-﻿$("#SalesItems .item").on("contextmenu", function (e) {
+﻿const numberOfItemsToDisplay = 1000;
+$("#SalesItems .item").on("contextmenu", function (e) {
     e.preventDefault();
     const el = $(this);
     const defaultMenu = el.find(".info.block, .number.block");
@@ -476,7 +477,7 @@ function displayProducts(category, searchQuery) {
                     return x.ItemGroupName.toLowerCase() === category.toString().toLowerCase()
                         &&
                         (
-                            (x.ItemName && x.ItemName.length > 0 && x.ItemName.toLowerCase().indexOf(searchQuery.toLowerCase()) > -1)
+                          (x.ItemName && x.ItemName.length > 0 &&  x.ItemName.toLowerCase().indexOf(searchQuery.toLowerCase()) > -1)
                             ||
                             (x.Barcode && x.Barcode.length > 0 && x.Barcode.toLowerCase().indexOf(searchQuery.toLowerCase()) > -1)
                         );
@@ -490,7 +491,6 @@ function displayProducts(category, searchQuery) {
                         (x.Barcode && x.Barcode.length > 0 && x.Barcode.toLowerCase().indexOf(searchQuery.toString().toLowerCase()) > -1);
                 }).Take(numberOfItemsToDisplay).ToArray();
         } else {
-
             groupItems = window.Enumerable
                 .From(products)
                 .Where(function (x) {

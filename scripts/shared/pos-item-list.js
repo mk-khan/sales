@@ -1,4 +1,4 @@
-﻿const numberOfItemsToDisplay = 20;
+﻿const numberOfItemsToDisplay = 1000;
 
 var itemTemplate =
     `<div class="item" id="pos-{ItemId}" data-selling-price="{InvariantCultureSellingPrice}" data-photo="{Photo}" data-unit-id="{UnitId}" data-valid-units="{ValidUnits}" data-brand="{BrandName}" data-item-group="{ItemGroupName}" data-item-name="{ItemName}" data-item-code="{ItemCode}" data-item-id="{ItemId}" data-price="{Price}" data-is-taxable-item="{IsTaxableItem}">
@@ -394,18 +394,18 @@ function displayProducts(category, searchQuery) {
                     return x.ItemGroupName.toLowerCase() === category.toString().toLowerCase()
                         &&
                         (
-                            x.ItemName.toLowerCase().indexOf(searchQuery.toLowerCase()) > -1
-                                ||
-                                x.Barcode.toLowerCase().indexOf(searchQuery.toLowerCase()) > -1
+                          (x.ItemName && x.ItemName.length > 0 &&  x.ItemName.toLowerCase().indexOf(searchQuery.toLowerCase()) > -1)
+                            ||
+                            (x.Barcode && x.Barcode.length > 0 && x.Barcode.toLowerCase().indexOf(searchQuery.toLowerCase()) > -1)
                         );
                 }).Take(numberOfItemsToDisplay).ToArray();
         } else if (!category && searchQuery) {
             groupItems = window.Enumerable
                 .From(products)
                 .Where(function (x) {
-                    return x.ItemName.toLowerCase().indexOf(searchQuery.toLowerCase()) > -1
+                    return (x.ItemName && x.ItemName.length > 0 && x.ItemName.toLowerCase().indexOf(searchQuery.toString().toLowerCase()) > -1)
                         ||
-                        x.Barcode.toLowerCase().indexOf(searchQuery.toLowerCase()) > -1;
+                        (x.Barcode && x.Barcode.length > 0 && x.Barcode.toLowerCase().indexOf(searchQuery.toString().toLowerCase()) > -1);
                 }).Take(numberOfItemsToDisplay).ToArray();
         } else {
             groupItems = window.Enumerable
