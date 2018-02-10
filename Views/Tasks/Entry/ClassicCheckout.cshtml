@@ -123,7 +123,8 @@
 
 <script>
     $(document).ready(function () {
-        const orderId = $("#OrderIdInputHidden").val();
+        const orderId = window.getQueryStringByName("OrderId");
+
         if (orderId) {
             function request() {
                 const url = `/dashboard/sales/tasks/order/merge-model/${orderId}`;
@@ -137,8 +138,6 @@
 
                 setTimeout(function () {
                     if (response.Order) {
-                        $("#ValueDateInputDate").datepicker("setDate", new Date(order.ValueDate));
-                        $("#BookDateInputDate").datepicker("setDate", new Date(order.ExpectedDeliveryDate));
                         $("#StoreSelect").val(order.StoreId);
                         $("#PriceTypeSelect").val(order.PriceTypeId);
                         $("#CustomerSelect").val(order.CustomerId);
@@ -149,6 +148,62 @@
                         $("#TaxInputText").val(order.Tax);
                         $("#NonTaxableTotalInputText").val(order.NontaxableTotal);
                     }
+
+                    $.each(response.Details, function() {
+                        const el = $("#CheckoutGrid tbody");
+                        const item = $(this)[0];
+
+                        //const candidate = "<tr />";
+                        //el.append(candidate);
+
+                        const add = $("#CheckoutGrid tfoot tr:eq(1)");
+                        add.find("#ItemSelect").val(item.ItemId);
+                        add.find("#QuantityInputText").val(item.Quantity);
+                        add.find("#UnitSelect").val(item.UnitId);
+                        add.find("#PriceInputText").val(item.Price);
+                        add.find("#ShippingChargeInputText").val(item.ShippingCharge);
+                        add.find("#LineDiscountInputText").val(item.Discount);
+
+                        add.find("#AddButton").trigger("click");
+
+                        el.find("tr:last").attr("data-unit-id", item.UnitId);
+                        el.find("tr:last").attr("data-is-taxable-item", item.IsTaxed);
+                        getUnits(el.find("tr:last td:eq(2)"), item.UnitId);
+                    });
+                }, 3000);
+            });
+
+            ajax.fail(function (xhr) {
+                ajax.logAjaxErrorMessage(xhr);
+            });
+        };
+    });
+
+    $(document).ready(function () {
+        const quotationId = window.getQueryStringByName("QuotationId");
+
+        if (quotationId) {
+            function request() {
+                const url = `/dashboard/sales/tasks/quotation/merge-model/${quotationId}`;
+                return window.getAjaxRequest(url);
+            };
+
+            const ajax = request();
+
+            ajax.success(function (response) {
+                const quotation = response.Quotation;
+
+                setTimeout(function () {
+                    if (response.Quotation) {
+                        $("#PriceTypeSelect").val(quotation.PriceTypeId);
+                        $("#CustomerSelect").val(quotation.CustomerId);
+                        $("#ShipperSelect").val(quotation.ShipperId);
+                        $("#ReferenceNumberInputText").val(quotation.ReferenceNumber);
+                        $("#DiscountInputText").val(quotation.Discount);
+                        $("#TaxableTotalInputText").val(quotation.TaxableTotal);
+                        $("#TaxInputText").val(quotation.Tax);
+                        $("#NonTaxableTotalInputText").val(quotation.NontaxableTotal);
+                    };
 
                     $.each(response.Details, function () {
                         const el = $("#CheckoutGrid tbody");
@@ -170,7 +225,7 @@
                         el.find("tr:last").attr("data-unit-id", item.UnitId);
                         el.find("tr:last").attr("data-is-taxable-item", item.IsTaxed);
                         getUnits(el.find("tr:last td:eq(2)"), item.UnitId);
-                    })
+                    });
                 }, 3000);
             });
 

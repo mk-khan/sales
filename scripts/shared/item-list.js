@@ -557,13 +557,21 @@ function displayFieldBinder(el, url) {
 
     const ajax = request();
 
+    const selected = el.attr("data-selected");
+
     ajax.success(function (response) {
         var options = "";
 
         $.each(response, function () {
-            var option = "<option value='{key}'>{value}</option>";
+            var option = "<option value='{key}' {selected}>{value}</option>";
             option = option.replace("{key}", this.Key);
             option = option.replace("{value}", this.Value);
+
+            if (selected.toString() === this.Key.toString()) {
+                option = option.replace("{selected}", "selected");
+            } else {
+                option = option.replace("{selected}", "");
+            };
 
             options += option;
         });
