@@ -76,9 +76,7 @@
     SortExpression: function (data) {
         return window.Enumerable.From(data)
             .OrderByDescending(function (x) {
-                return new Date(x.ValueDate);
-            }).ThenByDescending(function (x) {
-                return new Date(x.PostedOn);
+                return parseInt(x.InvoiceNumber);
             }).ToArray();
     },
     Annotation: [

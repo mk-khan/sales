@@ -39,7 +39,6 @@ namespace MixERP.Sales.DAL.Backend.Tasks
                 }
 
                 sql.And("office_id IN(SELECT * FROM core.get_office_ids(@0))", officeId);
-
                 return await db.SelectAsync<dynamic>(sql).ConfigureAwait(false);
             }
         }

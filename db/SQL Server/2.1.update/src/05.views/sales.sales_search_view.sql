@@ -6,8 +6,9 @@ GO
 CREATE VIEW sales.sales_search_view
 AS
 SELECT 
-    CAST(finance.transaction_master.transaction_master_id AS varchar(100)) AS tran_id, 
+    CAST(finance.transaction_master.transaction_master_id AS varchar(100)) AS tran_id,
     finance.transaction_master.transaction_code AS tran_code,
+	sales.sales.invoice_number,
     finance.transaction_master.value_date,
     finance.transaction_master.book_date,
     inventory.get_customer_name_by_customer_id(sales.sales.customer_id) AS customer,
@@ -28,4 +29,3 @@ ON sales.sales.transaction_master_id = finance.transaction_master.transaction_ma
 WHERE finance.transaction_master.deleted = 0;
 
 GO
-
