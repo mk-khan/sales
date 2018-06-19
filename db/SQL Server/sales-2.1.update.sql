@@ -2657,7 +2657,7 @@ BEGIN
 		AND finance.tax_setups.office_id = @office_id;
 
         INSERT INTO @checkout_details(store_id, transaction_type, item_id, quantity, unit_id, price, discount_rate, discount, shipping_charge, is_taxed)
-        SELECT store_id, 'Cr', item_id, quantity, unit_id, price, discount_rate, discount, shipping_charge, COALESCE(is_taxed, 1)
+        SELECT store_id, 'Dr', item_id, quantity, unit_id, price, discount_rate, discount, shipping_charge, COALESCE(is_taxed, 1)
         FROM @details;
 
         UPDATE @checkout_details 
@@ -3981,6 +3981,7 @@ EXECUTE core.create_menu 'MixERP.Sales', 'Customers', 'Customers', '/dashboard/r
 EXECUTE core.create_menu 'MixERP.Sales', 'SalesDetails', 'Sales Details', '/dashboard/reports/view/Areas/MixERP.Sales/Reports/SalesDetails.xml', 'money', 'Reports';
 EXECUTE core.create_menu 'MixERP.Sales', 'SalesSummary', 'Sales Summary', '/dashboard/reports/view/Areas/MixERP.Sales/Reports/SalesSummary.xml', 'money', 'Reports';
 EXECUTE core.create_menu 'MixERP.Sales', 'LeastSellingItems', 'Least Selling Items', '/dashboard/reports/view/Areas/MixERP.Sales/Reports/LeastSellingItems.xml', 'map signs', 'Reports';
+EXECUTE core.create_menu 'MixERP.Sales', 'SalesReturnReport', 'Sales Return Report', '/dashboard/reports/view/Areas/MixERP.Sales/Reports/SalesReturn.xml', 'map signs', 'Reports';
 
 
 -->-->-- src/Frapid.Web/Areas/MixERP.Sales/db/SQL Server/2.1.update/src/05.views/00.sales.sales_view.sql --<--<--
@@ -4481,8 +4482,9 @@ GO
 CREATE VIEW sales.sales_search_view
 AS
 SELECT 
-    CAST(finance.transaction_master.transaction_master_id AS varchar(100)) AS tran_id, 
+    CAST(finance.transaction_master.transaction_master_id AS varchar(100)) AS tran_id,
     finance.transaction_master.transaction_code AS tran_code,
+	sales.sales.invoice_number,
     finance.transaction_master.value_date,
     finance.transaction_master.book_date,
     inventory.get_customer_name_by_customer_id(sales.sales.customer_id) AS customer,
@@ -4503,7 +4505,6 @@ ON sales.sales.transaction_master_id = finance.transaction_master.transaction_ma
 WHERE finance.transaction_master.deleted = 0;
 
 GO
-
 
 
 -->-->-- src/Frapid.Web/Areas/MixERP.Sales/db/SQL Server/2.1.update/src/99.ownership.sql --<--<--

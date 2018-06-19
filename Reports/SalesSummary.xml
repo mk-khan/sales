@@ -40,6 +40,7 @@
 			INNER JOIN finance.transaction_master
 			ON finance.transaction_master.transaction_master_id = inventory.checkouts.transaction_master_id
 			WHERE finance.transaction_master.book_date BETWEEN @From::date AND @To::date
+			AND finance.transaction_master.verification_status_id &gt; 0
 			AND finance.transaction_master.office_id = @OfficeId
 			AND (COALESCE(@StoreId, 0) = 0 OR inventory.stores.store_id = @StoreId)
 			AND (COALESCE(@BrandId, 0) = 0 OR inventory.brands.brand_id = @BrandId)
