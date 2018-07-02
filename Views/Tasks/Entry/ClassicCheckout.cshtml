@@ -122,6 +122,7 @@
 @Html.PartialView("Shared/GiftCardSerachModal.cshtml", TenantConvention.GetTenant());
 
 <script>
+	window.isSales = true;
     $(document).ready(function () {
         const orderId = window.getQueryStringByName("OrderId");
 
@@ -467,7 +468,7 @@
 
         ajax.fail(function (xhr) {
             button.removeClass("loading").prop("disabled", false);
-            window.displayMessage(JSON.stringify(xhr));
+            window.displayMessage(xhr.responseText);
         });
     };
 
