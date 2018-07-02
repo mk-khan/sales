@@ -28,7 +28,7 @@
           sales.price_types.price_type_code,
           inventory.customers.customer_name,
           inventory.customers.company_name,
-          account.users.name AS salesperson,
+          account.users.name AS [user],
           sales.sales.total_amount,
           sales.sales.total_discount_amount,
           sales.sales.tender,

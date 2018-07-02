@@ -103,8 +103,10 @@ BEGIN
     DECLARE @item_quantities TABLE
     (
         item_id                             integer,
+		unit_id								integer,
         base_unit_id                        integer,
         store_id                            integer,
+		quantity							numeric(30, 6),
         total_sales                         numeric(30, 6),
         in_stock                            numeric(30, 6),
         maintain_inventory                  bit
@@ -236,10 +238,10 @@ BEGIN
 			RAISERROR('A line amount cannot be less than zero.', 16, 1);
 		END;
 
-        INSERT INTO @item_quantities(item_id, base_unit_id, store_id, total_sales)
-        SELECT item_id, base_unit_id, store_id, SUM(base_quantity)
+        INSERT INTO @item_quantities(item_id, base_unit_id, unit_id, store_id, quantity, total_sales)
+        SELECT item_id, base_unit_id, unit_id, store_id, SUM(quantity), SUM(base_quantity)
         FROM @checkout_details
-        GROUP BY item_id, base_unit_id, store_id;
+        GROUP BY item_id, base_unit_id, unit_id, store_id;
 
         UPDATE @item_quantities
         SET maintain_inventory = inventory.items.maintain_inventory
@@ -259,7 +261,14 @@ BEGIN
             AND maintain_inventory = 1     
         )
         BEGIN
-            RAISERROR('Insufficient item quantity', 13, 1);
+			SET @error_message = 'Negative stock is not allowed. <br /> <br />';
+
+			SELECT @error_message = @error_message + inventory.get_item_name_by_item_id(item_id) + ' --> required: ' + CAST(quantity AS varchar(50))+ ', actual: ' + CAST(inventory.convert_unit(base_unit_id, unit_id) * in_stock AS varchar(50)) + ' / ' + inventory.get_unit_name_by_unit_id(unit_id) +  ' <br />'
+			FROM @item_quantities
+            WHERE total_sales > in_stock
+            AND maintain_inventory = 1     
+
+            RAISERROR(@error_message, 13, 1);
         END;
         
         IF EXISTS
