@@ -23,6 +23,7 @@ SELECT
 	sales.orders.office_id,
 	sales.orders.discount,
 	sales.orders.tax,
+	sales.orders.priority,
 	sales.orders.cancelled
 FROM sales.orders;
 
