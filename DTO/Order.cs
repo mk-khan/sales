@@ -26,6 +26,7 @@ namespace MixERP.Sales.DTO
         public decimal TaxRate { get; set; }
         public decimal Tax { get; set; }
         public decimal NontaxableTotal { get; set; }
+        public string Priority { get; set; }
         public int? AuditUserId { get; set; }
         public DateTimeOffset? AuditTs { get; set; }
         public bool? Deleted { get; set; }
