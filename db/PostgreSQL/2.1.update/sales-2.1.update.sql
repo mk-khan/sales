@@ -3738,6 +3738,8 @@ LANGUAGE plpgsql;
 SELECT * FROM core.create_menu('MixERP.Sales', 'Customers', 'Customers', '/dashboard/reports/view/Areas/MixERP.Sales/Reports/Customers.xml', 'users', 'Reports');
 SELECT * FROM core.create_menu('MixERP.Sales', 'SalesDetails', 'Sales Details', '/dashboard/reports/view/Areas/MixERP.Sales/Reports/SalesDetails.xml', 'money', 'Reports');
 SELECT * FROM core.create_menu('MixERP.Sales', 'SalesSummary', 'Sales Summary', '/dashboard/reports/view/Areas/MixERP.Sales/Reports/SalesSummary.xml', 'money', 'Reports');
+SELECT * FROM core.create_menu('MixERP.Sales', 'LeastSellingItems', 'Least Selling Items', '/dashboard/reports/view/Areas/MixERP.Sales/Reports/LeastSellingItems.xml', 'money', 'Reports');
+SELECT * FROM core.create_menu('MixERP.Sales', 'SalesReturnReport', 'Sales Return Report', '/dashboard/reports/view/Areas/MixERP.Sales/Reports/SalesReturn.xml', 'money', 'Reports');
 
 
 -->-->-- src/Frapid.Web/Areas/MixERP.Sales/db/PostgreSQL/2.1.update/src/05.views/00.sales.sales_view.sql --<--<--
@@ -4175,6 +4177,7 @@ AS
 SELECT 
     finance.transaction_master.transaction_master_id::text AS tran_id, 
     finance.transaction_master.transaction_code AS tran_code,
+	sales.sales.invoice_number,
     finance.transaction_master.value_date,
     finance.transaction_master.book_date,
     inventory.get_customer_name_by_customer_id(sales.sales.customer_id) AS customer,
@@ -4238,25 +4241,41 @@ LANGUAGE plpgsql;
 DO
 $$
     DECLARE this record;
+    DECLARE _version_number integer = current_setting('server_version_num')::integer;
 BEGIN
     IF(CURRENT_USER = 'frapid_db_user') THEN
         RETURN;
     END IF;
 
-    FOR this IN 
-    SELECT 'ALTER '
-        || CASE WHEN p.proisagg THEN 'AGGREGATE ' ELSE 'FUNCTION ' END
-        || quote_ident(n.nspname) || '.' || quote_ident(p.proname) || '(' 
-        || pg_catalog.pg_get_function_identity_arguments(p.oid) || ') OWNER TO frapid_db_user;' AS sql
-    FROM   pg_catalog.pg_proc p
-    JOIN   pg_catalog.pg_namespace n ON n.oid = p.pronamespace
-    WHERE  NOT n.nspname = ANY(ARRAY['pg_catalog', 'information_schema'])
-    LOOP        
-        EXECUTE this.sql;
-    END LOOP;
+    IF(_version_number < 110000) THEN
+        FOR this IN 
+        SELECT 'ALTER '
+            || CASE WHEN p.proisagg THEN 'AGGREGATE ' ELSE 'FUNCTION ' END
+            || quote_ident(n.nspname) || '.' || quote_ident(p.proname) || '(' 
+            || pg_catalog.pg_get_function_identity_arguments(p.oid) || ') OWNER TO frapid_db_user;' AS sql
+        FROM   pg_catalog.pg_proc p
+        JOIN   pg_catalog.pg_namespace n ON n.oid = p.pronamespace
+        WHERE  NOT n.nspname = ANY(ARRAY['pg_catalog', 'information_schema'])
+        LOOP        
+            EXECUTE this.sql;
+        END LOOP;
+    ELSE
+        FOR this IN 
+        SELECT 'ALTER '
+            || CASE p.prokind WHEN 'a' THEN 'AGGREGATE ' ELSE 'FUNCTION ' END
+            || quote_ident(n.nspname) || '.' || quote_ident(p.proname) || '(' 
+            || pg_catalog.pg_get_function_identity_arguments(p.oid) || ') OWNER TO frapid_db_user;' AS sql
+        FROM   pg_catalog.pg_proc p
+        JOIN   pg_catalog.pg_namespace n ON n.oid = p.pronamespace
+        WHERE  NOT n.nspname = ANY(ARRAY['pg_catalog', 'information_schema'])
+        LOOP        
+            EXECUTE this.sql;
+        END LOOP;
+    END IF;
 END
 $$
 LANGUAGE plpgsql;
+
 
 
 DO
@@ -4365,22 +4384,37 @@ LANGUAGE plpgsql;
 DO
 $$
     DECLARE this record;
+    DECLARE _version_number integer = current_setting('server_version_num')::integer;
 BEGIN
     IF(CURRENT_USER = 'report_user') THEN
         RETURN;
     END IF;
 
-    FOR this IN 
-    SELECT 'GRANT EXECUTE ON '
-        || CASE WHEN p.proisagg THEN 'AGGREGATE ' ELSE 'FUNCTION ' END
-        || quote_ident(n.nspname) || '.' || quote_ident(p.proname) || '(' 
-        || pg_catalog.pg_get_function_identity_arguments(p.oid) || ') TO report_user;' AS sql
-    FROM   pg_catalog.pg_proc p
-    JOIN   pg_catalog.pg_namespace n ON n.oid = p.pronamespace
-    WHERE  NOT n.nspname = ANY(ARRAY['pg_catalog', 'information_schema'])
-    LOOP        
-        EXECUTE this.sql;
-    END LOOP;
+    IF(_version_number < 110000) THEN
+        FOR this IN 
+        SELECT 'GRANT EXECUTE ON '
+            || CASE WHEN p.proisagg THEN 'AGGREGATE ' ELSE 'FUNCTION ' END
+            || quote_ident(n.nspname) || '.' || quote_ident(p.proname) || '(' 
+            || pg_catalog.pg_get_function_identity_arguments(p.oid) || ') TO report_user;' AS sql
+        FROM   pg_catalog.pg_proc p
+        JOIN   pg_catalog.pg_namespace n ON n.oid = p.pronamespace
+        WHERE  NOT n.nspname = ANY(ARRAY['pg_catalog', 'information_schema'])
+        LOOP        
+            EXECUTE this.sql;
+        END LOOP;
+    ELSE
+        FOR this IN 
+        SELECT 'GRANT EXECUTE ON '
+            || CASE p.prokind WHEN 'a' THEN 'AGGREGATE ' ELSE 'FUNCTION ' END
+            || quote_ident(n.nspname) || '.' || quote_ident(p.proname) || '(' 
+            || pg_catalog.pg_get_function_identity_arguments(p.oid) || ') TO report_user;' AS sql
+        FROM   pg_catalog.pg_proc p
+        JOIN   pg_catalog.pg_namespace n ON n.oid = p.pronamespace
+        WHERE  NOT n.nspname = ANY(ARRAY['pg_catalog', 'information_schema'])
+        LOOP        
+            EXECUTE this.sql;
+        END LOOP;
+    END IF;
 END
 $$
 LANGUAGE plpgsql;

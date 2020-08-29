@@ -84,6 +84,18 @@
         };
     });
 
+    const form = $(".flat.form.attached")[1];
+    if (form) {
+        const select = $("<select id='PrioritySelect'/>");
+        select.append($("<option value='Normal' />").append('Normal'));
+        select.append($("<option value='Low' />").append('Low'));
+        select.append($("<option value='High' />").append('High'));
+
+        $($(form).find('.fields')[1]).append($("<div class='two wide field'/>")
+            .append($("<label />").append('Priority'))
+            .append(select));
+    }
+
     function getUnits(el, unitId) {
         function request() {
             const url = "/api/forms/inventory/units/get-where/-1";
@@ -123,6 +135,7 @@
                 return null;
             };
 
+            model.Priority = $("#PrioritySelect").val();
             return model;
         };
 

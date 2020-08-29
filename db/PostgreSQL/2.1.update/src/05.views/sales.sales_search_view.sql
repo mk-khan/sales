@@ -5,6 +5,7 @@ AS
 SELECT 
     finance.transaction_master.transaction_master_id::text AS tran_id, 
     finance.transaction_master.transaction_code AS tran_code,
+	sales.sales.invoice_number,
     finance.transaction_master.value_date,
     finance.transaction_master.book_date,
     inventory.get_customer_name_by_customer_id(sales.sales.customer_id) AS customer,

@@ -5,12 +5,17 @@ ALTER COLUMN sales_id bigint NULL;
 ALTER TABLE sales.returns
 ALTER COLUMN transaction_master_id bigint NULL;
 
+IF COL_LENGTH('sales.orders', 'priority') IS NULL
+BEGIN
+	ALTER TABLE sales.orders 
+	ADD [priority] national character varying(24);
+END;
+
 IF COL_LENGTH('sales.customerwise_selling_prices', 'is_taxable') IS NULL
 BEGIN
 	ALTER TABLE sales.customerwise_selling_prices
 	ADD is_taxable bit NOT NULL DEFAULT(0);
 END;
-
 
 
 
@@ -2657,7 +2662,7 @@ BEGIN
 		AND finance.tax_setups.office_id = @office_id;
 
         INSERT INTO @checkout_details(store_id, transaction_type, item_id, quantity, unit_id, price, discount_rate, discount, shipping_charge, is_taxed)
-        SELECT store_id, 'Cr', item_id, quantity, unit_id, price, discount_rate, discount, shipping_charge, COALESCE(is_taxed, 1)
+        SELECT store_id, 'Dr', item_id, quantity, unit_id, price, discount_rate, discount, shipping_charge, COALESCE(is_taxed, 1)
         FROM @details;
 
         UPDATE @checkout_details 
@@ -3021,8 +3026,10 @@ BEGIN
     DECLARE @item_quantities TABLE
     (
         item_id                             integer,
+		unit_id								integer,
         base_unit_id                        integer,
         store_id                            integer,
+		quantity							numeric(30, 6),
         total_sales                         numeric(30, 6),
         in_stock                            numeric(30, 6),
         maintain_inventory                  bit
@@ -3154,10 +3161,10 @@ BEGIN
 			RAISERROR('A line amount cannot be less than zero.', 16, 1);
 		END;
 
-        INSERT INTO @item_quantities(item_id, base_unit_id, store_id, total_sales)
-        SELECT item_id, base_unit_id, store_id, SUM(base_quantity)
+        INSERT INTO @item_quantities(item_id, base_unit_id, unit_id, store_id, quantity, total_sales)
+        SELECT item_id, base_unit_id, unit_id, store_id, SUM(quantity), SUM(base_quantity)
         FROM @checkout_details
-        GROUP BY item_id, base_unit_id, store_id;
+        GROUP BY item_id, base_unit_id, unit_id, store_id;
 
         UPDATE @item_quantities
         SET maintain_inventory = inventory.items.maintain_inventory
@@ -3177,7 +3184,14 @@ BEGIN
             AND maintain_inventory = 1     
         )
         BEGIN
-            RAISERROR('Insufficient item quantity', 13, 1);
+			SET @error_message = 'Negative stock is not allowed. <br /> <br />';
+
+			SELECT @error_message = @error_message + inventory.get_item_name_by_item_id(item_id) + ' --> required: ' + CAST(quantity AS varchar(50))+ ', actual: ' + CAST(inventory.convert_unit(base_unit_id, unit_id) * in_stock AS varchar(50)) + ' / ' + inventory.get_unit_name_by_unit_id(unit_id) +  ' <br />'
+			FROM @item_quantities
+            WHERE total_sales > in_stock
+            AND maintain_inventory = 1     
+
+            RAISERROR(@error_message, 13, 1);
         END;
         
         IF EXISTS
@@ -3980,6 +3994,8 @@ GO
 EXECUTE core.create_menu 'MixERP.Sales', 'Customers', 'Customers', '/dashboard/reports/view/Areas/MixERP.Sales/Reports/Customers.xml', 'users', 'Reports';
 EXECUTE core.create_menu 'MixERP.Sales', 'SalesDetails', 'Sales Details', '/dashboard/reports/view/Areas/MixERP.Sales/Reports/SalesDetails.xml', 'money', 'Reports';
 EXECUTE core.create_menu 'MixERP.Sales', 'SalesSummary', 'Sales Summary', '/dashboard/reports/view/Areas/MixERP.Sales/Reports/SalesSummary.xml', 'money', 'Reports';
+EXECUTE core.create_menu 'MixERP.Sales', 'LeastSellingItems', 'Least Selling Items', '/dashboard/reports/view/Areas/MixERP.Sales/Reports/LeastSellingItems.xml', 'map signs', 'Reports';
+EXECUTE core.create_menu 'MixERP.Sales', 'SalesReturnReport', 'Sales Return Report', '/dashboard/reports/view/Areas/MixERP.Sales/Reports/SalesReturn.xml', 'map signs', 'Reports';
 
 
 -->-->-- src/Frapid.Web/Areas/MixERP.Sales/db/SQL Server/2.1.update/src/05.views/00.sales.sales_view.sql --<--<--
@@ -4382,6 +4398,7 @@ SELECT
 	sales.orders.office_id,
 	sales.orders.discount,
 	sales.orders.tax,
+	sales.orders.priority,
 	sales.orders.cancelled
 FROM sales.orders;
 
@@ -4480,8 +4497,9 @@ GO
 CREATE VIEW sales.sales_search_view
 AS
 SELECT 
-    CAST(finance.transaction_master.transaction_master_id AS varchar(100)) AS tran_id, 
+    CAST(finance.transaction_master.transaction_master_id AS varchar(100)) AS tran_id,
     finance.transaction_master.transaction_code AS tran_code,
+	sales.sales.invoice_number,
     finance.transaction_master.value_date,
     finance.transaction_master.book_date,
     inventory.get_customer_name_by_customer_id(sales.sales.customer_id) AS customer,
@@ -4504,12 +4522,17 @@ WHERE finance.transaction_master.deleted = 0;
 GO
 
 
-
 -->-->-- src/Frapid.Web/Areas/MixERP.Sales/db/SQL Server/2.1.update/src/99.ownership.sql --<--<--
-EXEC sp_addrolemember  @rolename = 'db_owner', @membername  = 'frapid_db_user'
+IF(IS_ROLEMEMBER ('db_owner') = 1)
+BEGIN
+	EXEC sp_addrolemember  @rolename = 'db_owner', @membername  = 'frapid_db_user';
+END
 GO
 
-EXEC sp_addrolemember  @rolename = 'db_datareader', @membername  = 'report_user'
+IF(IS_ROLEMEMBER ('db_owner') = 1)
+BEGIN
+	EXEC sp_addrolemember  @rolename = 'db_datareader', @membername  = 'report_user'
+END
 GO
 
 DECLARE @proc sysname

@@ -4901,14 +4901,17 @@ GO
 
 
 -->-->-- src/Frapid.Web/Areas/MixERP.Sales/db/SQL Server/2.x/2.0/src/99.ownership.sql --<--<--
-EXEC sp_addrolemember  @rolename = 'db_owner', @membername  = 'frapid_db_user'
-
-
-EXEC sp_addrolemember  @rolename = 'db_datareader', @membername  = 'report_user'
-
-
+IF(IS_ROLEMEMBER ('db_owner') = 1)
+BEGIN
+	EXEC sp_addrolemember  @rolename = 'db_owner', @membername  = 'frapid_db_user';
+END
 GO
 
+IF(IS_ROLEMEMBER ('db_owner') = 1)
+BEGIN
+	EXEC sp_addrolemember  @rolename = 'db_datareader', @membername  = 'report_user'
+END
+GO
 
 DECLARE @proc sysname
 DECLARE @cmd varchar(8000)
